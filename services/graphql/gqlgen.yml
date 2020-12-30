@@ -1,0 +1,29 @@
+schema:
+  - graph/schema/*.graphql
+
+exec:
+  filename: graph/generated/generated.go
+  package: generated
+
+model:
+  filename: graph/model/models_gen.go
+  package: model
+
+resolver:
+  layout: follow-schema
+  dir: graph
+  package: graph
+  type: resolver
+
+autobind:
+  - "github.com/takuya911/project-user-definition"
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int64
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int64
+  Time:
+    model:
+      - "github.com/takuya911/project-user-services/services/graphql/graph/scalar.TimeProto"

@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  graphql:
+    build:
+      context: ./services/graphql
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/graphql:/app
+    ports:
+      - 80:80
+    tty: true

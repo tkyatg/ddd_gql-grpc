@@ -1,0 +1,76 @@
+scalar Time
+extend type Query {
+  getUserById(input:getUserForm!): User
+}
+extend type Mutation {
+  login(input: LoginInput!): LoginPayload!
+  createUser(input: CreateUserInput!): CreateUserPayload!
+  updateUser(input: UpdateUserInput!): UpdateUserPayload!
+  deleteUser(input: DeleteUserPayInput!): DeleteUserPayload!
+}
+
+input getUserForm{
+  id:ID!
+}
+
+extend type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  telephoneNumber:String!
+  gender: Int!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
+type TokenPair {
+  idToken: String!
+  refreshToken: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginPayload {
+  user: User!
+  tokenPair: TokenPair!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  telephoneNumber: String!
+  gender: Int!
+
+}
+
+type CreateUserPayload {
+  user: User!
+  tokenPair: TokenPair!
+}
+input UpdateUserInput {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+  telephoneNumber:String!
+  gender: Int!
+}
+type UpdateUserPayload {
+  beforeUser: User!
+  afterUser: User!
+}
+
+input DeleteUserPayInput {
+  id: ID!
+  email: String!
+  password: String!
+}
+
+type DeleteUserPayload {
+  result: Boolean!
+}
