@@ -1,8 +1,6 @@
 package userqueryservice
 
 import (
-	"context"
-
 	"github.com/golang/protobuf/ptypes/timestamp"
 )
 
@@ -25,11 +23,11 @@ type (
 	}
 	// Usecase interface
 	Usecase interface {
-		getUserByID(ctx context.Context, req getUserByIDRequest) (getUserByIDResponse, error)
+		getUserByID(req getUserByIDRequest) (getUserByIDResponse, error)
 	}
 	// DataAccessor interface
 	DataAccessor interface {
-		getUserByID(ctx context.Context, req getUserByIDRequest) (getUserByIDResponse, error)
+		getUserByID(req getUserByIDRequest) (getUserByIDResponse, error)
 	}
 )
 
@@ -38,6 +36,6 @@ func NewUsecase(da DataAccessor) Usecase {
 	return &usecase{da}
 }
 
-func (uc *usecase) getUserByID(ctx context.Context, req getUserByIDRequest) (getUserByIDResponse, error) {
-	return uc.da.getUserByID(ctx, req)
+func (uc *usecase) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+	return uc.da.getUserByID(req)
 }

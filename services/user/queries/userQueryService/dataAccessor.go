@@ -1,8 +1,6 @@
 package userqueryservice
 
 import (
-	"context"
-
 	"github.com/jinzhu/gorm"
 )
 
@@ -15,7 +13,7 @@ func NewDataAccessor(db *gorm.DB) DataAccessor {
 	return &dataAccessor{db}
 }
 
-func (d *dataAccessor) getUserByID(ctx context.Context, req getUserByIDRequest) (getUserByIDResponse, error) {
+func (d *dataAccessor) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
 	sql := `
     SELECT id
          , name

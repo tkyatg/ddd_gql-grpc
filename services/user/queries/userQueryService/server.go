@@ -22,7 +22,7 @@ func (s *server) GetUserByID(ctx context.Context, req *definition.GetUserRequest
 	if id == "" {
 		return nil, errors.New(shared.RequiredUserID)
 	}
-	res, err := s.uc.getUserByID(ctx, getUserByIDRequest{id: req.GetId()})
+	res, err := s.uc.getUserByID(getUserByIDRequest{id: req.GetId()})
 	if err != nil {
 		return nil, err
 	}
