@@ -2,7 +2,9 @@ package userqueryservice
 
 import (
 	"context"
+	"errors"
 
+	"github.com/takuya911/project-services/services/user/shared"
 	definition "github.com/takuya911/project-user-definition"
 )
 
@@ -16,6 +18,10 @@ func NewServer(uc Usecase) definition.UserServiceServer {
 }
 
 func (s *server) GetUserByID(ctx context.Context, req *definition.GetUserRequest) (*definition.GetUserResponse, error) {
+	id := req.GetId()
+	if id == "" {
+		return nil, errors.New(shared.RequiredUserID)
+	}
 	res, err := s.uc.getUserByID(ctx, getUserByIDRequest{id: req.GetId()})
 	if err != nil {
 		return nil, err
