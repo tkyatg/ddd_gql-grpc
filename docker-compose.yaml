@@ -1,11 +1,13 @@
 version: '3.4'
 services:
-  graphql:
+  user:
     build:
-      context: ./services/graphql
+      context: ./services/user
       dockerfile: Dockerfile.dev
     volumes:
-      - ./services/graphql:/app
+      - ./services/user:/app
+    environment:
+      - USER_SERVICE_PORT=50051
     ports:
-      - 80:80
+      - 50051:50051
     tty: true
