@@ -5,7 +5,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/takuya911/project-services/services/user/adapter/env"
+	"github.com/takuya911/project-services/services/user/adapter/sql"
 	userqueryservice "github.com/takuya911/project-services/services/user/queries/userQueryService"
 	definition "github.com/takuya911/project-user-definition"
 	"google.golang.org/grpc"
@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// db connect
-	dbConn, err := env.NewGormConnect()
+	dbConn, err := sql.NewGormConnect()
 	if err != nil {
 		log.Fatal(err)
 	}

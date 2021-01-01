@@ -7,33 +7,21 @@ services:
     volumes:
       - ./services/user:/app
     environment:
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_NAME=dev_database
-      - DB_USER=root
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
       - DB_PASS=password
       - USER_SERVICE_PORT=50051
     ports:
       - 50051:50051
     tty: true
-  mysql:
-    image: mysql:5.7
+  postgres:
+    image: postgres:13
     ports:
-      - 3306:3306
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: dev_database
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
-      - PMA_USER=root
-      - PMA_PASSWORD=password
-    ports:
-      - 1234:80
-    volumes:
-      - /sessions
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - PGPASSWORD=password
+      - DATABASE_HOST=localhost
