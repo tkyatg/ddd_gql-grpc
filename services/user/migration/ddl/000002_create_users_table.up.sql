@@ -1,6 +1,5 @@
 create type gender as enum ('女性', '男性', 'その他');
-
-CREATE TABLE IF NOT EXISTS users (
+create table if not exists users.users (
   user_uuid uuid not null default gen_random_uuid(),
   name varchar not null,
   email varchar not null,
@@ -9,5 +8,5 @@ CREATE TABLE IF NOT EXISTS users (
   type gender not null,
   created_at timestamp not null DEFAULT current_timestamp,
   updated_at timestamp not null DEFAULT current_timestamp,
-  constraint users_pkey primary key (user_uuid),
+  constraint users_pkey primary key (user_uuid)
 );
