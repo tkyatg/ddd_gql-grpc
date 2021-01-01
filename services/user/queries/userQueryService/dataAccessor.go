@@ -21,10 +21,10 @@ func (d *dataAccessor) getUserByID(req getUserByIDRequest) (getUserByIDResponse,
          , password
          , telephoneNumber
          , gender
-	  FROM users
+	  FROM users.users
      WHERE id = ?`
 	var rslt struct {
-		id              string `db:"id"`
+		userUUID        string `db:"user_uuid"`
 		name            string `db:"name"`
 		email           string `db:"email"`
 		password        string `db:"password"`
@@ -32,10 +32,10 @@ func (d *dataAccessor) getUserByID(req getUserByIDRequest) (getUserByIDResponse,
 		gender          int64  `db:"gender"`
 	}
 
-	d.db.Raw(sql, req.id).Scan(&rslt)
+	d.db.Raw(sql, req.userUUID).Scan(&rslt)
 
 	return getUserByIDResponse{
-		id:              rslt.id,
+		userUUID:        rslt.userUUID,
 		name:            rslt.name,
 		email:           rslt.email,
 		password:        rslt.password,

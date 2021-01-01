@@ -14,9 +14,9 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	usecase := NewMockUsecase(ctrl)
 
 	usecase.EXPECT().getUserByID(getUserByIDRequest{
-		id: "id",
+		userUUID: "id",
 	}).Return(getUserByIDResponse{
-		id:              "id",
+		userUUID:        "id",
 		name:            "name",
 		email:           "email",
 		password:        "password",
@@ -25,7 +25,7 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	}, nil)
 
 	res, err := usecase.getUserByID(getUserByIDRequest{
-		id: "id",
+		userUUID: "id",
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -35,7 +35,7 @@ func TestUsecaseGetUserByID(t *testing.T) {
 		cmpopts.IgnoreUnexported(getUserByIDResponse{}),
 	}
 	if diff := cmp.Diff(getUserByIDResponse{
-		id:              "id",
+		userUUID:        "id",
 		name:            "name",
 		email:           "email",
 		password:        "password",

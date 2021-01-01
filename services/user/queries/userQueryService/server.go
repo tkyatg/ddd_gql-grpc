@@ -18,17 +18,17 @@ func NewServer(uc Usecase) definition.UserServiceServer {
 }
 
 func (s *server) GetUserByID(ctx context.Context, req *definition.GetUserRequest) (*definition.GetUserResponse, error) {
-	id := req.GetId()
-	if id == "" {
+	uuid := req.GetUuid()
+	if uuid == "" {
 		return nil, errors.New(shared.RequiredUserID)
 	}
-	res, err := s.uc.getUserByID(getUserByIDRequest{id: req.GetId()})
+	res, err := s.uc.getUserByID(getUserByIDRequest{userUUID: req.GetUuid()})
 	if err != nil {
 		return nil, err
 	}
 
 	return &definition.GetUserResponse{
-		Id:              res.id,
+		Uuid:            res.userUUID,
 		Name:            res.name,
 		Email:           res.email,
 		Password:        res.password,

@@ -17,9 +17,9 @@ func TestServerGetUserByID(t *testing.T) {
 	ctx := context.Background()
 
 	usecase.EXPECT().getUserByID(getUserByIDRequest{
-		id: "id",
+		userUUID: "id",
 	}).Return(getUserByIDResponse{
-		id:              "id",
+		userUUID:        "id",
 		name:            "name",
 		email:           "email",
 		password:        "password",
@@ -28,7 +28,7 @@ func TestServerGetUserByID(t *testing.T) {
 	}, nil)
 
 	res, err := server.GetUserByID(ctx, &definition.GetUserRequest{
-		Id: "id",
+		Uuid: "id",
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -36,7 +36,7 @@ func TestServerGetUserByID(t *testing.T) {
 
 	opts := cmp.Options{}
 	if diff := cmp.Diff(&definition.GetUserResponse{
-		Id:              "id",
+		Uuid:            "id",
 		Name:            "name",
 		Email:           "email",
 		Password:        "password",

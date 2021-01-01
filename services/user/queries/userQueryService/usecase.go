@@ -9,10 +9,10 @@ type (
 		da DataAccessor
 	}
 	getUserByIDRequest struct {
-		id string
+		userUUID string
 	}
 	getUserByIDResponse struct {
-		id              string
+		userUUID        string
 		name            string
 		email           string
 		password        string
