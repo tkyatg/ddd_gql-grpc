@@ -14,12 +14,7 @@ type (
 		gender          int64
 	}
 	createResponse struct {
-		userUUID  string
-		tokenPair *tokenPair
-	}
-	tokenPair struct {
-		accessToken  string
-		refreshToken string
+		userUUID string
 	}
 	updateRequest struct {
 		userUUID        string
@@ -30,20 +25,17 @@ type (
 		gender          int64
 	}
 	updateResponse struct {
-		userUUID  string
-		tokenPair *tokenPair
 	}
 	deleteRequest struct {
 		userUUID string
 	}
 	deleteResponse struct {
-		userUUID string
 	}
 	// Usecase interface
 	Usecase interface {
 		create(req createRequest) (createResponse, error)
-		update(req updateRequest) (updateResponse, error)
-		delete(req deleteRequest) (deleteResponse, error)
+		update(req updateRequest) error
+		delete(req deleteRequest) error
 	}
 )
 
@@ -57,36 +49,39 @@ func (uc *usecase) create(req createRequest) (createResponse, error) {
 	if err != nil {
 		return createResponse{}, err
 	}
-	if err := uc.repo.create(attr); err != nil {
+	userUUID, err := uc.repo.Create(attr)
+	if err != nil {
 		return createResponse{}, err
 	}
-	return createResponse{}, nil
+
+	return createResponse{
+		userUUID: string(userUUID),
+	}, nil
 }
 
-func (uc *usecase) update(req updateRequest) (updateResponse, error) {
+func (uc *usecase) update(req updateRequest) error {
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
-		return updateResponse{}, err
+		return err
 	}
 	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
-		return updateResponse{}, err
+		return err
 	}
-	if err := uc.repo.update(id, attr); err != nil {
-		return updateResponse{}, err
+	if err := uc.repo.Update(id, attr); err != nil {
+		return err
 	}
 
-	return updateResponse{}, nil
+	return nil
 }
 
-func (uc *usecase) delete(req deleteRequest) (deleteResponse, error) {
+func (uc *usecase) delete(req deleteRequest) error {
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
-		return deleteResponse{}, err
+		return err
 	}
-	if err := uc.repo.delete(id); err != nil {
-		return deleteResponse{}, err
+	if err := uc.repo.Delete(id); err != nil {
+		return err
 	}
-	return deleteResponse{}, nil
-
+	return nil
 }

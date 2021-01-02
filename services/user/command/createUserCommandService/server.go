@@ -29,42 +29,32 @@ func (s *server) Create(context context.Context, req *definition.CreateRequest) 
 	}
 	return &definition.CreateResponse{
 		Uuid: res.userUUID,
-		TokenPair: &definition.TokenPair{
-			AccessToken:  res.tokenPair.accessToken,
-			RefreshToken: res.tokenPair.refreshToken,
-		},
 	}, nil
 }
 
 func (s *server) Update(context context.Context, req *definition.UpdateRequest) (*definition.UpdateResponse, error) {
-	res, err := s.uc.update(updateRequest{
+	if err := s.uc.update(updateRequest{
 		userUUID:        req.Uuid,
 		name:            req.Name,
 		email:           req.Email,
 		password:        req.Password,
 		telephoneNumber: req.TelephoneNumber,
 		gender:          req.Gender,
-	})
-	if err != nil {
+	}); err != nil {
 		return nil, err
 	}
 	return &definition.UpdateResponse{
-		Uuid: res.userUUID,
-		TokenPair: &definition.TokenPair{
-			AccessToken:  res.tokenPair.accessToken,
-			RefreshToken: res.tokenPair.refreshToken,
-		},
+		Uuid: req.Uuid,
 	}, nil
 }
 
 func (s *server) Delete(context context.Context, req *definition.DeleteRequest) (*definition.DeleteResponse, error) {
-	res, err := s.uc.delete(deleteRequest{
+	if err := s.uc.delete(deleteRequest{
 		userUUID: req.Uuid,
-	})
-	if err != nil {
+	}); err != nil {
 		return &definition.DeleteResponse{}, err
 	}
 	return &definition.DeleteResponse{
-		Uuid: res.userUUID,
+		Uuid: req.Uuid,
 	}, nil
 }

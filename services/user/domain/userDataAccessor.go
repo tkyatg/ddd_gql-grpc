@@ -17,7 +17,7 @@ func NewUserDataAccessor(
 	return &userDataAccessor{db}
 }
 
-func (d userDataAccessor) create(attr *UserAttributes) error {
+func (d userDataAccessor) create(attr *UserAttributes) (UserUUID, error) {
 	sql := `
 insert into users.users
      ( name
@@ -30,12 +30,20 @@ values
      , ?
      , ?
      , ?
-     , ? );
+	 , ? )
+RETURNING user_uuid;
 `
-	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender); result.Error != nil {
-		return result.Error
+	var rslt struct {
+		userUUID string `db:"user_uuid"`
 	}
-	return nil
+	if result := d.db.Raw(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender).Scan(&rslt); result.Error != nil {
+		return "", result.Error
+	}
+	res, err := ParseUserUUID(rslt.userUUID)
+	if err != nil {
+		return "", err
+	}
+	return res, nil
 }
 
 func (d userDataAccessor) update(id UserUUID, attr *UserAttributes) error {
@@ -48,6 +56,7 @@ update users.users
      , gender = ?
  where user_uuid = ?;
 `
+	// ここのresult何が返ってくるか気になる
 	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender, id); result.Error != nil {
 		return result.Error
 	}
@@ -59,6 +68,7 @@ func (d userDataAccessor) delete(id UserUUID) error {
 delete users.users 
  where user_uuid= ?;
 `
+	// ここのresult何が返ってくるか気になる
 	if result := d.db.Exec(sql, id); result.Error != nil {
 		return result.Error
 	}

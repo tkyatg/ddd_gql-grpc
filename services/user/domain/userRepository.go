@@ -6,13 +6,13 @@ type (
 	}
 	// UserRepository interface
 	UserRepository interface {
-		Create(attr *UserAttributes) error
+		Create(attr *UserAttributes) (UserUUID, error)
 		Update(id UserUUID, attr *UserAttributes) error
 		Delete(id UserUUID) error
 	}
 	// UserDataAccessor interface
 	UserDataAccessor interface {
-		create(attr *UserAttributes) error
+		create(attr *UserAttributes) (UserUUID, error)
 		update(id UserUUID, attr *UserAttributes) error
 		delete(id UserUUID) error
 	}
@@ -25,7 +25,7 @@ func NewUserRepository(
 	return &userRepository{da}
 }
 
-func (r *userRepository) Create(attr *UserAttributes) error {
+func (r *userRepository) Create(attr *UserAttributes) (UserUUID, error) {
 	return r.da.create(attr)
 }
 
