@@ -13,16 +13,16 @@ type server struct {
 }
 
 // NewServer function
-func NewServer(uc Usecase) definition.UserServiceServer {
+func NewServer(uc Usecase) definition.UserQueryServiceServer {
 	return &server{uc}
 }
 
-func (s *server) GetUserByID(ctx context.Context, req *definition.GetUserRequest) (*definition.GetUserResponse, error) {
+func (s *server) GetByID(ctx context.Context, req *definition.GetUserRequest) (*definition.GetUserResponse, error) {
 	uuid := req.GetUuid()
 	if uuid == "" {
 		return nil, errors.New(shared.RequiredUserID)
 	}
-	res, err := s.uc.getUserByID(getUserByIDRequest{userUUID: req.GetUuid()})
+	res, err := s.uc.getByID(getUserByIDRequest{userUUID: req.GetUuid()})
 	if err != nil {
 		return nil, err
 	}

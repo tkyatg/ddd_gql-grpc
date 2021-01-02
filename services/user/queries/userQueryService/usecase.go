@@ -23,11 +23,11 @@ type (
 	}
 	// Usecase interface
 	Usecase interface {
-		getUserByID(req getUserByIDRequest) (getUserByIDResponse, error)
+		getByID(req getUserByIDRequest) (getUserByIDResponse, error)
 	}
 	// DataAccessor interface
 	DataAccessor interface {
-		getUserByID(req getUserByIDRequest) (getUserByIDResponse, error)
+		getByID(req getUserByIDRequest) (getUserByIDResponse, error)
 	}
 )
 
@@ -36,6 +36,6 @@ func NewUsecase(da DataAccessor) Usecase {
 	return &usecase{da}
 }
 
-func (uc *usecase) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
-	return uc.da.getUserByID(req)
+func (uc *usecase) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+	return uc.da.getByID(req)
 }

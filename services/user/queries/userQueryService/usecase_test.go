@@ -13,7 +13,7 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	defer ctrl.Finish()
 	usecase := NewMockUsecase(ctrl)
 
-	usecase.EXPECT().getUserByID(getUserByIDRequest{
+	usecase.EXPECT().getByID(getUserByIDRequest{
 		userUUID: "id",
 	}).Return(getUserByIDResponse{
 		userUUID:        "id",
@@ -24,7 +24,7 @@ func TestUsecaseGetUserByID(t *testing.T) {
 		gender:          1,
 	}, nil)
 
-	res, err := usecase.getUserByID(getUserByIDRequest{
+	res, err := usecase.getByID(getUserByIDRequest{
 		userUUID: "id",
 	})
 	if err != nil {

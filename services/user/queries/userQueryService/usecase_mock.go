@@ -32,19 +32,19 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 	return m.recorder
 }
 
-// getUserByID mocks base method
-func (m *MockUsecase) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+// getByID mocks base method
+func (m *MockUsecase) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "getUserByID", req)
+	ret := m.ctrl.Call(m, "getByID", req)
 	ret0, _ := ret[0].(getUserByIDResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// getUserByID indicates an expected call of getUserByID
-func (mr *MockUsecaseMockRecorder) getUserByID(req interface{}) *gomock.Call {
+// getByID indicates an expected call of getByID
+func (mr *MockUsecaseMockRecorder) getByID(req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getUserByID", reflect.TypeOf((*MockUsecase)(nil).getUserByID), req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByID", reflect.TypeOf((*MockUsecase)(nil).getByID), req)
 }
 
 // MockDataAccessor is a mock of DataAccessor interface
@@ -70,17 +70,17 @@ func (m *MockDataAccessor) EXPECT() *MockDataAccessorMockRecorder {
 	return m.recorder
 }
 
-// getUserByID mocks base method
-func (m *MockDataAccessor) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+// getByID mocks base method
+func (m *MockDataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "getUserByID", req)
+	ret := m.ctrl.Call(m, "getByID", req)
 	ret0, _ := ret[0].(getUserByIDResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// getUserByID indicates an expected call of getUserByID
-func (mr *MockDataAccessorMockRecorder) getUserByID(req interface{}) *gomock.Call {
+// getByID indicates an expected call of getByID
+func (mr *MockDataAccessorMockRecorder) getByID(req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getUserByID", reflect.TypeOf((*MockDataAccessor)(nil).getUserByID), req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByID", reflect.TypeOf((*MockDataAccessor)(nil).getByID), req)
 }

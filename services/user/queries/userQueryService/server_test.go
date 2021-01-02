@@ -9,14 +9,14 @@ import (
 	definition "github.com/takuya911/project-user-definition"
 )
 
-func TestServerGetUserByID(t *testing.T) {
+func TestServerGetByID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	usecase := NewMockUsecase(ctrl)
 	server := NewServer(usecase)
 	ctx := context.Background()
 
-	usecase.EXPECT().getUserByID(getUserByIDRequest{
+	usecase.EXPECT().getByID(getUserByIDRequest{
 		userUUID: "id",
 	}).Return(getUserByIDResponse{
 		userUUID:        "id",
@@ -27,7 +27,7 @@ func TestServerGetUserByID(t *testing.T) {
 		gender:          1,
 	}, nil)
 
-	res, err := server.GetUserByID(ctx, &definition.GetUserRequest{
+	res, err := server.GetByID(ctx, &definition.GetUserRequest{
 		Uuid: "id",
 	})
 	if err != nil {

@@ -13,7 +13,7 @@ func NewDataAccessor(db *gorm.DB) DataAccessor {
 	return &dataAccessor{db}
 }
 
-func (d *dataAccessor) getUserByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+func (d *dataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
 	sql := `
     SELECT id
          , name
