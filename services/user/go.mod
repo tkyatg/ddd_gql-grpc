@@ -13,7 +13,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.8.0
-	github.com/takuya911/project-user-definition v0.0.0-20210102012314-91821a0ea279
+	github.com/takuya911/project-user-definition v0.0.0-20210102075050-b75a271783c6
 	google.golang.org/grpc v1.34.0
 
 )

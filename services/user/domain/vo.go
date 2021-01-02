@@ -27,6 +27,11 @@ type (
 		telephoneNumber TelephoneNumber
 		gender          Gender
 	}
+	// TokenPair struct
+	TokenPair struct {
+		AccessToken  string
+		RefreshToken string
+	}
 )
 
 // NewUserAttributes func
@@ -66,7 +71,9 @@ func NewUserAttributes(
 		gender:          gn,
 	}, nil
 }
-func parseUserUUID(id string) (UserUUID, error) {
+
+// ParseUserUUID func
+func ParseUserUUID(id string) (UserUUID, error) {
 	if id == "" {
 		return "", errors.New(shared.RequiredUserUUID)
 	}

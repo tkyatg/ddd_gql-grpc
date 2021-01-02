@@ -11,9 +11,15 @@ type (
 		email           string
 		password        string
 		telephoneNumber string
-		gender          string
+		gender          int64
 	}
 	createResponse struct {
+		userUUID  string
+		tokenPair *tokenPair
+	}
+	tokenPair struct {
+		accessToken  string
+		refreshToken string
 	}
 	updateRequest struct {
 		userUUID        string
@@ -21,14 +27,17 @@ type (
 		email           string
 		password        string
 		telephoneNumber string
-		gender          string
+		gender          int64
 	}
 	updateResponse struct {
+		userUUID  string
+		tokenPair *tokenPair
 	}
 	deleteRequest struct {
 		userUUID string
 	}
 	deleteResponse struct {
+		userUUID string
 	}
 	// Usecase interface
 	Usecase interface {
@@ -44,30 +53,40 @@ func NewUsecase(repo domain.UserRepository) Usecase {
 }
 
 func (uc *usecase) create(req createRequest) (createResponse, error) {
-	attr, err := domain.NewUserAttributes(req.nam, req.spotCategory, req.spotAuthenticators, req.reservationRule)
+	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
-		return err
+		return createResponse{}, err
 	}
-	return uc.repo.create(attr)
+	if err := uc.repo.create(attr); err != nil {
+		return createResponse{}, err
+	}
+	return createResponse{}, nil
 }
 
 func (uc *usecase) update(req updateRequest) (updateResponse, error) {
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
-		return err
+		return updateResponse{}, err
 	}
-	attr, err := domain.NewUserAttributes(req.nam, req.spotCategory, req.spotAuthenticators, req.reservationRule)
+	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
-		return err
+		return updateResponse{}, err
+	}
+	if err := uc.repo.update(id, attr); err != nil {
+		return updateResponse{}, err
 	}
 
-	return uc.repo.update(id, attr)
+	return updateResponse{}, nil
 }
 
 func (uc *usecase) delete(req deleteRequest) (deleteResponse, error) {
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
-		return err
+		return deleteResponse{}, err
 	}
-	return uc.repo.delete(id)
+	if err := uc.repo.delete(id); err != nil {
+		return deleteResponse{}, err
+	}
+	return deleteResponse{}, nil
+
 }
