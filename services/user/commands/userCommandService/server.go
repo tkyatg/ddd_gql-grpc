@@ -1,4 +1,4 @@
-package createusercommandservice
+package usercommandservice
 
 import (
 	"context"

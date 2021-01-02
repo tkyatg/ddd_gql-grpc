@@ -6,6 +6,8 @@ import (
 	"os"
 
 	"github.com/takuya911/project-services/services/user/adapter/sql"
+	usercommandservice "github.com/takuya911/project-services/services/user/commands/userCommandService"
+	domain "github.com/takuya911/project-services/services/user/domain"
 	userqueryservice "github.com/takuya911/project-services/services/user/queries/userQueryService"
 	definition "github.com/takuya911/project-user-definition"
 	"google.golang.org/grpc"
@@ -24,13 +26,19 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	// userservice
+	// user query service
 	userQueryDataAccessor := userqueryservice.NewDataAccessor(dbConn)
 	userQueryUsecase := userqueryservice.NewUsecase(userQueryDataAccessor)
 	userQueryServer := userqueryservice.NewServer(userQueryUsecase)
+	// user command service
+	userCommandDataAccessor := domain.NewUserDataAccessor(dbConn)
+	userCommandRepository := domain.NewUserRepository(userCommandDataAccessor)
+	userCommandUsecase := usercommandservice.NewUsecase(userCommandRepository)
+	userCommandServer := usercommandservice.NewServer(userCommandUsecase)
 
 	server := grpc.NewServer()
-	definition.RegisterUserServiceServer(server, userQueryServer)
+	definition.RegisterUserQueryServiceServer(server, userQueryServer)
+	definition.RegisterUserCommandServiceServer(server, userCommandServer)
 
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

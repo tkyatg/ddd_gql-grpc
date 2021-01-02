@@ -422,6 +422,7 @@ github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5
 github.com/subosito/gotenv v1.2.0 h1:Slr1R9HxAlEKefgq5jn9U+DnETlIUa6HfgEzj0g5d7s=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
 github.com/takuya911/project-services v0.0.0-20201230065158-898fbc018235 h1:ojZe1fIgl0tXXAKRnFKPpK1IWlMb1BVxAtdL2jjA3Mk=
+github.com/takuya911/project-services v0.0.0-20210102082850-eae515da0f10 h1:LN7qTLOyJirVuBaCsWbgc6Q/KeLRujnKEQNmpt4wrsA=
 github.com/takuya911/project-user-definition v0.0.0-20201230060458-b25c8be6a3aa h1:9SDoEJnrgPRSrB67GSGE16nkSR1wUsjWPmsfGIxYhtc=
 github.com/takuya911/project-user-definition v0.0.0-20201230060458-b25c8be6a3aa/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/takuya911/project-user-definition v0.0.0-20201230072157-0842c7bef399 h1:uxOAhHVXhwY+Kga3lZtN9OVyEfB4Bc5UAX4fNlokQeE=

@@ -1,4 +1,4 @@
-package createusercommandservice
+package usercommandservice
 
 import "github.com/takuya911/project-services/services/user/domain"
 
