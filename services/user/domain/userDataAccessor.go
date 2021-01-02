@@ -25,11 +25,12 @@ insert into users.users
      , password
      , telephone_number
      , gender )
-values ( ?
-       , ?
-       , ?
-       , ?
-       , ? );
+values
+     ( ?
+     , ?
+     , ?
+     , ?
+     , ? );
 `
 	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender); result.Error != nil {
 		return result.Error

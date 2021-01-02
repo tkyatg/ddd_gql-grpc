@@ -26,13 +26,13 @@ func NewUserRepository(
 }
 
 func (r *userRepository) Create(attr *UserAttributes) error {
-	return nil
+	return r.da.create(attr)
 }
 
 func (r *userRepository) Update(id UserUUID, attr *UserAttributes) error {
-	return nil
+	return r.da.update(id, attr)
 }
 
 func (r *userRepository) Delete(id UserUUID) error {
-	return nil
+	return r.da.delete(id)
 }
