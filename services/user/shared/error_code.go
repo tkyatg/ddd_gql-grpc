@@ -15,4 +15,6 @@ const (
 	RequiredGender = "user-00006"
 	// RequiredUserUUID : UUID は必須です
 	RequiredUserUUID = "user-00007"
+	// InvalidUUIDFormat : UUID の型が不正です
+	InvalidUUIDFormat = "user-00008"
 )

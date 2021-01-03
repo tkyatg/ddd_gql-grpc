@@ -3,6 +3,7 @@ package domain
 import (
 	"errors"
 
+	"github.com/google/uuid"
 	"github.com/takuya911/project-services/services/user/shared"
 )
 
@@ -74,11 +75,16 @@ func NewUserAttributes(
 
 // ParseUserUUID func
 func ParseUserUUID(id string) (UserUUID, error) {
+	return parseUserUUID(id)
+}
+func parseUserUUID(id string) (UserUUID, error) {
 	if id == "" {
 		return "", errors.New(shared.RequiredUserUUID)
 	}
+	if _, err := uuid.Parse(id); err != nil {
+		return "", errors.New(shared.InvalidUUIDFormat)
+	}
 	return UserUUID(id), nil
-
 }
 
 func parseUserName(userName string) (UserName, error) {
