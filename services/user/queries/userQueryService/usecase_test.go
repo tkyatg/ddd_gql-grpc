@@ -1,6 +1,7 @@
 package userqueryservice
 
 import (
+	"errors"
 	"testing"
 
 	gomock "github.com/golang/mock/gomock"
@@ -44,4 +45,23 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
 	}
+}
+
+func TestUsecaseGetUserByIDERROR01(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	usecase := NewMockUsecase(ctrl)
+
+	err := errors.New("error")
+	usecase.EXPECT().getByID(getUserByIDRequest{
+		userUUID: "id",
+	}).Return(getUserByIDResponse{}, err)
+
+	_, getByIDErr := usecase.getByID(getUserByIDRequest{
+		userUUID: "id",
+	})
+	if err != getByIDErr {
+		t.Fatal(getByIDErr)
+	}
+
 }
