@@ -1,5 +1,7 @@
 gen-mock:
 	mockgen -source queries/userQueryService/usecase.go -destination  queries/userQueryService/usecase_mock.go -package userqueryservice
+	mockgen -source commands/userCommandService/usecase.go -destination  commands/userCommandService/usecase_mock.go -package usercommandservice
+	mockgen -source domain/userRepository.go -destination  domain/userRepository_mock.go -package domain
 test:
 	go test -race -covermode=atomic ./... -test.v
 migrationfile:
