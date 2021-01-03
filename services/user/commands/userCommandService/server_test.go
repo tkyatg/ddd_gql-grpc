@@ -78,3 +78,127 @@ func TestServerCreateERROR01(t *testing.T) {
 	}
 
 }
+
+func TestServerUpdate(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	usecase := NewMockUsecase(ctrl)
+	server := NewServer(usecase)
+	ctx := context.Background()
+
+	userUUID := uuid.New()
+
+	usecase.EXPECT().update(updateRequest{
+		userUUID:        userUUID.String(),
+		name:            "name",
+		email:           "email",
+		password:        "password",
+		telephoneNumber: "090-8436-3176",
+		gender:          1,
+	}).Return(nil)
+
+	res, err := server.Update(ctx, &definition.UpdateRequest{
+		Uuid:            userUUID.String(),
+		Name:            "name",
+		Email:           "email",
+		Password:        "password",
+		TelephoneNumber: "090-8436-3176",
+		Gender:          1,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	opts := cmp.Options{}
+	if diff := cmp.Diff(&definition.UpdateResponse{
+		Uuid: userUUID.String(),
+	}, res, opts); diff != "" {
+		t.Fatal(diff)
+	}
+
+}
+
+func TestServerUpdateERROR01(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	usecase := NewMockUsecase(ctrl)
+	server := NewServer(usecase)
+	ctx := context.Background()
+
+	userUUID := uuid.New()
+	err := errors.New("error")
+
+	usecase.EXPECT().update(updateRequest{
+		userUUID:        userUUID.String(),
+		name:            "name",
+		email:           "email",
+		password:        "password",
+		telephoneNumber: "090-8436-3176",
+		gender:          1,
+	}).Return(err)
+
+	_, updateErr := server.Update(ctx, &definition.UpdateRequest{
+		Uuid:            userUUID.String(),
+		Name:            "name",
+		Email:           "email",
+		Password:        "password",
+		TelephoneNumber: "090-8436-3176",
+		Gender:          1,
+	})
+	if err != updateErr {
+		t.Fatal(updateErr)
+	}
+
+}
+
+func TestServerDelete(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	usecase := NewMockUsecase(ctrl)
+	server := NewServer(usecase)
+	ctx := context.Background()
+
+	userUUID := uuid.New()
+
+	usecase.EXPECT().delete(deleteRequest{
+		userUUID: userUUID.String(),
+	}).Return(nil)
+
+	res, err := server.Delete(ctx, &definition.DeleteRequest{
+		Uuid: userUUID.String(),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	opts := cmp.Options{}
+	if diff := cmp.Diff(&definition.DeleteResponse{
+		Uuid: userUUID.String(),
+	}, res, opts); diff != "" {
+		t.Fatal(diff)
+	}
+
+}
+
+func TestServerDeleteERROR01(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	usecase := NewMockUsecase(ctrl)
+	server := NewServer(usecase)
+	ctx := context.Background()
+
+	userUUID := uuid.New()
+	err := errors.New("error")
+
+	usecase.EXPECT().delete(deleteRequest{
+		userUUID: userUUID.String(),
+	}).Return(err)
+
+	_, deleteErr := server.Delete(ctx, &definition.DeleteRequest{
+		Uuid: userUUID.String(),
+	})
+	if err != deleteErr {
+		t.Fatal(deleteErr)
+	}
+
+}
