@@ -8,32 +8,48 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
+	"github.com/takuya911/project-services/services/user/domain"
 )
 
-func TestUsecaseCreate(t *testing.T) {
+type usecaseTestHelper struct {
+	ctrl *gomock.Controller
+	repo *domain.MockUserRepository
+	uc   Usecase
+}
+
+func newUsecaseTestHelper(t *testing.T) *usecaseTestHelper {
 	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	repo := domain.NewMockUserRepository(ctrl)
+	uc := NewUsecase(repo)
+
+	return &usecaseTestHelper{
+		ctrl: ctrl,
+		repo: repo,
+		uc:   uc,
+	}
+}
+
+func TestUsecaseCreate(t *testing.T) {
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
 
-	usecase.EXPECT().create(createRequest{
+	req := createRequest{
 		name:            "name",
-		email:           "email",
+		email:           "test@gmail.gom",
 		password:        "password",
-		telephoneNumber: "090-8436-3176",
+		telephoneNumber: "09084363174",
 		gender:          1,
-	}).Return(createResponse{
-		userUUID: userUUID.String(),
-	}, nil)
+	}
+	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	res, err := usecase.create(createRequest{
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	})
+	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(userUUID.String()), nil)
+
+	res, err := h.uc.create(req)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,27 +65,26 @@ func TestUsecaseCreate(t *testing.T) {
 }
 
 func TestUsecaseCreateERROR01(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
+	userUUID := uuid.New()
+
+	req := createRequest{
+		name:            "name",
+		email:           "test@gmail.gom",
+		password:        "password",
+		telephoneNumber: "09084363174",
+		gender:          1,
+	}
+	attr, newAttrErr := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	if newAttrErr != nil {
+		t.Fatal(newAttrErr)
+	}
 	err := errors.New("error")
+	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(userUUID.String()), err)
 
-	usecase.EXPECT().create(createRequest{
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	}).Return(createResponse{}, err)
-
-	_, createErr := usecase.create(createRequest{
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	})
+	_, createErr := h.uc.create(req)
 	if err != createErr {
 		t.Fatal(createErr)
 	}
@@ -77,29 +92,28 @@ func TestUsecaseCreateERROR01(t *testing.T) {
 }
 
 func TestUsecaseUpdate(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
-
-	usecase.EXPECT().update(updateRequest{
+	req := updateRequest{
 		userUUID:        userUUID.String(),
 		name:            "name",
-		email:           "email",
+		email:           "test@gmail.com",
 		password:        "password",
-		telephoneNumber: "090-8436-3176",
+		telephoneNumber: "09084363176",
 		gender:          1,
-	}).Return(nil)
-
-	err := usecase.update(updateRequest{
-		userUUID:        userUUID.String(),
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	})
+	}
+	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	if err != nil {
+		t.Fatal(err)
+	}
+	id, err := domain.ParseUserUUID(req.userUUID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	h.repo.EXPECT().Update(id, attr).Return(nil)
+	err = h.uc.update(req)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -107,49 +121,51 @@ func TestUsecaseUpdate(t *testing.T) {
 }
 
 func TestUsecaseUpdateERROR01(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
+	req := updateRequest{
+		userUUID:        userUUID.String(),
+		name:            "name",
+		email:           "test@gmail.com",
+		password:        "password",
+		telephoneNumber: "09084363176",
+		gender:          1,
+	}
+	attr, newAttrErr := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	if newAttrErr != nil {
+		t.Fatal(newAttrErr)
+	}
+	id, parseErr := domain.ParseUserUUID(req.userUUID)
+	if parseErr != nil {
+		t.Fatal(parseErr)
+	}
+
 	err := errors.New("error")
-
-	usecase.EXPECT().update(updateRequest{
-		userUUID:        userUUID.String(),
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	}).Return(err)
-
-	updateErr := usecase.update(updateRequest{
-		userUUID:        userUUID.String(),
-		name:            "name",
-		email:           "email",
-		password:        "password",
-		telephoneNumber: "090-8436-3176",
-		gender:          1,
-	})
+	h.repo.EXPECT().Update(id, attr).Return(err)
+	updateErr := h.uc.update(req)
 	if err != updateErr {
 		t.Fatal(updateErr)
 	}
 }
 
 func TestUsecaseDelete(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
 
-	usecase.EXPECT().delete(deleteRequest{
+	req := deleteRequest{
 		userUUID: userUUID.String(),
-	}).Return(nil)
+	}
+	id, err := domain.ParseUserUUID(req.userUUID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	h.repo.EXPECT().Delete(id).Return(nil)
 
-	err := usecase.delete(deleteRequest{
-		userUUID: userUUID.String(),
-	})
+	err = h.uc.delete(req)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -157,20 +173,24 @@ func TestUsecaseDelete(t *testing.T) {
 }
 
 func TestUsecaseDeleteERROR01(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
-	err := errors.New("error")
-	usecase.EXPECT().delete(deleteRequest{
-		userUUID: userUUID.String(),
-	}).Return(err)
 
-	deleteErr := usecase.delete(deleteRequest{
+	req := deleteRequest{
 		userUUID: userUUID.String(),
-	})
+	}
+	id, parseErr := domain.ParseUserUUID(req.userUUID)
+	if parseErr != nil {
+		t.Fatal(parseErr)
+	}
+	err := errors.New("error")
+	h.repo.EXPECT().Delete(id).Return(err)
+
+	deleteErr := h.uc.delete(req)
 	if err != deleteErr {
 		t.Fatal(deleteErr)
 	}
+
 }

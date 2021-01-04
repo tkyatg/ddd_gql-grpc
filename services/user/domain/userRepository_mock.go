@@ -33,7 +33,7 @@ func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder {
 }
 
 // Create mocks base method
-func (m *MockUserRepository) Create(attr *UserAttributes) (UserUUID, error) {
+func (m *MockUserRepository) Create(attr UserAttributes) (UserUUID, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", attr)
 	ret0, _ := ret[0].(UserUUID)
@@ -48,7 +48,7 @@ func (mr *MockUserRepositoryMockRecorder) Create(attr interface{}) *gomock.Call 
 }
 
 // Update mocks base method
-func (m *MockUserRepository) Update(id UserUUID, attr *UserAttributes) error {
+func (m *MockUserRepository) Update(id UserUUID, attr UserAttributes) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", id, attr)
 	ret0, _ := ret[0].(error)
@@ -99,7 +99,7 @@ func (m *MockUserDataAccessor) EXPECT() *MockUserDataAccessorMockRecorder {
 }
 
 // create mocks base method
-func (m *MockUserDataAccessor) create(attr *UserAttributes) (UserUUID, error) {
+func (m *MockUserDataAccessor) create(attr UserAttributes) (UserUUID, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "create", attr)
 	ret0, _ := ret[0].(UserUUID)
@@ -114,7 +114,7 @@ func (mr *MockUserDataAccessorMockRecorder) create(attr interface{}) *gomock.Cal
 }
 
 // update mocks base method
-func (m *MockUserDataAccessor) update(id UserUUID, attr *UserAttributes) error {
+func (m *MockUserDataAccessor) update(id UserUUID, attr UserAttributes) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "update", id, attr)
 	ret0, _ := ret[0].(error)
