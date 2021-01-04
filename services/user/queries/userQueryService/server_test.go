@@ -11,27 +11,44 @@ import (
 	definition "github.com/takuya911/project-user-definition"
 )
 
-func TestServerGetByID(t *testing.T) {
+type serverTestHelper struct {
+	ctrl *gomock.Controller
+	uc   *MockUsecase
+	sv   definition.UserQueryServiceServer
+	ctx  context.Context
+}
+
+func newServerTestHelper(t *testing.T) *serverTestHelper {
 	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
-	server := NewServer(usecase)
+	uc := NewMockUsecase(ctrl)
+	sv := NewServer(uc)
 	ctx := context.Background()
 
-	userUUID := uuid.New()
+	return &serverTestHelper{
+		ctrl: ctrl,
+		uc:   uc,
+		sv:   sv,
+		ctx:  ctx,
+	}
+}
 
-	usecase.EXPECT().getByID(getUserByIDRequest{
+func TestServerGetByID(t *testing.T) {
+	h := newServerTestHelper(t)
+	defer h.ctrl.Finish()
+
+	userUUID := uuid.New()
+	h.uc.EXPECT().getByID(getUserByIDRequest{
 		userUUID: userUUID.String(),
 	}).Return(getUserByIDResponse{
 		userUUID:        userUUID.String(),
 		name:            "name",
-		email:           "email",
+		email:           "test@gmail.com",
 		password:        "password",
-		telephoneNumber: "090-8436-3174",
+		telephoneNumber: "0909090909090",
 		gender:          1,
 	}, nil)
 
-	res, err := server.GetByID(ctx, &definition.GetUserRequest{
+	res, err := h.sv.GetByID(h.ctx, &definition.GetUserRequest{
 		Uuid: userUUID.String(),
 	})
 	if err != nil {
@@ -42,9 +59,9 @@ func TestServerGetByID(t *testing.T) {
 	if diff := cmp.Diff(&definition.GetUserResponse{
 		Uuid:            userUUID.String(),
 		Name:            "name",
-		Email:           "email",
+		Email:           "test@gmail.com",
 		Password:        "password",
-		TelephoneNumber: "090-8436-3174",
+		TelephoneNumber: "0909090909090",
 		Gender:          1,
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
@@ -53,19 +70,15 @@ func TestServerGetByID(t *testing.T) {
 }
 
 func TestServerGetByIDERROR01(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
-	server := NewServer(usecase)
-	ctx := context.Background()
+	h := newServerTestHelper(t)
+	defer h.ctrl.Finish()
 
 	userUUID := uuid.New()
 	err := errors.New("error")
-	usecase.EXPECT().getByID(getUserByIDRequest{
+	h.uc.EXPECT().getByID(getUserByIDRequest{
 		userUUID: userUUID.String(),
 	}).Return(getUserByIDResponse{}, err)
-
-	_, getByIDErr := server.GetByID(ctx, &definition.GetUserRequest{
+	_, getByIDErr := h.sv.GetByID(h.ctx, &definition.GetUserRequest{
 		Uuid: userUUID.String(),
 	})
 	if err != getByIDErr {

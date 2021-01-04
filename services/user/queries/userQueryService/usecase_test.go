@@ -7,27 +7,45 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/google/uuid"
 )
 
-func TestUsecaseGetUserByID(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
+type usecaseTestHelper struct {
+	ctrl *gomock.Controller
+	da   *MockDataAccessor
+	uc   Usecase
+}
 
-	usecase.EXPECT().getByID(getUserByIDRequest{
-		userUUID: "id",
-	}).Return(getUserByIDResponse{
-		userUUID:        "id",
+func newUsecaseTestHelper(t *testing.T) *usecaseTestHelper {
+	ctrl := gomock.NewController(t)
+	da := NewMockDataAccessor(ctrl)
+	uc := NewUsecase(da)
+
+	return &usecaseTestHelper{
+		ctrl: ctrl,
+		da:   da,
+		uc:   uc,
+	}
+}
+
+func TestUsecaseGetUserByID(t *testing.T) {
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
+	uUUID := uuid.New()
+	req := getUserByIDRequest{
+		userUUID: uUUID.String(),
+	}
+
+	h.da.EXPECT().getByID(req).Return(getUserByIDResponse{
+		userUUID:        uUUID.String(),
 		name:            "name",
-		email:           "email",
+		email:           "test@gmail.com",
 		password:        "password",
-		telephoneNumber: "telephoneNumber",
+		telephoneNumber: "0909090909090",
 		gender:          1,
 	}, nil)
 
-	res, err := usecase.getByID(getUserByIDRequest{
-		userUUID: "id",
-	})
+	res, err := h.uc.getByID(req)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,11 +54,11 @@ func TestUsecaseGetUserByID(t *testing.T) {
 		cmpopts.IgnoreUnexported(getUserByIDResponse{}),
 	}
 	if diff := cmp.Diff(getUserByIDResponse{
-		userUUID:        "id",
+		userUUID:        uUUID.String(),
 		name:            "name",
-		email:           "email",
+		email:           "test@gmail.com",
 		password:        "password",
-		telephoneNumber: "telephoneNumber",
+		telephoneNumber: "0909090909090",
 		gender:          1,
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
@@ -48,18 +66,23 @@ func TestUsecaseGetUserByID(t *testing.T) {
 }
 
 func TestUsecaseGetUserByIDERROR01(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	usecase := NewMockUsecase(ctrl)
-
+	h := newUsecaseTestHelper(t)
+	defer h.ctrl.Finish()
+	uUUID := uuid.New()
+	req := getUserByIDRequest{
+		userUUID: uUUID.String(),
+	}
 	err := errors.New("error")
-	usecase.EXPECT().getByID(getUserByIDRequest{
-		userUUID: "id",
-	}).Return(getUserByIDResponse{}, err)
+	h.da.EXPECT().getByID(req).Return(getUserByIDResponse{
+		userUUID:        uUUID.String(),
+		name:            "name",
+		email:           "test@gmail.com",
+		password:        "password",
+		telephoneNumber: "0909090909090",
+		gender:          1,
+	}, err)
 
-	_, getByIDErr := usecase.getByID(getUserByIDRequest{
-		userUUID: "id",
-	})
+	_, getByIDErr := h.uc.getByID(req)
 	if err != getByIDErr {
 		t.Fatal(getByIDErr)
 	}
