@@ -11,7 +11,7 @@ services:
       - DB_PORT=5432
       - DB_NAME=postgres
       - DB_USER=postgres
-      - DB_PASS=password
+      - DB_PASSWORD=password
       - USER_SERVICE_PORT=50051
     ports:
       - 50051:50051
