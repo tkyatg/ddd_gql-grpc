@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"context"
+	"errors"
 	"testing"
 
 	gomock "github.com/golang/mock/gomock"
@@ -9,27 +11,46 @@ import (
 	"github.com/google/uuid"
 )
 
-func TestRepositoryCreate(t *testing.T) {
+type userRepositoryTestHelper struct {
+	ctrl *gomock.Controller
+	da   *MockUserDataAccessor
+	repo UserRepository
+	ctx  context.Context
+}
+
+func newUserRepositoryTestHelper(t *testing.T) *userRepositoryTestHelper {
 	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
 	da := NewMockUserDataAccessor(ctrl)
-	repository := NewUserRepository(da)
+	repo := NewUserRepository(da)
+	ctx := context.Background()
 
-	userUUID := uuid.New()
+	return &userRepositoryTestHelper{
+		ctrl: ctrl,
+		da:   da,
+		repo: repo,
+		ctx:  ctx,
+	}
+}
 
-	da.EXPECT().create(UserAttributes{
+func TestRepositoryCreate(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	h.da.EXPECT().create(UserAttributes{
 		name:            UserName("name"),
-		email:           Email("email"),
+		email:           Email("test@gmail.com"),
 		password:        Password("password"),
-		telephoneNumber: TelephoneNumber("09084363176"),
+		telephoneNumber: TelephoneNumber("09084363172"),
 		gender:          Gender(1),
-	}).Return(UserUUID(userUUID.String()), nil)
+	}).Return(UserUUID(uUUID.String()), nil)
 
-	res, err := repository.Create(UserAttributes{
+	res, err := h.repo.Create(UserAttributes{
 		name:            UserName("name"),
-		email:           Email("email"),
+		email:           Email("test@gmail.com"),
 		password:        Password("password"),
-		telephoneNumber: TelephoneNumber("09084363176"),
+		telephoneNumber: TelephoneNumber("09084363172"),
 		gender:          Gender(1),
 	})
 	if err != nil {
@@ -40,7 +61,118 @@ func TestRepositoryCreate(t *testing.T) {
 		cmpopts.IgnoreUnexported(),
 	}
 	if diff := cmp.Diff(
-		UserUUID(userUUID.String()), res, opts); diff != "" {
+		UserUUID(uUUID.String()), res, opts); diff != "" {
 		t.Fatal(diff)
 	}
+}
+
+func TestRepositoryCreateEROOR01(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	err := errors.New("error")
+	h.da.EXPECT().create(UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	}).Return(UserUUID(uUUID.String()), err)
+
+	_, createErr := h.repo.Create(UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err != createErr {
+		t.Fatal(createErr)
+	}
+}
+
+func TestRepositoryUpdate(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	h.da.EXPECT().update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	}).Return(nil)
+
+	err := h.repo.Update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestRepositoryUpdateEROOR01(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	err := errors.New("error")
+	h.da.EXPECT().update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	}).Return(err)
+
+	updateErr := h.repo.Update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err != updateErr {
+		t.Fatal(updateErr)
+	}
+
+}
+
+func TestRepositoryDelete(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	h.da.EXPECT().delete(UserUUID(uUUID.String())).Return(nil)
+
+	err := h.repo.Delete(UserUUID(uUUID.String()))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestRepositoryDeleteEROOR01(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	err := errors.New("error")
+	h.da.EXPECT().delete(UserUUID(uUUID.String())).Return(err)
+
+	deleteErr := h.repo.Delete(UserUUID(uUUID.String()))
+	if err != deleteErr {
+		t.Fatal(deleteErr)
+	}
+
 }

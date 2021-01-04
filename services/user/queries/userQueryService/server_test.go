@@ -36,11 +36,11 @@ func TestServerGetByID(t *testing.T) {
 	h := newServerTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
-	h.uc.EXPECT().getByID(getUserByIDRequest{
-		userUUID: userUUID.String(),
-	}).Return(getUserByIDResponse{
-		userUUID:        userUUID.String(),
+	req := getUserByIDRequest{
+		userUUID: uuid.New().String(),
+	}
+	h.uc.EXPECT().getByID(req).Return(getUserByIDResponse{
+		userUUID:        req.userUUID,
 		name:            "name",
 		email:           "test@gmail.com",
 		password:        "password",
@@ -49,7 +49,7 @@ func TestServerGetByID(t *testing.T) {
 	}, nil)
 
 	res, err := h.sv.GetByID(h.ctx, &definition.GetUserRequest{
-		Uuid: userUUID.String(),
+		Uuid: req.userUUID,
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -57,7 +57,7 @@ func TestServerGetByID(t *testing.T) {
 
 	opts := cmp.Options{}
 	if diff := cmp.Diff(&definition.GetUserResponse{
-		Uuid:            userUUID.String(),
+		Uuid:            req.userUUID,
 		Name:            "name",
 		Email:           "test@gmail.com",
 		Password:        "password",
@@ -73,13 +73,13 @@ func TestServerGetByIDERROR01(t *testing.T) {
 	h := newServerTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
+	req := getUserByIDRequest{
+		userUUID: uuid.New().String(),
+	}
 	err := errors.New("error")
-	h.uc.EXPECT().getByID(getUserByIDRequest{
-		userUUID: userUUID.String(),
-	}).Return(getUserByIDResponse{}, err)
+	h.uc.EXPECT().getByID(req).Return(getUserByIDResponse{}, err)
 	_, getByIDErr := h.sv.GetByID(h.ctx, &definition.GetUserRequest{
-		Uuid: userUUID.String(),
+		Uuid: req.userUUID,
 	})
 	if err != getByIDErr {
 		t.Fatal(getByIDErr)

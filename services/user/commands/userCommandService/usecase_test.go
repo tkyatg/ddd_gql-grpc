@@ -33,7 +33,7 @@ func TestUsecaseCreate(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
+	uUUID := uuid.New()
 
 	req := createRequest{
 		name:            "name",
@@ -47,7 +47,7 @@ func TestUsecaseCreate(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(userUUID.String()), nil)
+	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(uUUID.String()), nil)
 
 	res, err := h.uc.create(req)
 	if err != nil {
@@ -58,7 +58,7 @@ func TestUsecaseCreate(t *testing.T) {
 		cmpopts.IgnoreUnexported(createResponse{}),
 	}
 	if diff := cmp.Diff(createResponse{
-		userUUID: userUUID.String(),
+		userUUID: uUUID.String(),
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
 	}
@@ -68,7 +68,7 @@ func TestUsecaseCreateERROR01(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
+	uUUID := uuid.New()
 
 	req := createRequest{
 		name:            "name",
@@ -82,7 +82,7 @@ func TestUsecaseCreateERROR01(t *testing.T) {
 		t.Fatal(newAttrErr)
 	}
 	err := errors.New("error")
-	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(userUUID.String()), err)
+	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(uUUID.String()), err)
 
 	_, createErr := h.uc.create(req)
 	if err != createErr {
@@ -95,9 +95,8 @@ func TestUsecaseUpdate(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
 	req := updateRequest{
-		userUUID:        userUUID.String(),
+		userUUID:        uuid.New().String(),
 		name:            "name",
 		email:           "test@gmail.com",
 		password:        "password",
@@ -124,9 +123,8 @@ func TestUsecaseUpdateERROR01(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
 	req := updateRequest{
-		userUUID:        userUUID.String(),
+		userUUID:        uuid.New().String(),
 		name:            "name",
 		email:           "test@gmail.com",
 		password:        "password",
@@ -154,10 +152,8 @@ func TestUsecaseDelete(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
-
 	req := deleteRequest{
-		userUUID: userUUID.String(),
+		userUUID: uuid.New().String(),
 	}
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
@@ -176,10 +172,8 @@ func TestUsecaseDeleteERROR01(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
 
-	userUUID := uuid.New()
-
 	req := deleteRequest{
-		userUUID: userUUID.String(),
+		userUUID: uuid.New().String(),
 	}
 	id, parseErr := domain.ParseUserUUID(req.userUUID)
 	if parseErr != nil {
