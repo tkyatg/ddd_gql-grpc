@@ -17,7 +17,7 @@ func NewUserDataAccessor(
 	return &userDataAccessor{db}
 }
 
-func (d userDataAccessor) create(attr *UserAttributes) (UserUUID, error) {
+func (d userDataAccessor) create(attr UserAttributes) (UserUUID, error) {
 	sql := `
 insert into users.users
      ( name
@@ -46,7 +46,7 @@ RETURNING user_uuid;
 	return res, nil
 }
 
-func (d userDataAccessor) update(id UserUUID, attr *UserAttributes) error {
+func (d userDataAccessor) update(id UserUUID, attr UserAttributes) error {
 	sql := `
 update users.users 
    set name = ?

@@ -11,10 +11,18 @@ const (
 	RequiredEmail = "user-00004"
 	// RequiredTelephoneNumber : Telephone Number は必須です
 	RequiredTelephoneNumber = "user-00005"
-	// RequiredGender : Gender は必須です
-	RequiredGender = "user-00006"
+	// InvalidGenderFormat : 不正な gender です
+	InvalidGenderFormat = "user-00006"
 	// RequiredUserUUID : UUID は必須です
 	RequiredUserUUID = "user-00007"
-	// InvalidUUIDFormat : UUID の型が不正です
+	// InvalidUUIDFormat : 不正な UUID です
 	InvalidUUIDFormat = "user-00008"
+	// InvalidPasswordLength : Password の長さが不正です
+	InvalidPasswordLength = "user-00009"
+	// InvalidEmailLength : Email の長さが不正です
+	InvalidEmailLength = "user-00010"
+	// InvalidEmailFormat : 不正な Email です
+	InvalidEmailFormat = "user-00011"
+	// InvalidTelephoneNumberFormat : 不正な telephone number です
+	InvalidTelephoneNumberFormat = "user-00012"
 )

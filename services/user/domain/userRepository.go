@@ -6,14 +6,14 @@ type (
 	}
 	// UserRepository interface
 	UserRepository interface {
-		Create(attr *UserAttributes) (UserUUID, error)
-		Update(id UserUUID, attr *UserAttributes) error
+		Create(attr UserAttributes) (UserUUID, error)
+		Update(id UserUUID, attr UserAttributes) error
 		Delete(id UserUUID) error
 	}
 	// UserDataAccessor interface
 	UserDataAccessor interface {
-		create(attr *UserAttributes) (UserUUID, error)
-		update(id UserUUID, attr *UserAttributes) error
+		create(attr UserAttributes) (UserUUID, error)
+		update(id UserUUID, attr UserAttributes) error
 		delete(id UserUUID) error
 	}
 )
@@ -25,11 +25,11 @@ func NewUserRepository(
 	return &userRepository{da}
 }
 
-func (r *userRepository) Create(attr *UserAttributes) (UserUUID, error) {
+func (r *userRepository) Create(attr UserAttributes) (UserUUID, error) {
 	return r.da.create(attr)
 }
 
-func (r *userRepository) Update(id UserUUID, attr *UserAttributes) error {
+func (r *userRepository) Update(id UserUUID, attr UserAttributes) error {
 	return r.da.update(id, attr)
 }
 
