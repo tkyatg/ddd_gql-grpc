@@ -3,19 +3,20 @@ module github.com/takuya911/project-services/services/user
 go 1.13
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/ezio1119/fishapp-user v0.0.0-20200701083907-f27f80bfed1a
-	github.com/go-sql-driver/mysql v1.5.0
-	github.com/golang-migrate/migrate v3.5.4+incompatible
-	github.com/golang-migrate/migrate/v4 v4.14.1
+	github.com/denisenkom/go-mssqldb v0.0.0-20200620013148-b91950f658ec // indirect
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/google/go-cmp v0.5.1
 	github.com/google/uuid v1.1.2
-	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.8.0
+	github.com/mattn/go-sqlite3 v2.0.1+incompatible // indirect
 	github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c
+	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
+	golang.org/x/net v0.0.0-20201029221708-28c70e62bb1d // indirect
+	golang.org/x/sys v0.0.0-20201029080932-201ba4db2418 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	google.golang.org/genproto v0.0.0-20201030142918-24207fddd1c3 // indirect
 	google.golang.org/grpc v1.34.0
 
 )
