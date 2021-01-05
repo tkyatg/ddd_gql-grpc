@@ -1,0 +1,25 @@
+scalar Time
+
+extend type Query {
+  getUserByID(input:getUserByIDRequest!): getUserByIDResponse
+}
+
+input getUserByIDRequest{
+  id: String!
+}
+
+type getUserByIDResponse{
+  user: User!
+}
+
+extend type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  telephoneNumber:String!
+  gender: Int!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
