@@ -6,9 +6,6 @@ import (
 	"github.com/takuya911/project-services/services/user/adapter/env"
 	"github.com/takuya911/project-services/services/user/adapter/rpc"
 	"github.com/takuya911/project-services/services/user/adapter/sql"
-	usercommandservice "github.com/takuya911/project-services/services/user/commands/userCommandService"
-	"github.com/takuya911/project-services/services/user/domain"
-	userqueryservice "github.com/takuya911/project-services/services/user/queries/userQueryService"
 )
 
 func main() {
@@ -19,22 +16,11 @@ func main() {
 	}
 	defer dbConnection.Close()
 
-	server, err := rpc.NewServer(env.GetUserServicePort())
+	server, err := rpc.NewServer(env.GetUserServicePort(), dbConnection)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// user query service
-	userQueryDataAccessor := userqueryservice.NewDataAccessor(dbConnection)
-	userQueryUsecase := userqueryservice.NewUsecase(userQueryDataAccessor)
-	userQueryServer := userqueryservice.NewServer(userQueryUsecase)
-	// user command service
-	userCommandDataAccessor := domain.NewUserDataAccessor(dbConnection)
-	userCommandRepository := domain.NewUserRepository(userCommandDataAccessor)
-	userCommandUsecase := usercommandservice.NewUsecase(userCommandRepository)
-	userCommandServer := usercommandservice.NewServer(userCommandUsecase)
-
-	server.RegisterService(userQueryServer, userCommandServer)
 	if err := server.Serve(); err != nil {
 		log.Fatal(err)
 	}

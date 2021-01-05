@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	definition "github.com/takuya911/project-user-definition"
+	"github.com/jinzhu/gorm"
 	"google.golang.org/grpc"
 )
 
@@ -16,24 +16,20 @@ type (
 	// Server interface
 	Server interface {
 		Serve() error
-		RegisterService(
-			userQueryServer definition.UserQueryServiceServer,
-			userCommandServer definition.UserCommandServiceServer,
-		)
 	}
 )
 
 // NewServer はインスタンスを生成します
-func NewServer(port string) (Server, error) {
+func NewServer(port string, dbConnection *gorm.DB) (Server, error) {
 	s := &server{port, grpc.NewServer()}
-
+	s.registerServices(dbConnection)
 	return s, nil
 }
 
-func (t *server) Serve() error {
-	listenPort, err := net.Listen("tcp", fmt.Sprintf(":%s", t.port))
+func (s *server) Serve() error {
+	listenPort, err := net.Listen("tcp", fmt.Sprintf(":%s", s.port))
 	if err != nil {
 		return err
 	}
-	return t.rpc.Serve(listenPort)
+	return s.rpc.Serve(listenPort)
 }
