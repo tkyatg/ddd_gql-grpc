@@ -1,5 +1,18 @@
 version: '3.4'
 services:
+  gql:
+    build:
+      context: ./services/gql
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/gql:/app
+    environment:
+      - GRAPHQL_SERVICE_PORT=80
+      - USER_SERVICE_NAME=user
+      - USER_SERVICE_PORT=50051
+    ports:
+      - 80:80
+    tty: true
   user:
     build:
       context: ./services/user

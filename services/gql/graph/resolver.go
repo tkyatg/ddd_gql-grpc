@@ -1,8 +1,17 @@
 package graph
 
-// This file will not be regenerated automatically.
-//
-// It serves as dependency injection for your app, add any dependencies you require here.
+import (
+	"github.com/takuya911/project-services/services/gql/graph/generated"
+	definition "github.com/takuya911/project-user-definition"
+)
 
 type resolver struct {
+	userClient definition.UserQueryServiceClient
+}
+
+// NewResolver function
+func NewResolver(userClient definition.UserQueryServiceClient) generated.ResolverRoot {
+	return &resolver{
+		userClient,
+	}
 }
