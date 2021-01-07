@@ -19,7 +19,7 @@ extend type User {
   password: String!
   telephoneNumber:String!
   gender: Int!
-  createdAt: Time!
-  updatedAt: Time!
+  createdAt: Time
+  updatedAt: Time
 }
 

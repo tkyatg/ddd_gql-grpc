@@ -7,14 +7,14 @@ import (
 )
 
 type User struct {
-	ID              string                `json:"id"`
-	Name            string                `json:"name"`
-	Email           string                `json:"email"`
-	Password        string                `json:"password"`
-	TelephoneNumber string                `json:"telephoneNumber"`
-	Gender          int64                 `json:"gender"`
-	CreatedAt       timestamppb.Timestamp `json:"createdAt"`
-	UpdatedAt       timestamppb.Timestamp `json:"updatedAt"`
+	ID              string                 `json:"id"`
+	Name            string                 `json:"name"`
+	Email           string                 `json:"email"`
+	Password        string                 `json:"password"`
+	TelephoneNumber string                 `json:"telephoneNumber"`
+	Gender          int64                  `json:"gender"`
+	CreatedAt       *timestamppb.Timestamp `json:"createdAt"`
+	UpdatedAt       *timestamppb.Timestamp `json:"updatedAt"`
 }
 
 type GetUserByIDRequest struct {

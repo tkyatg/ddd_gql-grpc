@@ -20,7 +20,6 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	if err != nil {
 		panic(err)
 	}
-	defer conn.Close()
 	userClient := definition.NewUserQueryServiceClient(conn)
 
 	return &resolver{
