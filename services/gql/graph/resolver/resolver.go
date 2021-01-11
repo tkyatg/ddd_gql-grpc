@@ -3,14 +3,16 @@ package resolver
 import (
 	"context"
 
+	userserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/userServiceAccessor"
 	"github.com/takuya911/project-services/services/gql/graph/generated"
 	"github.com/takuya911/project-services/services/gql/shared"
-	definition "github.com/takuya911/project-user-definition"
+	userdefinition "github.com/takuya911/project-user-definition"
 	"google.golang.org/grpc"
 )
 
 type resolver struct {
-	userClient definition.UserQueryServiceClient
+	userServiceClient   userdefinition.UserQueryServiceClient
+	userServiceAccessor userserviceaccessor.ServiceAccessor
 }
 
 // NewResolver function
@@ -20,9 +22,14 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	if err != nil {
 		panic(err)
 	}
-	userClient := definition.NewUserQueryServiceClient(conn)
+	// client
+	userServiceClient := userdefinition.NewUserQueryServiceClient(conn)
+
+	// accessor
+	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userServiceClient)
 
 	return &resolver{
-		userClient,
+		userServiceClient,
+		userServiceAccessor,
 	}
 }

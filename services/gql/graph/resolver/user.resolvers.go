@@ -8,27 +8,11 @@ import (
 
 	"github.com/takuya911/project-services/services/gql/graph/generated"
 	"github.com/takuya911/project-services/services/gql/graph/model"
-	definition "github.com/takuya911/project-user-definition"
 )
 
 func (r *queryResolver) GetUserByID(ctx context.Context, input model.GetUserByIDRequest) (*model.GetUserByIDResponse, error) {
-	res, err := r.userClient.GetByID(ctx, &definition.GetByIDRequest{
-		Uuid: input.ID,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	return &model.GetUserByIDResponse{User: &model.User{
-		ID:              res.GetUuid(),
-		Name:            res.GetName(),
-		Email:           res.GetEmail(),
-		Password:        res.GetPassword(),
-		TelephoneNumber: res.GetTelephoneNumber(),
-		Gender:          res.GetGender(),
-		CreatedAt:       res.GetCreatedAt(),
-		UpdatedAt:       res.GetUpdatedAt(),
-	}}, nil
+	res, err := r.userServiceAccessor.GetByID(ctx, input.ID)
+	return res, err
 }
 
 // Query returns generated.QueryResolver implementation.

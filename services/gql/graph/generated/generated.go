@@ -213,7 +213,6 @@ extend type Query {
   getUserByID(input:getUserByIDRequest!): getUserByIDResponse
 }
 
-
 extend type User {
   id: String!
   name: String!
@@ -228,7 +227,6 @@ extend type User {
 input getUserByIDRequest{
   id: String!
 }
-
 type getUserByIDResponse{
   user: User!
 }

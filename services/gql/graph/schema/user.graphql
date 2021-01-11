@@ -4,12 +4,6 @@ extend type Query {
   getUserByID(input:getUserByIDRequest!): getUserByIDResponse
 }
 
-extend type Mutation {
-  createUser(input: CreateRequest!): CreateResponse!
-  updateUser(input: UpdateRequest!): UpdateResponse!
-  deleteUser(input: DeleteRequest!): DeleteResponse!
-}
-
 extend type User {
   id: String!
   name: String!
@@ -24,37 +18,6 @@ extend type User {
 input getUserByIDRequest{
   id: String!
 }
-
 type getUserByIDResponse{
   user: User!
-}
-
-input CreateRequest {
-  name: String!
-  email: String!
-  password: String!
-  telephoneNumber: String!
-  gender: Int!
-}
-type CreateResponse {
-  result: Boolean!
-}
-
-input UpdateRequest {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  telephoneNumber: String!
-  gender: Int!
-}
-type UpdateResponse {
-  result: Boolean!
-}
-
-input DeleteRequest {
-  id: ID!
-}
-type DeleteResponse {
-  result: Boolean!
 }

@@ -18,7 +18,7 @@ func NewServer(uc Usecase) definition.UserQueryServiceServer {
 	return &server{uc}
 }
 
-func (s *server) GetByID(ctx context.Context, req *definition.GetUserRequest) (*definition.GetUserResponse, error) {
+func (s *server) GetByID(ctx context.Context, req *definition.GetByIDRequest) (*definition.GetByIDResponse, error) {
 	uuid := req.GetUuid()
 	if uuid == "" {
 		return nil, errors.New(shared.RequiredUserID)
@@ -31,7 +31,7 @@ func (s *server) GetByID(ctx context.Context, req *definition.GetUserRequest) (*
 		return nil, err
 	}
 
-	return &definition.GetUserResponse{
+	return &definition.GetByIDResponse{
 		Uuid:            res.userUUID,
 		Name:            res.name,
 		Email:           res.email,
