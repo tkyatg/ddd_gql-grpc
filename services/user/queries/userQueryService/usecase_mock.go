@@ -33,10 +33,10 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 }
 
 // getByID mocks base method
-func (m *MockUsecase) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+func (m *MockUsecase) getByID(req getByIDRequest) (getByIDResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "getByID", req)
-	ret0, _ := ret[0].(getUserByIDResponse)
+	ret0, _ := ret[0].(getByIDResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -71,10 +71,10 @@ func (m *MockDataAccessor) EXPECT() *MockDataAccessorMockRecorder {
 }
 
 // getByID mocks base method
-func (m *MockDataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+func (m *MockDataAccessor) getByID(req getByIDRequest) (getByIDResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "getByID", req)
-	ret0, _ := ret[0].(getUserByIDResponse)
+	ret0, _ := ret[0].(getByIDResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

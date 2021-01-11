@@ -31,11 +31,11 @@ func newUsecaseTestHelper(t *testing.T) *usecaseTestHelper {
 func TestUsecaseGetUserByID(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
-	req := getUserByIDRequest{
+	req := getByIDRequest{
 		userUUID: uuid.New().String(),
 	}
 
-	h.da.EXPECT().getByID(req).Return(getUserByIDResponse{
+	h.da.EXPECT().getByID(req).Return(getByIDResponse{
 		userUUID:        req.userUUID,
 		name:            "name",
 		email:           "test@gmail.com",
@@ -50,9 +50,9 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	}
 
 	opts := cmp.Options{
-		cmpopts.IgnoreUnexported(getUserByIDResponse{}),
+		cmpopts.IgnoreUnexported(getByIDResponse{}),
 	}
-	if diff := cmp.Diff(getUserByIDResponse{
+	if diff := cmp.Diff(getByIDResponse{
 		userUUID:        req.userUUID,
 		name:            "name",
 		email:           "test@gmail.com",
@@ -67,11 +67,11 @@ func TestUsecaseGetUserByID(t *testing.T) {
 func TestUsecaseGetUserByIDERROR01(t *testing.T) {
 	h := newUsecaseTestHelper(t)
 	defer h.ctrl.Finish()
-	req := getUserByIDRequest{
+	req := getByIDRequest{
 		userUUID: uuid.New().String(),
 	}
 	err := errors.New("error")
-	h.da.EXPECT().getByID(req).Return(getUserByIDResponse{
+	h.da.EXPECT().getByID(req).Return(getByIDResponse{
 		userUUID:        req.userUUID,
 		name:            "name",
 		email:           "test@gmail.com",

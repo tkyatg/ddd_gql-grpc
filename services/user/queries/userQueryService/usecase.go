@@ -8,10 +8,10 @@ type (
 	usecase struct {
 		da DataAccessor
 	}
-	getUserByIDRequest struct {
+	getByIDRequest struct {
 		userUUID string
 	}
-	getUserByIDResponse struct {
+	getByIDResponse struct {
 		userUUID        string
 		name            string
 		email           string
@@ -23,11 +23,11 @@ type (
 	}
 	// Usecase interface
 	Usecase interface {
-		getByID(req getUserByIDRequest) (getUserByIDResponse, error)
+		getByID(req getByIDRequest) (getByIDResponse, error)
 	}
 	// DataAccessor interface
 	DataAccessor interface {
-		getByID(req getUserByIDRequest) (getUserByIDResponse, error)
+		getByID(req getByIDRequest) (getByIDResponse, error)
 	}
 )
 
@@ -36,6 +36,6 @@ func NewUsecase(da DataAccessor) Usecase {
 	return &usecase{da}
 }
 
-func (uc *usecase) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+func (uc *usecase) getByID(req getByIDRequest) (getByIDResponse, error) {
 	return uc.da.getByID(req)
 }

@@ -21,16 +21,15 @@ func NewServer(uc Usecase) definition.UserQueryServiceServer {
 func (s *server) GetByID(ctx context.Context, req *definition.GetByIDRequest) (*definition.GetByIDResponse, error) {
 	uuid := req.GetUuid()
 	if uuid == "" {
-		return nil, errors.New(shared.RequiredUserID)
+		return nil, errors.New(shared.RequiredUserUUID)
 	}
 	if _, err := domain.ParseUserUUID(uuid); err != nil {
 		return nil, err
 	}
-	res, err := s.uc.getByID(getUserByIDRequest{userUUID: req.GetUuid()})
+	res, err := s.uc.getByID(getByIDRequest{userUUID: req.GetUuid()})
 	if err != nil {
 		return nil, err
 	}
-
 	return &definition.GetByIDResponse{
 		Uuid:            res.userUUID,
 		Name:            res.name,

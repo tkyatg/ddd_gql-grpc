@@ -4,8 +4,12 @@ extend type Query {
   getUserByID(input:getUserByIDRequest!): getUserByIDResponse
 }
 
+extend type Mutation {
+  createUser(input: CreateUserRequest!): CreateUserResponse!
+}
+
 extend type User {
-  id: String!
+  uuid: String!
   name: String!
   email: String!
   password: String!
@@ -16,8 +20,20 @@ extend type User {
 }
 
 input getUserByIDRequest{
-  id: String!
+  uuid: String!
 }
 type getUserByIDResponse{
   user: User!
 }
+
+input CreateUserRequest {
+  name: String!
+  email: String!
+  password: String!
+  telephoneNumber: String!
+  gender: Int!
+}
+type CreateUserResponse {
+  uuid: String!
+}
+

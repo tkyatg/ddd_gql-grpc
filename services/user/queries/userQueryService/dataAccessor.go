@@ -13,16 +13,17 @@ func NewDataAccessor(db *gorm.DB) DataAccessor {
 	return &dataAccessor{db}
 }
 
-func (d *dataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
+func (d *dataAccessor) getByID(req getByIDRequest) (getByIDResponse, error) {
 	sql := `
-    SELECT user_uuid
-         , name
-         , email
-         , password
-         , telephone_number
-         , gender
-	  FROM users.users
-     WHERE user_uuid = ?`
+SELECT user_uuid
+     , name
+     , email
+     , password
+     , telephone_number
+     , gender
+FROM users.users
+WHERE user_uuid = ?
+`
 	var rslt struct {
 		userUUID        string `db:"user_uuid"`
 		name            string `db:"name"`
@@ -34,7 +35,7 @@ func (d *dataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, err
 
 	d.db.Raw(sql, req.userUUID).Scan(&rslt)
 
-	return getUserByIDResponse{
+	return getByIDResponse{
 		userUUID:        rslt.userUUID,
 		name:            rslt.name,
 		email:           rslt.email,

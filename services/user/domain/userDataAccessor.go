@@ -19,27 +19,17 @@ func NewUserDataAccessor(
 
 func (d userDataAccessor) create(attr UserAttributes) (UserUUID, error) {
 	sql := `
-insert into users.users
-     ( name
-     , email
-     , password
-     , telephone_number
-     , gender )
-values
-     ( ?
-     , ?
-     , ?
-     , ?
-	 , ? )
-RETURNING user_uuid;
+INSERT INTO users.users(name , email , password , telephone_number , gender)
+VALUES ( ?, ?, ?, ?, ? ) returning user_uuid;
 `
 	var rslt struct {
-		userUUID string `db:"user_uuid"`
+		UserUUID string `db:"user_uuid"`
 	}
 	if result := d.db.Raw(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender).Scan(&rslt); result.Error != nil {
 		return "", result.Error
 	}
-	res, err := ParseUserUUID(rslt.userUUID)
+
+	res, err := ParseUserUUID(rslt.UserUUID)
 	if err != nil {
 		return "", err
 	}

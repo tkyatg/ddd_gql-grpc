@@ -6,8 +6,20 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+type CreateUserRequest struct {
+	Name            string `json:"name"`
+	Email           string `json:"email"`
+	Password        string `json:"password"`
+	TelephoneNumber string `json:"telephoneNumber"`
+	Gender          int64  `json:"gender"`
+}
+
+type CreateUserResponse struct {
+	UUID string `json:"uuid"`
+}
+
 type User struct {
-	ID              string                 `json:"id"`
+	UUID            string                 `json:"uuid"`
 	Name            string                 `json:"name"`
 	Email           string                 `json:"email"`
 	Password        string                 `json:"password"`
@@ -18,7 +30,7 @@ type User struct {
 }
 
 type GetUserByIDRequest struct {
-	ID string `json:"id"`
+	UUID string `json:"uuid"`
 }
 
 type GetUserByIDResponse struct {

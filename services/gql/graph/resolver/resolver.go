@@ -11,7 +11,6 @@ import (
 )
 
 type resolver struct {
-	userServiceClient   userdefinition.UserQueryServiceClient
 	userServiceAccessor userserviceaccessor.ServiceAccessor
 }
 
@@ -22,14 +21,15 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	if err != nil {
 		panic(err)
 	}
+
 	// client
-	userServiceClient := userdefinition.NewUserQueryServiceClient(conn)
+	userQueryClient := userdefinition.NewUserQueryServiceClient(conn)
+	userCommandClient := userdefinition.NewUserCommandServiceClient(conn)
 
 	// accessor
-	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userServiceClient)
+	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userQueryClient, userCommandClient)
 
 	return &resolver{
-		userServiceClient,
 		userServiceAccessor,
 	}
 }
