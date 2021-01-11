@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/takuya911/project-services/services/user/domain"
 	"github.com/takuya911/project-services/services/user/shared"
 	definition "github.com/takuya911/project-user-definition"
 )
@@ -21,6 +22,9 @@ func (s *server) GetByID(ctx context.Context, req *definition.GetUserRequest) (*
 	uuid := req.GetUuid()
 	if uuid == "" {
 		return nil, errors.New(shared.RequiredUserID)
+	}
+	if _, err := domain.ParseUserUUID(uuid); err != nil {
+		return nil, err
 	}
 	res, err := s.uc.getByID(getUserByIDRequest{userUUID: req.GetUuid()})
 	if err != nil {

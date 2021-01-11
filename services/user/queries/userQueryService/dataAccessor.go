@@ -15,20 +15,20 @@ func NewDataAccessor(db *gorm.DB) DataAccessor {
 
 func (d *dataAccessor) getByID(req getUserByIDRequest) (getUserByIDResponse, error) {
 	sql := `
-    SELECT id
+    SELECT user_uuid
          , name
          , email
          , password
-         , telephoneNumber
+         , telephone_number
          , gender
 	  FROM users.users
-     WHERE id = ?`
+     WHERE user_uuid = ?`
 	var rslt struct {
 		userUUID        string `db:"user_uuid"`
 		name            string `db:"name"`
 		email           string `db:"email"`
 		password        string `db:"password"`
-		telephoneNumber string `db:"telephoneNumber"`
+		telephoneNumber string `db:"telephone_number"`
 		gender          int64  `db:"gender"`
 	}
 
