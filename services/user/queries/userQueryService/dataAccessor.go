@@ -25,22 +25,22 @@ FROM users.users
 WHERE user_uuid = ?
 `
 	var rslt struct {
-		userUUID        string `db:"user_uuid"`
-		name            string `db:"name"`
-		email           string `db:"email"`
-		password        string `db:"password"`
-		telephoneNumber string `db:"telephone_number"`
-		gender          int64  `db:"gender"`
+		UserUUID        string `db:"user_uuid"`
+		Name            string `db:"name"`
+		Email           string `db:"email"`
+		Password        string `db:"password"`
+		TelephoneNumber string `db:"telephone_number"`
+		Gender          int64  `db:"gender"`
 	}
 
 	d.db.Raw(sql, req.userUUID).Scan(&rslt)
 
 	return getByIDResponse{
-		userUUID:        rslt.userUUID,
-		name:            rslt.name,
-		email:           rslt.email,
-		password:        rslt.password,
-		telephoneNumber: rslt.telephoneNumber,
-		gender:          rslt.gender,
+		userUUID:        rslt.UserUUID,
+		name:            rslt.Name,
+		email:           rslt.Email,
+		password:        rslt.Password,
+		telephoneNumber: rslt.TelephoneNumber,
+		gender:          rslt.Gender,
 	}, nil
 }
