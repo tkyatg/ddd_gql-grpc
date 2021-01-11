@@ -11,7 +11,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.8.0
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible // indirect
-	github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c
+	github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48
 	google.golang.org/grpc v1.34.0
 
 )

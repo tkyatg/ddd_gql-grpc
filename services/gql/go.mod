@@ -6,7 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/golang/protobuf v1.4.3
 	github.com/google/go-cmp v0.5.1 // indirect
-	github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c
+	github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48
 	github.com/vektah/gqlparser/v2 v2.1.0
 	golang.org/x/net v0.0.0-20201029221708-28c70e62bb1d // indirect
 	golang.org/x/sys v0.0.0-20201029080932-201ba4db2418 // indirect

@@ -213,13 +213,6 @@ extend type Query {
   getUserByID(input:getUserByIDRequest!): getUserByIDResponse
 }
 
-input getUserByIDRequest{
-  id: String!
-}
-
-type getUserByIDResponse{
-  user: User!
-}
 
 extend type User {
   id: String!
@@ -232,6 +225,13 @@ extend type User {
   updatedAt: Time
 }
 
+input getUserByIDRequest{
+  id: String!
+}
+
+type getUserByIDResponse{
+  user: User!
+}
 `, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)

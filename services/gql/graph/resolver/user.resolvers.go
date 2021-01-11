@@ -1,5 +1,8 @@
 package resolver
 
+// This file will be automatically regenerated based on the schema, any resolver implementations
+// will be copied through when generating and any unknown code will be moved to the end.
+
 import (
 	"context"
 
@@ -9,7 +12,7 @@ import (
 )
 
 func (r *queryResolver) GetUserByID(ctx context.Context, input model.GetUserByIDRequest) (*model.GetUserByIDResponse, error) {
-	res, err := r.userClient.GetByID(ctx, &definition.GetUserRequest{
+	res, err := r.userClient.GetByID(ctx, &definition.GetByIDRequest{
 		Uuid: input.ID,
 	})
 	if err != nil {

@@ -278,6 +278,8 @@ github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81P
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c h1:ugkhBx70ulU4hHddRduEBVP6Pb5T1W8/2UjI9j6Za6g=
 github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
+github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48 h1:eGsyHdkhNoIFZqLxc3Imyj19Q/LS0sstH6OdIY6byjg=
+github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/tidwall/pretty v0.0.0-20180105212114-65a9db5fad51/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/xanzy/go-gitlab v0.15.0/go.mod h1:8zdQa/ri1dfn8eS3Ir1SyfvOKlw7WBJ8DVThkpGiXrs=
 github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c/go.mod h1:lB8K/P019DLNhemzwFU4jHLhdvlE6uDZjXFejJXr49I=
