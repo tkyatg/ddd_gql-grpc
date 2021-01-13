@@ -37,6 +37,7 @@ input CreateUserRequest {
 }
 type CreateUserResponse {
   uuid: String!
+  tokenPair: TokenPair!
 }
 
 input UpdateUserRequest {
@@ -49,6 +50,7 @@ input UpdateUserRequest {
 }
 type UpdateUserResponse {
   uuid: String!
+  tokenPair: TokenPair!
 }
 
 input DeleteUserRequest {

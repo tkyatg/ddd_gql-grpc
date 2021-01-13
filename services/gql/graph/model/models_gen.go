@@ -15,7 +15,8 @@ type CreateUserRequest struct {
 }
 
 type CreateUserResponse struct {
-	UUID string `json:"uuid"`
+	UUID      string     `json:"uuid"`
+	TokenPair *TokenPair `json:"tokenPair"`
 }
 
 type DeleteUserRequest struct {
@@ -24,6 +25,11 @@ type DeleteUserRequest struct {
 
 type DeleteUserResponse struct {
 	UUID string `json:"uuid"`
+}
+
+type TokenPair struct {
+	Token        string `json:"token"`
+	RefreshToken string `json:"refreshToken"`
 }
 
 type UpdateUserRequest struct {
@@ -36,7 +42,8 @@ type UpdateUserRequest struct {
 }
 
 type UpdateUserResponse struct {
-	UUID string `json:"uuid"`
+	UUID      string     `json:"uuid"`
+	TokenPair *TokenPair `json:"tokenPair"`
 }
 
 type User struct {

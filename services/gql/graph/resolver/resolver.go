@@ -4,15 +4,18 @@ import (
 	"context"
 
 	authdefinition "github.com/takuya911/project-auth-definition"
+	authserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/authServiceAccessor"
 	userserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/userServiceAccessor"
 	"github.com/takuya911/project-services/services/gql/graph/generated"
 	"github.com/takuya911/project-services/services/gql/shared"
 	userdefinition "github.com/takuya911/project-user-definition"
+
 	"google.golang.org/grpc"
 )
 
 type resolver struct {
 	userServiceAccessor userserviceaccessor.ServiceAccessor
+	authServiceAccessor authserviceaccessor.ServiceAccessor
 }
 
 // NewResolver function
@@ -26,13 +29,14 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	// client
 	userQueryClient := userdefinition.NewUserQueryServiceClient(conn)
 	userCommandClient := userdefinition.NewUserCommandServiceClient(conn)
-	// client
 	authQueryClient := authdefinition.NewAuthQueryServiceClient(conn)
 
 	// accessor
-	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userQueryClient, userCommandClient, authQueryClient)
+	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userQueryClient, userCommandClient)
+	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient)
 
 	return &resolver{
 		userServiceAccessor,
+		authServiceAccessor,
 	}
 }

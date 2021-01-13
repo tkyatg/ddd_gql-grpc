@@ -6,13 +6,14 @@ package resolver
 import (
 	"context"
 
+	authserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/authServiceAccessor"
 	userserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/userServiceAccessor"
 	"github.com/takuya911/project-services/services/gql/graph/generated"
 	"github.com/takuya911/project-services/services/gql/graph/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUserRequest) (*model.CreateUserResponse, error) {
-	res, err := r.userServiceAccessor.Create(ctx, userserviceaccessor.CreateUserRequest{
+	uuid, err := r.userServiceAccessor.Create(ctx, userserviceaccessor.CreateUserRequest{
 		Name:            input.Name,
 		Email:           input.Email,
 		Password:        input.Password,
@@ -23,14 +24,19 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		return nil, err
 	}
 
-	// feature: return auth info
+	tokenPair, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	if err != nil {
+		return nil, err
+	}
+
 	return &model.CreateUserResponse{
-		UUID: res,
+		UUID:      uuid,
+		TokenPair: tokenPair,
 	}, nil
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUserRequest) (*model.UpdateUserResponse, error) {
-	res, err := r.userServiceAccessor.Update(ctx, userserviceaccessor.UpdateUserRequest{
+	uuid, err := r.userServiceAccessor.Update(ctx, userserviceaccessor.UpdateUserRequest{
 		UUID:            input.UUID,
 		Name:            input.Name,
 		Email:           input.Email,
@@ -42,9 +48,14 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 		return nil, err
 	}
 
-	// feature: return auth info
+	tokenPair, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	if err != nil {
+		return nil, err
+	}
+
 	return &model.UpdateUserResponse{
-		UUID: res,
+		UUID:      uuid,
+		TokenPair: tokenPair,
 	}, nil
 }
 
