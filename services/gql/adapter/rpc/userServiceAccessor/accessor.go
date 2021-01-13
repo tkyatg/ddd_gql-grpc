@@ -3,14 +3,16 @@ package userserviceaccessor
 import (
 	"context"
 
+	authdefinition "github.com/takuya911/project-auth-definition"
 	"github.com/takuya911/project-services/services/gql/graph/model"
-	definition "github.com/takuya911/project-user-definition"
+	userdefinition "github.com/takuya911/project-user-definition"
 )
 
 type (
 	serviceAccessor struct {
-		userQueryClient   definition.UserQueryServiceClient
-		userCommnadClient definition.UserCommandServiceClient
+		userQueryClient   userdefinition.UserQueryServiceClient
+		userCommnadClient userdefinition.UserCommandServiceClient
+		authdefinition    authdefinition.AuthQueryServiceClient
 	}
 	// ServiceAccessor interface
 	ServiceAccessor interface {
@@ -22,12 +24,15 @@ type (
 )
 
 // NewUserServiceAccessor func
-func NewUserServiceAccessor(userQueryClient definition.UserQueryServiceClient, userCommnadClient definition.UserCommandServiceClient) ServiceAccessor {
-	return &serviceAccessor{userQueryClient, userCommnadClient}
+func NewUserServiceAccessor(
+	userQueryClient userdefinition.UserQueryServiceClient,
+	userCommnadClient userdefinition.UserCommandServiceClient,
+	authQueryClient authdefinition.AuthQueryServiceClient) ServiceAccessor {
+	return &serviceAccessor{userQueryClient, userCommnadClient, authQueryClient}
 }
 
 func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetUserByIDResponse, error) {
-	res, err := r.userQueryClient.GetByID(ctx, &definition.GetByIDRequest{
+	res, err := r.userQueryClient.GetByID(ctx, &userdefinition.GetByIDRequest{
 		Uuid: uuid,
 	})
 	if err != nil {
@@ -47,7 +52,7 @@ func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetU
 }
 
 func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (string, error) {
-	res, err := r.userCommnadClient.Create(ctx, &definition.CreateRequest{
+	res, err := r.userCommnadClient.Create(ctx, &userdefinition.CreateRequest{
 		Name:            req.Name,
 		Email:           req.Email,
 		Password:        req.Password,
@@ -61,7 +66,7 @@ func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (st
 }
 
 func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (string, error) {
-	res, err := r.userCommnadClient.Update(ctx, &definition.UpdateRequest{
+	res, err := r.userCommnadClient.Update(ctx, &userdefinition.UpdateRequest{
 		Uuid:            req.UUID,
 		Name:            req.Name,
 		Email:           req.Email,
@@ -76,7 +81,7 @@ func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (st
 }
 
 func (r *serviceAccessor) Delete(ctx context.Context, req DeleteUserRequest) (string, error) {
-	res, err := r.userCommnadClient.Delete(ctx, &definition.DeleteRequest{
+	res, err := r.userCommnadClient.Delete(ctx, &userdefinition.DeleteRequest{
 		Uuid: req.UUID,
 	})
 	if err != nil {

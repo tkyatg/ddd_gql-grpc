@@ -311,6 +311,8 @@ github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UV
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/stretchr/testify v1.5.1 h1:nOGnQDM7FYENwehXlg/kFVnos3rEvtKTjRvOWSzb6H4=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
+github.com/takuya911/project-auth-definition v0.0.0-20210113114725-fd0e54044f55 h1:TJk6gpaniAKbq8VP+JL3FbtOXz6f7J7Fc2J5Zs4LwIA=
+github.com/takuya911/project-auth-definition v0.0.0-20210113114725-fd0e54044f55/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
 github.com/takuya911/project-services v0.0.0-20210107132147-674d3a61f43d h1:oiJg2K/oIKX5cZ5pHsTaWyWTTspd5mU91p7hqx2QCeY=
 github.com/takuya911/project-services v0.0.0-20210111120452-61d7cb80fdf4 h1:IcgAtwb+ADHPVpiZrnHWU6dEg+wVDMaw8MHNrtr9u8U=
 github.com/takuya911/project-services v0.0.0-20210111130224-e86cca0556da h1:sOkVWAyAVEXYChLplGlkbF2kV0N/LkbLumu86WGBgn0=
