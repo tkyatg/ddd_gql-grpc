@@ -23,8 +23,27 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		return nil, err
 	}
 
-	// auth
+	// feature: return auth info
 	return &model.CreateUserResponse{
+		UUID: res,
+	}, nil
+}
+
+func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUserRequest) (*model.UpdateUserResponse, error) {
+	res, err := r.userServiceAccessor.Update(ctx, userserviceaccessor.UpdateUserRequest{
+		UUID:            input.UUID,
+		Name:            input.Name,
+		Email:           input.Email,
+		Password:        input.Password,
+		TelephoneNumber: input.TelephoneNumber,
+		Gender:          input.Gender,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// feature: return auth info
+	return &model.UpdateUserResponse{
 		UUID: res,
 	}, nil
 }

@@ -18,6 +18,19 @@ type CreateUserResponse struct {
 	UUID string `json:"uuid"`
 }
 
+type UpdateUserRequest struct {
+	UUID            string `json:"uuid"`
+	Name            string `json:"name"`
+	Email           string `json:"email"`
+	Password        string `json:"password"`
+	TelephoneNumber string `json:"telephoneNumber"`
+	Gender          int64  `json:"gender"`
+}
+
+type UpdateUserResponse struct {
+	UUID string `json:"uuid"`
+}
+
 type User struct {
 	UUID            string                 `json:"uuid"`
 	Name            string                 `json:"name"`

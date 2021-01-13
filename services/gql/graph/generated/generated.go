@@ -50,10 +50,15 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateUser func(childComplexity int, input model.CreateUserRequest) int
+		UpdateUser func(childComplexity int, input model.UpdateUserRequest) int
 	}
 
 	Query struct {
 		GetUserByID func(childComplexity int, input model.GetUserByIDRequest) int
+	}
+
+	UpdateUserResponse struct {
+		UUID func(childComplexity int) int
 	}
 
 	User struct {
@@ -74,6 +79,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CreateUser(ctx context.Context, input model.CreateUserRequest) (*model.CreateUserResponse, error)
+	UpdateUser(ctx context.Context, input model.UpdateUserRequest) (*model.UpdateUserResponse, error)
 }
 type QueryResolver interface {
 	GetUserByID(ctx context.Context, input model.GetUserByIDRequest) (*model.GetUserByIDResponse, error)
@@ -113,6 +119,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateUser(childComplexity, args["input"].(model.CreateUserRequest)), true
 
+	case "Mutation.updateUser":
+		if e.complexity.Mutation.UpdateUser == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateUser_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateUser(childComplexity, args["input"].(model.UpdateUserRequest)), true
+
 	case "Query.getUserByID":
 		if e.complexity.Query.GetUserByID == nil {
 			break
@@ -124,6 +142,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.GetUserByID(childComplexity, args["input"].(model.GetUserByIDRequest)), true
+
+	case "UpdateUserResponse.uuid":
+		if e.complexity.UpdateUserResponse.UUID == nil {
+			break
+		}
+
+		return e.complexity.UpdateUserResponse.UUID(childComplexity), true
 
 	case "User.createdAt":
 		if e.complexity.User.CreatedAt == nil {
@@ -260,6 +285,7 @@ extend type Query {
 
 extend type Mutation {
   createUser(input: CreateUserRequest!): CreateUserResponse!
+  updateUser(input: UpdateUserRequest!): UpdateUserResponse!
 }
 
 extend type User {
@@ -291,6 +317,17 @@ type CreateUserResponse {
   uuid: String!
 }
 
+input UpdateUserRequest {
+  uuid: String!
+  name: String!
+  email: String!
+  password: String!
+  telephoneNumber: String!
+  gender: Int!
+}
+type UpdateUserResponse {
+  uuid: String!
+}
 `, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -306,6 +343,21 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNCreateUserRequest2githubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐCreateUserRequest(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateUser_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.UpdateUserRequest
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNUpdateUserRequest2githubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUpdateUserRequest(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -459,6 +511,48 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 	return ec.marshalNCreateUserResponse2ᚖgithubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐCreateUserResponse(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_updateUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_updateUser_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().UpdateUser(rctx, args["input"].(model.UpdateUserRequest))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.UpdateUserResponse)
+	fc.Result = res
+	return ec.marshalNUpdateUserResponse2ᚖgithubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUpdateUserResponse(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_getUserByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -567,6 +661,41 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 	res := resTmp.(*introspection.Schema)
 	fc.Result = res
 	return ec.marshalO__Schema2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐSchema(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _UpdateUserResponse_uuid(ctx context.Context, field graphql.CollectedField, obj *model.UpdateUserResponse) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "UpdateUserResponse",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_uuid(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
@@ -2017,6 +2146,66 @@ func (ec *executionContext) unmarshalInputCreateUserRequest(ctx context.Context,
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputUpdateUserRequest(ctx context.Context, obj interface{}) (model.UpdateUserRequest, error) {
+	var it model.UpdateUserRequest
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			it.UUID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			it.Name, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			it.Email, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "password":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
+			it.Password, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "telephoneNumber":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("telephoneNumber"))
+			it.TelephoneNumber, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "gender":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("gender"))
+			it.Gender, err = ec.unmarshalNInt2int64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputgetUserByIDRequest(ctx context.Context, obj interface{}) (model.GetUserByIDRequest, error) {
 	var it model.GetUserByIDRequest
 	var asMap = obj.(map[string]interface{})
@@ -2092,6 +2281,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "updateUser":
+			out.Values[i] = ec._Mutation_updateUser(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -2133,6 +2327,33 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Values[i] = ec._Query___type(ctx, field)
 		case "__schema":
 			out.Values[i] = ec._Query___schema(ctx, field)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var updateUserResponseImplementors = []string{"UpdateUserResponse"}
+
+func (ec *executionContext) _UpdateUserResponse(ctx context.Context, sel ast.SelectionSet, obj *model.UpdateUserResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, updateUserResponseImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("UpdateUserResponse")
+		case "uuid":
+			out.Values[i] = ec._UpdateUserResponse_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -2534,6 +2755,25 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNUpdateUserRequest2githubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUpdateUserRequest(ctx context.Context, v interface{}) (model.UpdateUserRequest, error) {
+	res, err := ec.unmarshalInputUpdateUserRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNUpdateUserResponse2githubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUpdateUserResponse(ctx context.Context, sel ast.SelectionSet, v model.UpdateUserResponse) graphql.Marshaler {
+	return ec._UpdateUserResponse(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNUpdateUserResponse2ᚖgithubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUpdateUserResponse(ctx context.Context, sel ast.SelectionSet, v *model.UpdateUserResponse) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._UpdateUserResponse(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {

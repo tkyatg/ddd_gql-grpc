@@ -17,6 +17,7 @@ type (
 	ServiceAccessor interface {
 		GetByID(ctx context.Context, uuid string) (*model.GetUserByIDResponse, error)
 		Create(ctx context.Context, req CreateUserRequest) (string, error)
+		Update(ctx context.Context, req UpdateUserRequest) (string, error)
 	}
 )
 
@@ -48,6 +49,21 @@ func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetU
 
 func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (string, error) {
 	res, err := r.userCommnadClient.Create(ctx, &definition.CreateRequest{
+		Name:            req.Name,
+		Email:           req.Email,
+		Password:        req.Password,
+		TelephoneNumber: req.TelephoneNumber,
+		Gender:          req.Gender,
+	})
+	if err != nil {
+		return "", err
+	}
+	return res.Uuid, err
+}
+
+func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (string, error) {
+	res, err := r.userCommnadClient.Update(ctx, &definition.UpdateRequest{
+		Uuid:            req.UUID,
 		Name:            req.Name,
 		Email:           req.Email,
 		Password:        req.Password,

@@ -314,6 +314,7 @@ github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5
 github.com/takuya911/project-services v0.0.0-20210107132147-674d3a61f43d h1:oiJg2K/oIKX5cZ5pHsTaWyWTTspd5mU91p7hqx2QCeY=
 github.com/takuya911/project-services v0.0.0-20210111120452-61d7cb80fdf4 h1:IcgAtwb+ADHPVpiZrnHWU6dEg+wVDMaw8MHNrtr9u8U=
 github.com/takuya911/project-services v0.0.0-20210111130224-e86cca0556da h1:sOkVWAyAVEXYChLplGlkbF2kV0N/LkbLumu86WGBgn0=
+github.com/takuya911/project-services v0.0.0-20210111153746-46a8d47297fe h1:cOPCPP6ZRyy6ZLgaMNchYcBIjH0MqSEr+T5vEiRWQBw=
 github.com/takuya911/project-services/services/user v0.0.0-20210111130224-e86cca0556da h1:gBR+9jTk/yHlel63LMgozXXEdBL40Uaflj3QmQKhMdQ=
 github.com/takuya911/project-services/services/user v0.0.0-20210111130224-e86cca0556da/go.mod h1:HGWUbSC9dNidZVgZSQUALsLRSZdprdSPuJbqSINWpJs=
 github.com/takuya911/project-user-definition v0.0.0-20210102092047-5cfbc4a0cc2c h1:ugkhBx70ulU4hHddRduEBVP6Pb5T1W8/2UjI9j6Za6g=

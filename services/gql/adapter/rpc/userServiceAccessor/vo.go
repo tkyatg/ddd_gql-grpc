@@ -8,3 +8,13 @@ type CreateUserRequest struct {
 	TelephoneNumber string
 	Gender          int64
 }
+
+// UpdateUserRequest struct
+type UpdateUserRequest struct {
+	UUID            string
+	Name            string
+	Email           string
+	Password        string
+	TelephoneNumber string
+	Gender          int64
+}
