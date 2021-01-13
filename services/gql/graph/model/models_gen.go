@@ -18,6 +18,14 @@ type CreateUserResponse struct {
 	UUID string `json:"uuid"`
 }
 
+type DeleteUserRequest struct {
+	UUID string `json:"uuid"`
+}
+
+type DeleteUserResponse struct {
+	UUID string `json:"uuid"`
+}
+
 type UpdateUserRequest struct {
 	UUID            string `json:"uuid"`
 	Name            string `json:"name"`

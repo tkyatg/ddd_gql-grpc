@@ -48,6 +48,18 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 	}, nil
 }
 
+func (r *mutationResolver) DeleteUser(ctx context.Context, input model.DeleteUserRequest) (*model.DeleteUserResponse, error) {
+	res, err := r.userServiceAccessor.Delete(ctx, userserviceaccessor.DeleteUserRequest{
+		UUID: input.UUID,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &model.DeleteUserResponse{
+		UUID: res,
+	}, nil
+}
+
 func (r *queryResolver) GetUserByID(ctx context.Context, input model.GetUserByIDRequest) (*model.GetUserByIDResponse, error) {
 	return r.userServiceAccessor.GetByID(ctx, input.UUID)
 }

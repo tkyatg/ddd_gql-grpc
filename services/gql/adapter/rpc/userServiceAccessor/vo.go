@@ -18,3 +18,8 @@ type UpdateUserRequest struct {
 	TelephoneNumber string
 	Gender          int64
 }
+
+// DeleteUserRequest struct
+type DeleteUserRequest struct {
+	UUID string
+}

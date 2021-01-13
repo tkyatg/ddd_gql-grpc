@@ -7,6 +7,7 @@ extend type Query {
 extend type Mutation {
   createUser(input: CreateUserRequest!): CreateUserResponse!
   updateUser(input: UpdateUserRequest!): UpdateUserResponse!
+  deleteUser(input: DeleteUserRequest!): DeleteUserResponse!
 }
 
 extend type User {
@@ -47,5 +48,12 @@ input UpdateUserRequest {
   gender: Int!
 }
 type UpdateUserResponse {
+  uuid: String!
+}
+
+input DeleteUserRequest {
+  uuid: String!
+}
+type DeleteUserResponse {
   uuid: String!
 }

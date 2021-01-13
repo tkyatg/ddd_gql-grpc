@@ -2,7 +2,6 @@ package userserviceaccessor
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/takuya911/project-services/services/gql/graph/model"
 	definition "github.com/takuya911/project-user-definition"
@@ -18,6 +17,7 @@ type (
 		GetByID(ctx context.Context, uuid string) (*model.GetUserByIDResponse, error)
 		Create(ctx context.Context, req CreateUserRequest) (string, error)
 		Update(ctx context.Context, req UpdateUserRequest) (string, error)
+		Delete(ctx context.Context, req DeleteUserRequest) (string, error)
 	}
 )
 
@@ -30,7 +30,6 @@ func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetU
 	res, err := r.userQueryClient.GetByID(ctx, &definition.GetByIDRequest{
 		Uuid: uuid,
 	})
-	fmt.Print(res)
 	if err != nil {
 		return nil, err
 	}
@@ -69,6 +68,16 @@ func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (st
 		Password:        req.Password,
 		TelephoneNumber: req.TelephoneNumber,
 		Gender:          req.Gender,
+	})
+	if err != nil {
+		return "", err
+	}
+	return res.Uuid, err
+}
+
+func (r *serviceAccessor) Delete(ctx context.Context, req DeleteUserRequest) (string, error) {
+	res, err := r.userCommnadClient.Delete(ctx, &definition.DeleteRequest{
+		Uuid: req.UUID,
 	})
 	if err != nil {
 		return "", err

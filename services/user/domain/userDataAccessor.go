@@ -46,7 +46,6 @@ update users.users
      , gender = ?
  where user_uuid = ?;
 `
-	// ここのresult何が返ってくるか気になる
 	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender, id); result.Error != nil {
 		return result.Error
 	}
@@ -55,10 +54,9 @@ update users.users
 
 func (d userDataAccessor) delete(id UserUUID) error {
 	sql := `
-delete users.users 
+delete from users.users 
  where user_uuid= ?;
 `
-	// ここのresult何が返ってくるか気になる
 	if result := d.db.Exec(sql, id); result.Error != nil {
 		return result.Error
 	}
