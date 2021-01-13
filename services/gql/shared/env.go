@@ -6,5 +6,7 @@ type (
 		GetGraphqlServerPort() string
 		GetUserServerName() string
 		GetUserServerPort() string
+		GetAuthServerName() string
+		GetAuthServerPort() string
 	}
 )

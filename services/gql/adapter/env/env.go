@@ -11,6 +11,8 @@ type (
 		graphqlServerPort string
 		userServerName    string
 		userServerPort    string
+		authServerName    string
+		authServerPort    string
 	}
 )
 
@@ -19,10 +21,14 @@ func NewEnv() shared.Env {
 	graphqlServerPort := os.Getenv("GRAPHQL_SERVICE_PORT")
 	userServerName := os.Getenv("USER_SERVICE_NAME")
 	userServerPort := os.Getenv("USER_SERVICE_PORT")
+	authServerName := os.Getenv("AUTH_SERVICE_NAME")
+	authServerPort := os.Getenv("AUTH_SERVICE_PORT")
 	return &environment{
 		graphqlServerPort,
 		userServerName,
 		userServerPort,
+		authServerName,
+		authServerPort,
 	}
 }
 
@@ -34,4 +40,10 @@ func (t *environment) GetUserServerName() string {
 }
 func (t *environment) GetUserServerPort() string {
 	return t.userServerPort
+}
+func (t *environment) GetAuthServerName() string {
+	return t.authServerName
+}
+func (t *environment) GetAuthServerPort() string {
+	return t.authServerPort
 }

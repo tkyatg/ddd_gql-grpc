@@ -21,18 +21,21 @@ type resolver struct {
 // NewResolver function
 func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	conn, err := grpc.DialContext(ctx, env.GetUserServerName()+":"+env.GetUserServerPort(), opts...)
+	// user service
+	userConn, err := grpc.DialContext(ctx, env.GetUserServerName()+":"+env.GetUserServerPort(), opts...)
 	if err != nil {
 		panic(err)
 	}
-
-	// client
-	userQueryClient := userdefinition.NewUserQueryServiceClient(conn)
-	userCommandClient := userdefinition.NewUserCommandServiceClient(conn)
-	authQueryClient := authdefinition.NewAuthQueryServiceClient(conn)
-
-	// accessor
+	userQueryClient := userdefinition.NewUserQueryServiceClient(userConn)
+	userCommandClient := userdefinition.NewUserCommandServiceClient(userConn)
 	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userQueryClient, userCommandClient)
+
+	// user service
+	authConn, err := grpc.DialContext(ctx, env.GetAuthServerName()+":"+env.GetAuthServerPort(), opts...)
+	if err != nil {
+		panic(err)
+	}
+	authQueryClient := authdefinition.NewAuthQueryServiceClient(authConn)
 	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient)
 
 	return &resolver{

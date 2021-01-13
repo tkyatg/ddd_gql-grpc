@@ -10,6 +10,8 @@ services:
       - GRAPHQL_SERVICE_PORT=80
       - USER_SERVICE_NAME=user
       - USER_SERVICE_PORT=50051
+      - AUTH_SERVICE_NAME=auth
+      - AUTH_SERVICE_PORT=50052
     ports:
       - 80:80
     tty: true
@@ -28,6 +30,22 @@ services:
       - USER_SERVICE_PORT=50051
     ports:
       - 50051:50051
+    tty: true
+  auth:
+    build:
+      context: ./services/auth
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/auth:/app
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - AUTH_SERVICE_PORT=50052
+    ports:
+      - 50052:50052
     tty: true
   postgres:
     image: postgres:13
