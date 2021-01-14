@@ -6,6 +6,7 @@ import (
 
 type (
 	usecase struct {
+		token shared.Token
 	}
 	genTokenRequest struct {
 		userUUID string
@@ -21,17 +22,17 @@ type (
 )
 
 // NewUsecase function
-func NewUsecase() Usecase {
-	return &usecase{}
+func NewUsecase(token shared.Token) Usecase {
+	return &usecase{token}
 }
 
 func (uc *usecase) genToken(req genTokenRequest) (genTokenResponse, error) {
-	tokenPair, err := shared.GenTokenPair(req.userUUID)
+	accessToken, refreshToken, err := uc.token.GenTokenPair(req.userUUID)
 	if err != nil {
 		return genTokenResponse{}, err
 	}
 	return genTokenResponse{
-		token:        tokenPair.Token,
-		refreshToken: tokenPair.RefreshToken,
+		token:        accessToken,
+		refreshToken: refreshToken,
 	}, nil
 }

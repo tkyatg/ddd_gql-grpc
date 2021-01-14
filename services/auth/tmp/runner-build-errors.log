@@ -1,2 +1,4 @@
-# github.com/takuya911/project-services/services/auth/queries/authQueryService
-queries/authQueryService/usecase.go:34:26: tokenPair.Token undefined (type shared.TokenPair has no field or method Token)
+# github.com/takuya911/project-services/services/auth/adapter/rpc
+adapter/rpc/register.go:12:49: not enough arguments in call to authqueryservice.NewUsecase
+	have ()
+	want (shared.Token)

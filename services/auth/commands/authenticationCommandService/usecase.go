@@ -7,7 +7,8 @@ import (
 
 type (
 	usecase struct {
-		repo domain.AuthenticationRepository
+		repo  domain.AuthenticationRepository
+		token shared.Token
 	}
 	loginRequest struct {
 		email    string
@@ -25,8 +26,8 @@ type (
 )
 
 // NewUsecase はコンストラクタです
-func NewUsecase(repo domain.AuthenticationRepository) Usecase {
-	return &usecase{repo}
+func NewUsecase(repo domain.AuthenticationRepository, token shared.Token) Usecase {
+	return &usecase{repo, token}
 }
 
 func (uc *usecase) login(req loginRequest) (loginResponse, error) {
@@ -34,14 +35,14 @@ func (uc *usecase) login(req loginRequest) (loginResponse, error) {
 	if err != nil {
 		return loginResponse{}, err
 	}
-	tokenPair, err := shared.GenTokenPair(string(uuid))
+	accessToken, refreshToken, err := uc.token.GenTokenPair(string(uuid))
 	if err != nil {
 		return loginResponse{}, err
 	}
 
 	return loginResponse{
 		loginResult:  true,
-		accessToken:  tokenPair.AccessToken,
-		refreshToken: tokenPair.RefreshToken,
+		accessToken:  accessToken,
+		refreshToken: refreshToken,
 	}, nil
 }
