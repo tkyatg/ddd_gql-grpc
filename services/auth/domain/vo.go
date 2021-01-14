@@ -15,6 +15,10 @@ type (
 		AccessToken  string
 		RefreshToken string
 	}
+	// Email vo
+	Email string
+	// Password vo
+	Password string
 )
 
 // ParseUserUUID func
