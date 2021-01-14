@@ -1,6 +1,9 @@
 package usercommandservice
 
-import "github.com/takuya911/project-services/services/user/domain"
+import (
+	"github.com/takuya911/project-services/services/user/adapter/hash"
+	"github.com/takuya911/project-services/services/user/domain"
+)
 
 type (
 	usecase struct {
@@ -45,7 +48,12 @@ func NewUsecase(repo domain.UserRepository) Usecase {
 }
 
 func (uc *usecase) create(req createRequest) (createResponse, error) {
-	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	hashedPassword, err := hash.GenEncryptedPass(req.password)
+	if err != nil {
+		return createResponse{}, err
+	}
+
+	attr, err := domain.NewUserAttributes(req.name, hashedPassword, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
 		return createResponse{}, err
 	}
@@ -64,7 +72,12 @@ func (uc *usecase) update(req updateRequest) error {
 	if err != nil {
 		return err
 	}
-	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
+	hashedPassword, err := hash.GenEncryptedPass(req.password)
+	if err != nil {
+		return err
+	}
+
+	attr, err := domain.NewUserAttributes(req.name, hashedPassword, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
 		return err
 	}
