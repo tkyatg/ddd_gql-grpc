@@ -24,9 +24,10 @@ func (s *server) Login(context context.Context, req *definition.LoginRequest) (*
 	if err != nil {
 		return nil, err
 	}
+
 	return &definition.LoginResponse{
-		Result:       1,
-		Token:        "",
-		RefreshToken: "",
+		LoginResult:  res.loginResult,
+		AccessToken:  res.accessToken,
+		RefreshToken: res.refreshToken,
 	}, nil
 }

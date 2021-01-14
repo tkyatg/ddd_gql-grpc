@@ -16,7 +16,7 @@ const (
 type (
 	// TokenPair struct
 	TokenPair struct {
-		Token        string
+		AccessToken  string
 		RefreshToken string
 	}
 	// JwtClaims struct
@@ -34,7 +34,7 @@ type (
 
 // GenTokenPair func
 func GenTokenPair(userUUID string) (TokenPair, error) {
-	token, err := genToken(userUUID, tokenSubject, 3600)
+	accessToken, err := genToken(userUUID, tokenSubject, 3600)
 	if err != nil {
 		return TokenPair{}, err
 	}
@@ -44,7 +44,7 @@ func GenTokenPair(userUUID string) (TokenPair, error) {
 
 	}
 	return TokenPair{
-		Token:        token,
+		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}, nil
 }

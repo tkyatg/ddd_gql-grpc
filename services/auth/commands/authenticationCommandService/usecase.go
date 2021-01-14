@@ -1,6 +1,9 @@
 package authenticationcommandservice
 
-import "github.com/takuya911/project-services/services/user/domain"
+import (
+	"github.com/takuya911/project-services/services/auth/domain"
+	"github.com/takuya911/project-services/services/auth/shared"
+)
 
 type (
 	usecase struct {
@@ -11,8 +14,8 @@ type (
 		password string
 	}
 	loginResponse struct {
-		result       int64
-		token        string
+		loginResult  bool
+		accessToken  string
 		refreshToken string
 	}
 	// Usecase interface
@@ -27,10 +30,18 @@ func NewUsecase(repo domain.AuthenticationRepository) Usecase {
 }
 
 func (uc *usecase) login(req loginRequest) (loginResponse, error) {
+	uuid, err := uc.repo.Login(domain.Email(req.email), domain.Password(req.password))
+	if err != nil {
+		return loginResponse{}, err
+	}
+	tokenPair, err := shared.GenTokenPair(string(uuid))
+	if err != nil {
+		return loginResponse{}, err
+	}
 
 	return loginResponse{
-		result:       1,
-		token:        "",
-		refreshToken: "",
+		loginResult:  true,
+		accessToken:  tokenPair.AccessToken,
+		refreshToken: tokenPair.RefreshToken,
 	}, nil
 }

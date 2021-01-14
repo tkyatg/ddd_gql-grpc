@@ -1,26 +1,30 @@
 package domain
 
 type (
-	userRepository struct {
-		da UserDataAccessor
+	authenticationRepository struct {
+		da AuthenticationDataAccessor
 	}
-	// UserRepository interface
-	UserRepository interface {
-		Login(attr string) error
+	// AuthenticationRepository interface
+	AuthenticationRepository interface {
+		Login(email Email, pasword Password) (UserUUID, error)
 	}
-	// UserDataAccessor interface
-	UserDataAccessor interface {
-		login(attr string) error
+	// AuthenticationDataAccessor interface
+	AuthenticationDataAccessor interface {
+		login(email Email, pasword Password) (UserUUID, error)
 	}
 )
 
 // NewAuthenticationRepository func
 func NewAuthenticationRepository(
-	da UserDataAccessor,
-) UserRepository {
-	return &userRepository{da}
+	da AuthenticationDataAccessor,
+) AuthenticationRepository {
+	return &authenticationRepository{da}
 }
 
-func (r *userRepository) Login(attr string) error {
-	return r.da.login(attr)
+func (r *authenticationRepository) Login(email Email, password Password) (UserUUID, error) {
+	uuid, err := r.da.login(email, password)
+	if err != nil {
+		return "", err
+	}
+	return uuid, nil
 }

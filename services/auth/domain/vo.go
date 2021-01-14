@@ -19,6 +19,8 @@ type (
 	Email string
 	// Password vo
 	Password string
+	// LoginResult vo
+	LoginResult bool
 )
 
 // ParseUserUUID func
