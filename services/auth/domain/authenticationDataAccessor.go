@@ -17,19 +17,19 @@ func NewAuthenticationDataAccessor(
 	return &authenticationDataAccessor{db}
 }
 
-func (d authenticationDataAccessor) login(email Email, password Password) (UserUUID, error) {
+func (d authenticationDataAccessor) login(email Email) (UserUUID, Password, error) {
 	sql := `
 select user_uuid
+     , password
   from users.users
  where email = ?
-   and password = ?
-
 `
 	var rslt struct {
-		uuid string `db:"user_uuid"`
+		uuid     string `db:"user_uuid"`
+		password string `db:"password"`
 	}
-	if result := d.db.Raw(sql, string(email), string(password)).Scan(&rslt); result.Error != nil {
-		return "", result.Error
+	if result := d.db.Raw(sql, string(email)).Scan(&rslt); result.Error != nil {
+		return "", "", result.Error
 	}
-	return UserUUID(rslt.uuid), nil
+	return UserUUID(rslt.uuid), Password(rslt.password), nil
 }

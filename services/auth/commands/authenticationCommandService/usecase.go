@@ -9,6 +9,7 @@ type (
 	usecase struct {
 		repo  domain.AuthenticationRepository
 		token shared.Token
+		hash  shared.Hash
 	}
 	loginRequest struct {
 		email    string
@@ -26,22 +27,21 @@ type (
 )
 
 // NewUsecase はコンストラクタです
-func NewUsecase(repo domain.AuthenticationRepository, token shared.Token) Usecase {
-	return &usecase{repo, token}
+func NewUsecase(repo domain.AuthenticationRepository, token shared.Token, hash shared.Hash) Usecase {
+	return &usecase{repo, token, hash}
 }
 
 func (uc *usecase) login(req loginRequest) (loginResponse, error) {
 	email, err := domain.ParseEmail(req.email)
 	if err != nil {
-		return err
-	}
-	password, err := domain.ParsePassword(req.password)
-	if err != nil {
-		return err
+		return loginResponse{}, err
 	}
 
-	uuid, err := uc.repo.Login(email, password)
+	uuid, password, err := uc.repo.Login(email)
 	if err != nil {
+		return loginResponse{}, err
+	}
+	if err := uc.hash.CompareHashAndPass(string(password), req.password); err != nil {
 		return loginResponse{}, err
 	}
 

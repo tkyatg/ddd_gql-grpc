@@ -15,4 +15,6 @@ const (
 	InvalidEmailLength = "user-00006"
 	// InvalidEmailFormat : 不正な Email です
 	InvalidEmailFormat = "user-00007"
+	// PasswordIsIncorrect : パスワードが誤っています
+	PasswordIsIncorrect = "user-00008"
 )

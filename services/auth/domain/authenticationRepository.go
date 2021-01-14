@@ -6,11 +6,11 @@ type (
 	}
 	// AuthenticationRepository interface
 	AuthenticationRepository interface {
-		Login(email Email, pasword Password) (UserUUID, error)
+		Login(email Email) (UserUUID, Password, error)
 	}
 	// AuthenticationDataAccessor interface
 	AuthenticationDataAccessor interface {
-		login(email Email, pasword Password) (UserUUID, error)
+		login(email Email) (UserUUID, Password, error)
 	}
 )
 
@@ -21,10 +21,10 @@ func NewAuthenticationRepository(
 	return &authenticationRepository{da}
 }
 
-func (r *authenticationRepository) Login(email Email, password Password) (UserUUID, error) {
-	uuid, err := r.da.login(email, password)
+func (r *authenticationRepository) Login(email Email) (UserUUID, Password, error) {
+	uuid, password, err := r.da.login(email)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	return uuid, nil
+	return uuid, password, nil
 }
