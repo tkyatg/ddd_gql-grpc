@@ -31,10 +31,20 @@ func NewUsecase(repo domain.AuthenticationRepository, token shared.Token) Usecas
 }
 
 func (uc *usecase) login(req loginRequest) (loginResponse, error) {
-	uuid, err := uc.repo.Login(domain.Email(req.email), domain.Password(req.password))
+	email, err := domain.ParseEmail(req.email)
+	if err != nil {
+		return err
+	}
+	password, err := domain.ParsePassword(req.password)
+	if err != nil {
+		return err
+	}
+
+	uuid, err := uc.repo.Login(email, password)
 	if err != nil {
 		return loginResponse{}, err
 	}
+
 	accessToken, refreshToken, err := uc.token.GenTokenPair(string(uuid))
 	if err != nil {
 		return loginResponse{}, err

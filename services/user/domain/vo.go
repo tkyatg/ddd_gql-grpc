@@ -79,6 +79,7 @@ func NewUserAttributes(
 func ParseUserUUID(id string) (UserUUID, error) {
 	return parseUserUUID(id)
 }
+
 func parseUserUUID(id string) (UserUUID, error) {
 	if id == "" {
 		return "", errors.New(shared.RequiredUserUUID)
@@ -88,12 +89,14 @@ func parseUserUUID(id string) (UserUUID, error) {
 	}
 	return UserUUID(id), nil
 }
+
 func parseUserName(userName string) (UserName, error) {
 	if userName == "" {
 		return "", errors.New(shared.RequiredUserName)
 	}
 	return UserName(userName), nil
 }
+
 func parsePassword(password string) (Password, error) {
 	if password == "" {
 		return "", errors.New(shared.RequiredPassword)
@@ -103,6 +106,7 @@ func parsePassword(password string) (Password, error) {
 	}
 	return Password(password), nil
 }
+
 func parseEmail(email string) (Email, error) {
 	if email == "" {
 		return "", errors.New(shared.RequiredEmail)
@@ -115,6 +119,7 @@ func parseEmail(email string) (Email, error) {
 	}
 	return Email(email), nil
 }
+
 func parseTelephoneNumber(telephoneNumber string) (TelephoneNumber, error) {
 	if telephoneNumber == "" {
 		return "", errors.New(shared.RequiredTelephoneNumber)
@@ -124,6 +129,7 @@ func parseTelephoneNumber(telephoneNumber string) (TelephoneNumber, error) {
 	}
 	return TelephoneNumber(telephoneNumber), nil
 }
+
 func parseGender(gender int64) (Gender, error) {
 	if gender < 1 || gender > 3 {
 		return 0, errors.New(shared.InvalidGenderFormat)
