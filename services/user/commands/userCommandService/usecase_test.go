@@ -8,24 +8,29 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
+	"github.com/takuya911/project-services/services/user/adapter/hash"
 	"github.com/takuya911/project-services/services/user/domain"
+	"github.com/takuya911/project-services/services/user/shared"
 )
 
 type usecaseTestHelper struct {
 	ctrl *gomock.Controller
 	repo *domain.MockUserRepository
 	uc   Usecase
+	hash shared.Hash
 }
 
 func newUsecaseTestHelper(t *testing.T) *usecaseTestHelper {
 	ctrl := gomock.NewController(t)
 	repo := domain.NewMockUserRepository(ctrl)
-	uc := NewUsecase(repo)
+	hash := hash.NewHash()
+	uc := NewUsecase(repo, hash)
 
 	return &usecaseTestHelper{
 		ctrl: ctrl,
 		repo: repo,
 		uc:   uc,
+		hash: hash,
 	}
 }
 
@@ -42,12 +47,8 @@ func TestUsecaseCreate(t *testing.T) {
 		telephoneNumber: "09084363174",
 		gender:          1,
 	}
-	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
-	if err != nil {
-		t.Fatal(err)
-	}
 
-	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(uUUID.String()), nil)
+	h.repo.EXPECT().Create(gomock.Any()).Return(domain.UserUUID(uUUID.String()), nil)
 
 	res, err := h.uc.create(req)
 	if err != nil {
@@ -77,12 +78,8 @@ func TestUsecaseCreateERROR01(t *testing.T) {
 		telephoneNumber: "09084363174",
 		gender:          1,
 	}
-	attr, newAttrErr := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
-	if newAttrErr != nil {
-		t.Fatal(newAttrErr)
-	}
 	err := errors.New("error")
-	h.repo.EXPECT().Create(attr).Return(domain.UserUUID(uUUID.String()), err)
+	h.repo.EXPECT().Create(gomock.Any()).Return(domain.UserUUID(uUUID.String()), err)
 
 	_, createErr := h.uc.create(req)
 	if err != createErr {
@@ -103,15 +100,11 @@ func TestUsecaseUpdate(t *testing.T) {
 		telephoneNumber: "09084363176",
 		gender:          1,
 	}
-	attr, err := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
-	if err != nil {
-		t.Fatal(err)
-	}
 	id, err := domain.ParseUserUUID(req.userUUID)
 	if err != nil {
 		t.Fatal(err)
 	}
-	h.repo.EXPECT().Update(id, attr).Return(nil)
+	h.repo.EXPECT().Update(id, gomock.Any()).Return(nil)
 	err = h.uc.update(req)
 	if err != nil {
 		t.Fatal(err)
@@ -131,17 +124,13 @@ func TestUsecaseUpdateERROR01(t *testing.T) {
 		telephoneNumber: "09084363176",
 		gender:          1,
 	}
-	attr, newAttrErr := domain.NewUserAttributes(req.name, req.password, req.email, req.telephoneNumber, req.gender)
-	if newAttrErr != nil {
-		t.Fatal(newAttrErr)
-	}
 	id, parseErr := domain.ParseUserUUID(req.userUUID)
 	if parseErr != nil {
 		t.Fatal(parseErr)
 	}
 
 	err := errors.New("error")
-	h.repo.EXPECT().Update(id, attr).Return(err)
+	h.repo.EXPECT().Update(id, gomock.Any()).Return(err)
 	updateErr := h.uc.update(req)
 	if err != updateErr {
 		t.Fatal(updateErr)

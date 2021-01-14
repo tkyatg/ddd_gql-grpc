@@ -1,13 +1,14 @@
 package usercommandservice
 
 import (
-	"github.com/takuya911/project-services/services/user/adapter/hash"
 	"github.com/takuya911/project-services/services/user/domain"
+	"github.com/takuya911/project-services/services/user/shared"
 )
 
 type (
 	usecase struct {
 		repo domain.UserRepository
+		hash shared.Hash
 	}
 	createRequest struct {
 		name            string
@@ -43,12 +44,12 @@ type (
 )
 
 // NewUsecase はコンストラクタです
-func NewUsecase(repo domain.UserRepository) Usecase {
-	return &usecase{repo}
+func NewUsecase(repo domain.UserRepository, hash shared.Hash) Usecase {
+	return &usecase{repo, hash}
 }
 
 func (uc *usecase) create(req createRequest) (createResponse, error) {
-	hashedPassword, err := hash.GenEncryptedPass(req.password)
+	hashedPassword, err := uc.hash.GenEncryptedPassword(req.password)
 	if err != nil {
 		return createResponse{}, err
 	}
@@ -72,7 +73,7 @@ func (uc *usecase) update(req updateRequest) error {
 	if err != nil {
 		return err
 	}
-	hashedPassword, err := hash.GenEncryptedPass(req.password)
+	hashedPassword, err := uc.hash.GenEncryptedPassword(req.password)
 	if err != nil {
 		return err
 	}

@@ -17,7 +17,7 @@ type (
 	}
 )
 
-// NewEnv はコンストラクタです
+// NewEnv func
 func NewEnv() shared.Env {
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
