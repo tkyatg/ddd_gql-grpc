@@ -8,21 +8,19 @@ import (
 
 type (
 	serviceAccessor struct {
-		authQuery             definition.AuthQueryServiceClient
-		authenticationCommand definition.AuthenticationCommandServiceClient
+		authQuery definition.AuthQueryServiceClient
 	}
 	// ServiceAccessor interface
 	ServiceAccessor interface {
 		GenToken(ctx context.Context, req GenTokenRequest) (GenTokenResponse, error)
-		Login(ctx context.Context, req LoginRequest) (LoginResponse, error)
 	}
 )
 
 // NewAuthServiceAccessor func
-func NewAuthServiceAccessor(authQueryClient definition.AuthQueryServiceClient, authenticationCommandServiceClient definition.AuthenticationCommandServiceClient) ServiceAccessor {
+func NewAuthServiceAccessor(authQueryClient definition.AuthQueryServiceClient) ServiceAccessor {
 	return &serviceAccessor{
-		authQuery:             authQueryClient,
-		authenticationCommand: authenticationCommandServiceClient}
+		authQuery: authQueryClient,
+	}
 }
 
 func (r *serviceAccessor) GenToken(ctx context.Context, req GenTokenRequest) (GenTokenResponse, error) {
@@ -34,23 +32,6 @@ func (r *serviceAccessor) GenToken(ctx context.Context, req GenTokenRequest) (Ge
 	}
 
 	return GenTokenResponse{
-		TokenPair: TokenPair{
-			AccessToken:  res.GetAccessToken(),
-			RefreshToken: res.GetRefreshToken(),
-		},
-	}, nil
-}
-
-func (r *serviceAccessor) Login(ctx context.Context, req LoginRequest) (LoginResponse, error) {
-	res, err := r.authenticationCommand.Login(ctx, &definition.LoginRequest{
-		Email:    req.Email,
-		Password: req.Password,
-	})
-	if err != nil {
-		return LoginResponse{}, err
-	}
-
-	return LoginResponse{
 		TokenPair: TokenPair{
 			AccessToken:  res.GetAccessToken(),
 			RefreshToken: res.GetRefreshToken(),

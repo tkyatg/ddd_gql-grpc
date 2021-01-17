@@ -8,7 +8,7 @@ require (
 	github.com/google/go-cmp v0.5.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238 // indirect
-	github.com/takuya911/project-auth-definition v0.0.0-20210117100405-20fd0a5600f1
+	github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0
 	github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48
 	github.com/vektah/gqlparser/v2 v2.1.0
 	golang.org/x/net v0.0.0-20201029221708-28c70e62bb1d // indirect

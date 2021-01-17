@@ -98,6 +98,8 @@ github.com/takuya911/project-auth-definition v0.0.0-20210114123822-a726b7946381 
 github.com/takuya911/project-auth-definition v0.0.0-20210114123822-a726b7946381/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
 github.com/takuya911/project-auth-definition v0.0.0-20210117100405-20fd0a5600f1 h1:OduhgdfG5eIiKctLm/gOgw6gM3+jjoHAaBPlaKUCTY0=
 github.com/takuya911/project-auth-definition v0.0.0-20210117100405-20fd0a5600f1/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
+github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0 h1:PWN10psZFSQxiKmSdzNgi29rIv2LfBvDlt6Is7qNtB8=
+github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
 github.com/takuya911/project-services v0.0.0-20210114144512-cf3e68eedea6 h1:WHH2LdGtoiMsgPR1xJtLDF7MIr0D5hOUqC4UWBBLvBM=
 github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48 h1:eGsyHdkhNoIFZqLxc3Imyj19Q/LS0sstH6OdIY6byjg=
 github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=

@@ -36,9 +36,8 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 		panic(err)
 	}
 	authQueryClient := authdefinition.NewAuthQueryServiceClient(authConn)
-	authenticationCommand := authdefinition.NewAuthenticationCommandServiceClient(authConn)
 
-	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient, authenticationCommand)
+	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient)
 
 	return &resolver{
 		userServiceAccessor,
