@@ -19,8 +19,8 @@ func NewUserDataAccessor(
 
 func (d userDataAccessor) create(attr UserAttributes) (UserUUID, error) {
 	sql := `
-INSERT INTO users.users(name , email , password , telephone_number , gender)
-VALUES ( ?, ?, ?, ?, ? ) returning user_uuid;
+INSERT INTO users.users(name , email , password , telephone_number , gender, created_at)
+VALUES ( ?, ?, ?, ?, ? ,now() ) returning user_uuid;
 `
 	var rslt struct {
 		UserUUID string `db:"user_uuid"`
@@ -43,7 +43,8 @@ update users.users
      , email = ?
      , password = ?
      , telephone_number = ?
-     , gender = ?
+	 , gender = ?
+	 , updated_at = now()
  where user_uuid = ?;
 `
 	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender, id); result.Error != nil {

@@ -25,4 +25,6 @@ const (
 	InvalidEmailFormat = "user-00011"
 	// InvalidTelephoneNumberFormat : 不正な telephone number です
 	InvalidTelephoneNumberFormat = "user-00012"
+	// RequiredLoginArgs : RequiredLoginArgs は必須です
+	RequiredLoginArgs = "user-00013"
 )

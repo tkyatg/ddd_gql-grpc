@@ -65,6 +65,10 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48 h1:eGsyHdkhNoIFZqLxc3Imyj19Q/LS0sstH6OdIY6byjg=
 github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
+github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a h1:T+BUXQEmrdeX0BdPnGStPyq+9BdhZs6cC8NpZDuVrrI=
+github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
+github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
+github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=

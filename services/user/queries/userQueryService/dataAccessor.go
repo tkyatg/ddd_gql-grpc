@@ -1,6 +1,8 @@
 package userqueryservice
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -20,17 +22,21 @@ SELECT user_uuid
      , email
      , password
      , telephone_number
-     , gender
+	 , gender
+	 , created_at
+	 , updated_at
 FROM users.users
 WHERE user_uuid = ?
 `
 	var rslt struct {
-		UserUUID        string `db:"user_uuid"`
-		Name            string `db:"name"`
-		Email           string `db:"email"`
-		Password        string `db:"password"`
-		TelephoneNumber string `db:"telephone_number"`
-		Gender          int64  `db:"gender"`
+		UserUUID        string    `db:"user_uuid"`
+		Name            string    `db:"name"`
+		Email           string    `db:"email"`
+		Password        string    `db:"password"`
+		TelephoneNumber string    `db:"telephone_number"`
+		Gender          int64     `db:"gender"`
+		CreatedAt       time.Time `db:"created_at"`
+		UpdatedAt       time.Time `db:"updated_at"`
 	}
 
 	d.db.Raw(sql, req.userUUID).Scan(&rslt)
@@ -42,5 +48,46 @@ WHERE user_uuid = ?
 		password:        rslt.Password,
 		telephoneNumber: rslt.TelephoneNumber,
 		gender:          rslt.Gender,
+		createdAt:       rslt.CreatedAt,
+		updatedAt:       rslt.UpdatedAt,
+	}, nil
+}
+
+func (d *dataAccessor) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
+	sql := `
+SELECT user_uuid
+     , name
+     , email
+     , password
+     , telephone_number
+	 , gender
+	 , created_at
+	 , updated_at
+FROM users.users
+WHERE email = ?
+  AND password = ?
+`
+	var rslt struct {
+		UserUUID        string    `db:"user_uuid"`
+		Name            string    `db:"name"`
+		Email           string    `db:"email"`
+		Password        string    `db:"password"`
+		TelephoneNumber string    `db:"telephone_number"`
+		Gender          int64     `db:"gender"`
+		CreatedAt       time.Time `db:"created_at"`
+		UpdatedAt       time.Time `db:"updated_at"`
+	}
+
+	d.db.Raw(sql, req.email, req.password).Scan(&rslt)
+
+	return getByEmailAndPasswordResponse{
+		userUUID:        rslt.UserUUID,
+		name:            rslt.Name,
+		email:           rslt.Email,
+		password:        rslt.Password,
+		telephoneNumber: rslt.TelephoneNumber,
+		gender:          rslt.Gender,
+		createdAt:       rslt.CreatedAt,
+		updatedAt:       rslt.UpdatedAt,
 	}, nil
 }
