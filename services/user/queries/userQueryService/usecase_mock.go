@@ -47,6 +47,21 @@ func (mr *MockUsecaseMockRecorder) getByID(req interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByID", reflect.TypeOf((*MockUsecase)(nil).getByID), req)
 }
 
+// getByEmailAndPassword mocks base method
+func (m *MockUsecase) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "getByEmailAndPassword", req)
+	ret0, _ := ret[0].(getByEmailAndPasswordResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// getByEmailAndPassword indicates an expected call of getByEmailAndPassword
+func (mr *MockUsecaseMockRecorder) getByEmailAndPassword(req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByEmailAndPassword", reflect.TypeOf((*MockUsecase)(nil).getByEmailAndPassword), req)
+}
+
 // MockDataAccessor is a mock of DataAccessor interface
 type MockDataAccessor struct {
 	ctrl     *gomock.Controller
@@ -83,4 +98,19 @@ func (m *MockDataAccessor) getByID(req getByIDRequest) (getByIDResponse, error) 
 func (mr *MockDataAccessorMockRecorder) getByID(req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByID", reflect.TypeOf((*MockDataAccessor)(nil).getByID), req)
+}
+
+// getByEmailAndPassword mocks base method
+func (m *MockDataAccessor) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "getByEmailAndPassword", req)
+	ret0, _ := ret[0].(getByEmailAndPasswordResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// getByEmailAndPassword indicates an expected call of getByEmailAndPassword
+func (mr *MockDataAccessorMockRecorder) getByEmailAndPassword(req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByEmailAndPassword", reflect.TypeOf((*MockDataAccessor)(nil).getByEmailAndPassword), req)
 }
