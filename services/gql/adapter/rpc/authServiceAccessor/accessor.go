@@ -8,7 +8,8 @@ import (
 
 type (
 	serviceAccessor struct {
-		authQueryClient definition.AuthQueryServiceClient
+		authQuery             definition.AuthQueryServiceClient
+		authenticationCommand definition.AuthenticationCommandServiceClient
 	}
 	// ServiceAccessor interface
 	ServiceAccessor interface {
@@ -18,12 +19,14 @@ type (
 )
 
 // NewAuthServiceAccessor func
-func NewAuthServiceAccessor(authQueryClient definition.AuthQueryServiceClient) ServiceAccessor {
-	return &serviceAccessor{authQueryClient}
+func NewAuthServiceAccessor(authQueryClient definition.AuthQueryServiceClient, authenticationCommandServiceClient definition.AuthenticationCommandServiceClient) ServiceAccessor {
+	return &serviceAccessor{
+		authQuery:             authQueryClient,
+		authenticationCommand: authenticationCommandServiceClient}
 }
 
 func (r *serviceAccessor) GenToken(ctx context.Context, req GenTokenRequest) (GenTokenResponse, error) {
-	res, err := r.authQueryClient.GenToken(ctx, &definition.GenTokenRequest{
+	res, err := r.authQuery.GenToken(ctx, &definition.GenTokenRequest{
 		Uuid: req.UUID,
 	})
 	if err != nil {
@@ -32,12 +35,25 @@ func (r *serviceAccessor) GenToken(ctx context.Context, req GenTokenRequest) (Ge
 
 	return GenTokenResponse{
 		TokenPair: TokenPair{
-			AccessToken:  res.GetToken(),
+			AccessToken:  res.GetAccessToken(),
 			RefreshToken: res.GetRefreshToken(),
 		},
 	}, nil
 }
 
 func (r *serviceAccessor) Login(ctx context.Context, req LoginRequest) (LoginResponse, error) {
-	return LoginResponse{}, nil
+	res, err := r.authenticationCommand.Login(ctx, &definition.LoginRequest{
+		Email:    req.Email,
+		Password: req.Password,
+	})
+	if err != nil {
+		return LoginResponse{}, err
+	}
+
+	return LoginResponse{
+		TokenPair: TokenPair{
+			AccessToken:  res.GetAccessToken(),
+			RefreshToken: res.GetRefreshToken(),
+		},
+	}, nil
 }
