@@ -1,4 +1,15 @@
 type TokenPair{
-  token: String!
+  accessToken: String!
   refreshToken: String!
+}
+extend type Mutation {
+  login(input: loginRequest!): loginResponse!
+}
+
+input loginRequest{
+  email: String!
+  password: String!
+}
+type loginResponse{
+  tokenPair:TokenPair!
 }

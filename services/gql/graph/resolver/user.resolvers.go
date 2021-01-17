@@ -24,14 +24,17 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		return nil, err
 	}
 
-	tokenPair, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.CreateUserResponse{
-		UUID:      uuid,
-		TokenPair: tokenPair,
+		UUID: uuid,
+		TokenPair: &model.TokenPair{
+			AccessToken:  token.TokenPair.AccessToken,
+			RefreshToken: token.TokenPair.RefreshToken,
+		},
 	}, nil
 }
 
@@ -48,14 +51,17 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 		return nil, err
 	}
 
-	tokenPair, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.UpdateUserResponse{
-		UUID:      uuid,
-		TokenPair: tokenPair,
+		UUID: uuid,
+		TokenPair: &model.TokenPair{
+			AccessToken:  token.TokenPair.AccessToken,
+			RefreshToken: token.TokenPair.RefreshToken,
+		},
 	}, nil
 }
 
@@ -75,11 +81,7 @@ func (r *queryResolver) GetUserByID(ctx context.Context, input model.GetUserByID
 	return r.userServiceAccessor.GetByID(ctx, input.UUID)
 }
 
-// Mutation returns generated.MutationResolver implementation.
-func (r *resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
-
 // Query returns generated.QueryResolver implementation.
 func (r *resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
-type mutationResolver struct{ *resolver }
 type queryResolver struct{ *resolver }

@@ -1,4 +1,0 @@
-# github.com/takuya911/project-services/services/auth/adapter/rpc
-adapter/rpc/register.go:12:49: not enough arguments in call to authqueryservice.NewUsecase
-	have ()
-	want (shared.Token)

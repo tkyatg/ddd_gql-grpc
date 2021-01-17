@@ -28,7 +28,7 @@ type DeleteUserResponse struct {
 }
 
 type TokenPair struct {
-	Token        string `json:"token"`
+	AccessToken  string `json:"accessToken"`
 	RefreshToken string `json:"refreshToken"`
 }
 
@@ -63,4 +63,13 @@ type GetUserByIDRequest struct {
 
 type GetUserByIDResponse struct {
 	User *User `json:"user"`
+}
+
+type LoginRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type LoginResponse struct {
+	TokenPair *TokenPair `json:"tokenPair"`
 }
