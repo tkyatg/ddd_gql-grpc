@@ -106,6 +106,8 @@ github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48 
 github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a h1:T+BUXQEmrdeX0BdPnGStPyq+9BdhZs6cC8NpZDuVrrI=
 github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
+github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
+github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/urfave/cli/v2 v2.1.1 h1:Qt8FeAtxE/vfdrLmR3rxR6JRE0RoVmbXu8+6kZtYU4k=
 github.com/urfave/cli/v2 v2.1.1/go.mod h1:SE9GqnLQmjVa0iPEY0f1w3ygNIYcIJ0OKPMoW2caLfQ=
 github.com/vektah/dataloaden v0.2.1-0.20190515034641-a19b9a6e7c9e h1:+w0Zm/9gaWpEAyDlU1eKOuk5twTjAjuevXqcJJw8hrg=

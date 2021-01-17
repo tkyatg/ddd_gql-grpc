@@ -34,8 +34,8 @@ type (
 		Password        string
 		TelephoneNumber string
 		Gender          int64
-		CreatedAt       string
-		UpdatedAt       string
+		CreatedAt       *timestamppb.Timestamp
+		UpdatedAt       *timestamppb.Timestamp
 	}
 
 	// CreateUserRequest struct

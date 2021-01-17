@@ -71,5 +71,6 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
+	UUID      string     `json:"uuid"`
 	TokenPair *TokenPair `json:"tokenPair"`
 }

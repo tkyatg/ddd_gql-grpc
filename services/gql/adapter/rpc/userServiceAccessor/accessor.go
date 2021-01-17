@@ -47,9 +47,27 @@ func (r *serviceAccessor) GetByID(ctx context.Context, req GetByIDRequest) (GetB
 		UpdatedAt:       res.GetUpdatedAt(),
 	}, nil
 }
+
 func (r *serviceAccessor) GetByEmailAndPassword(ctx context.Context, req GetByEmailAndPasswordRequest) (GetByEmailAndPasswordResponse, error) {
 
-	return GetByEmailAndPasswordResponse{}, nil
+	res, err := r.userQueryClient.GetByEmailAndPassword(ctx, &definition.GetByEmailAndPasswordRequest{
+		Email:    req.Email,
+		Password: req.Password,
+	})
+	if err != nil {
+		return GetByEmailAndPasswordResponse{}, err
+	}
+
+	return GetByEmailAndPasswordResponse{
+		UUID:            res.GetUuid(),
+		Name:            res.GetName(),
+		Email:           res.GetEmail(),
+		Password:        res.GetPassword(),
+		TelephoneNumber: res.GetTelephoneNumber(),
+		Gender:          res.GetGender(),
+		CreatedAt:       res.GetCreatedAt(),
+		UpdatedAt:       res.GetUpdatedAt(),
+	}, nil
 }
 
 func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (CreateUserResponse, error) {

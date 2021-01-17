@@ -91,6 +91,7 @@ type ComplexityRoot struct {
 
 	LoginResponse struct {
 		TokenPair func(childComplexity int) int
+		UUID      func(childComplexity int) int
 	}
 }
 
@@ -298,6 +299,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LoginResponse.TokenPair(childComplexity), true
 
+	case "loginResponse.uuid":
+		if e.complexity.LoginResponse.UUID == nil {
+			break
+		}
+
+		return e.complexity.LoginResponse.UUID(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -375,6 +383,7 @@ input loginRequest{
   password: String!
 }
 type loginResponse{
+  uuid: String!
   tokenPair:TokenPair!
 }`, BuiltIn: false},
 	{Name: "graph/schema/user.graphql", Input: `scalar Time
@@ -2489,6 +2498,41 @@ func (ec *executionContext) _getUserByIDResponse_user(ctx context.Context, field
 	return ec.marshalNUser2ᚖgithubᚗcomᚋtakuya911ᚋprojectᚑservicesᚋservicesᚋgqlᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _loginResponse_uuid(ctx context.Context, field graphql.CollectedField, obj *model.LoginResponse) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "loginResponse",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _loginResponse_tokenPair(ctx context.Context, field graphql.CollectedField, obj *model.LoginResponse) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3261,6 +3305,11 @@ func (ec *executionContext) _loginResponse(ctx context.Context, sel ast.Selectio
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("loginResponse")
+		case "uuid":
+			out.Values[i] = ec._loginResponse_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "tokenPair":
 			out.Values[i] = ec._loginResponse_tokenPair(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

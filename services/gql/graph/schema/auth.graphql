@@ -11,5 +11,6 @@ input loginRequest{
   password: String!
 }
 type loginResponse{
+  uuid: String!
   tokenPair:TokenPair!
 }

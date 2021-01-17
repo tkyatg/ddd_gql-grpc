@@ -2,19 +2,19 @@ package shared
 
 const (
 	// RequiredUserUUID : User ID は必須です
-	RequiredUserUUID = "user-00001"
+	RequiredUserUUID = "auth-00001"
 	// InvalidUUIDFormat : 不正な UUID です
-	InvalidUUIDFormat = "user-00002"
+	InvalidUUIDFormat = "auth-00002"
 	// RequiredPassword : Password は必須です
-	RequiredPassword = "user-00003"
+	RequiredPassword = "auth-00003"
 	// RequiredEmail : Email は必須です
-	RequiredEmail = "user-00004"
+	RequiredEmail = "auth-00004"
 	// InvalidPasswordLength : Password の長さが不正です
-	InvalidPasswordLength = "user-00005"
+	InvalidPasswordLength = "auth-00005"
 	// InvalidEmailLength : Email の長さが不正です
-	InvalidEmailLength = "user-00006"
+	InvalidEmailLength = "auth-00006"
 	// InvalidEmailFormat : 不正な Email です
-	InvalidEmailFormat = "user-00007"
+	InvalidEmailFormat = "auth-00007"
 	// PasswordIsIncorrect : パスワードが誤っています
-	PasswordIsIncorrect = "user-00008"
+	PasswordIsIncorrect = "auth-00008"
 )
