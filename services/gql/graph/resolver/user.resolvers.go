@@ -13,7 +13,7 @@ import (
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUserRequest) (*model.CreateUserResponse, error) {
-	uuid, err := r.userServiceAccessor.Create(ctx, userserviceaccessor.CreateUserRequest{
+	res, err := r.userServiceAccessor.Create(ctx, userserviceaccessor.CreateUserRequest{
 		Name:            input.Name,
 		Email:           input.Email,
 		Password:        input.Password,
@@ -24,13 +24,13 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		return nil, err
 	}
 
-	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.CreateUserResponse{
-		UUID: uuid,
+		UUID: res.UUID,
 		TokenPair: &model.TokenPair{
 			AccessToken:  token.TokenPair.AccessToken,
 			RefreshToken: token.TokenPair.RefreshToken,
@@ -39,7 +39,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUserRequest) (*model.UpdateUserResponse, error) {
-	uuid, err := r.userServiceAccessor.Update(ctx, userserviceaccessor.UpdateUserRequest{
+	res, err := r.userServiceAccessor.Update(ctx, userserviceaccessor.UpdateUserRequest{
 		UUID:            input.UUID,
 		Name:            input.Name,
 		Email:           input.Email,
@@ -51,13 +51,13 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 		return nil, err
 	}
 
-	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: uuid})
+	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.UpdateUserResponse{
-		UUID: uuid,
+		UUID: res.UUID,
 		TokenPair: &model.TokenPair{
 			AccessToken:  token.TokenPair.AccessToken,
 			RefreshToken: token.TokenPair.RefreshToken,
@@ -72,13 +72,32 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, input model.DeleteUse
 	if err != nil {
 		return nil, err
 	}
+
 	return &model.DeleteUserResponse{
-		UUID: res,
+		UUID: res.UUID,
 	}, nil
 }
 
 func (r *queryResolver) GetUserByID(ctx context.Context, input model.GetUserByIDRequest) (*model.GetUserByIDResponse, error) {
-	return r.userServiceAccessor.GetByID(ctx, input.UUID)
+	res, err := r.userServiceAccessor.GetByID(ctx, userserviceaccessor.GetByIDRequest{
+		UUID: input.UUID,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.GetUserByIDResponse{
+		User: &model.User{
+			UUID:            res.UUID,
+			Name:            res.Name,
+			Email:           res.Email,
+			Password:        res.Password,
+			TelephoneNumber: res.TelephoneNumber,
+			Gender:          res.Gender,
+			CreatedAt:       res.CreatedAt,
+			UpdatedAt:       res.UpdatedAt,
+		},
+	}, nil
 }
 
 // Query returns generated.QueryResolver implementation.

@@ -3,7 +3,6 @@ package userserviceaccessor
 import (
 	"context"
 
-	"github.com/takuya911/project-services/services/gql/graph/model"
 	definition "github.com/takuya911/project-user-definition"
 )
 
@@ -14,10 +13,11 @@ type (
 	}
 	// ServiceAccessor interface
 	ServiceAccessor interface {
-		GetByID(ctx context.Context, uuid string) (*model.GetUserByIDResponse, error)
-		Create(ctx context.Context, req CreateUserRequest) (string, error)
-		Update(ctx context.Context, req UpdateUserRequest) (string, error)
-		Delete(ctx context.Context, req DeleteUserRequest) (string, error)
+		GetByID(ctx context.Context, req GetByIDRequest) (GetByIDResponse, error)
+		GetByEmailAndPassword(ctx context.Context, req GetByEmailAndPasswordRequest) (GetByEmailAndPasswordResponse, error)
+		Create(ctx context.Context, req CreateUserRequest) (CreateUserResponse, error)
+		Update(ctx context.Context, req UpdateUserRequest) (UpdateUserResponse, error)
+		Delete(ctx context.Context, req DeleteUserRequest) (DeleteUserResponse, error)
 	}
 )
 
@@ -28,15 +28,15 @@ func NewUserServiceAccessor(
 	return &serviceAccessor{userQueryClient, userCommnadClient}
 }
 
-func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetUserByIDResponse, error) {
+func (r *serviceAccessor) GetByID(ctx context.Context, req GetByIDRequest) (GetByIDResponse, error) {
 	res, err := r.userQueryClient.GetByID(ctx, &definition.GetByIDRequest{
-		Uuid: uuid,
+		Uuid: req.UUID,
 	})
 	if err != nil {
-		return nil, err
+		return GetByIDResponse{}, err
 	}
 
-	return &model.GetUserByIDResponse{User: &model.User{
+	return GetByIDResponse{
 		UUID:            res.GetUuid(),
 		Name:            res.GetName(),
 		Email:           res.GetEmail(),
@@ -45,10 +45,14 @@ func (r *serviceAccessor) GetByID(ctx context.Context, uuid string) (*model.GetU
 		Gender:          res.GetGender(),
 		CreatedAt:       res.GetCreatedAt(),
 		UpdatedAt:       res.GetUpdatedAt(),
-	}}, nil
+	}, nil
+}
+func (r *serviceAccessor) GetByEmailAndPassword(ctx context.Context, req GetByEmailAndPasswordRequest) (GetByEmailAndPasswordResponse, error) {
+
+	return GetByEmailAndPasswordResponse{}, nil
 }
 
-func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (string, error) {
+func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (CreateUserResponse, error) {
 	res, err := r.userCommnadClient.Create(ctx, &definition.CreateRequest{
 		Name:            req.Name,
 		Email:           req.Email,
@@ -57,12 +61,14 @@ func (r *serviceAccessor) Create(ctx context.Context, req CreateUserRequest) (st
 		Gender:          req.Gender,
 	})
 	if err != nil {
-		return "", err
+		return CreateUserResponse{}, err
 	}
-	return res.Uuid, err
+	return CreateUserResponse{
+		UUID: res.Uuid,
+	}, err
 }
 
-func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (string, error) {
+func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (UpdateUserResponse, error) {
 	res, err := r.userCommnadClient.Update(ctx, &definition.UpdateRequest{
 		Uuid:            req.UUID,
 		Name:            req.Name,
@@ -72,17 +78,21 @@ func (r *serviceAccessor) Update(ctx context.Context, req UpdateUserRequest) (st
 		Gender:          req.Gender,
 	})
 	if err != nil {
-		return "", err
+		return UpdateUserResponse{}, err
 	}
-	return res.Uuid, err
+	return UpdateUserResponse{
+		UUID: res.Uuid,
+	}, err
 }
 
-func (r *serviceAccessor) Delete(ctx context.Context, req DeleteUserRequest) (string, error) {
+func (r *serviceAccessor) Delete(ctx context.Context, req DeleteUserRequest) (DeleteUserResponse, error) {
 	res, err := r.userCommnadClient.Delete(ctx, &definition.DeleteRequest{
 		Uuid: req.UUID,
 	})
 	if err != nil {
-		return "", err
+		return DeleteUserResponse{}, err
 	}
-	return res.Uuid, err
+	return DeleteUserResponse{
+		UUID: res.Uuid,
+	}, err
 }
