@@ -30,13 +30,15 @@ func NewResolver(ctx context.Context, env shared.Env) generated.ResolverRoot {
 	userCommandClient := userdefinition.NewUserCommandServiceClient(userConn)
 	userServiceAccessor := userserviceaccessor.NewUserServiceAccessor(userQueryClient, userCommandClient)
 
-	// user service
+	// auth service
 	authConn, err := grpc.DialContext(ctx, env.GetAuthServerName()+":"+env.GetAuthServerPort(), opts...)
 	if err != nil {
 		panic(err)
 	}
 	authQueryClient := authdefinition.NewAuthQueryServiceClient(authConn)
-	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient)
+	authenticationCommand := authdefinition.NewAuthenticationCommandServiceClient(authConn)
+
+	authServiceAccessor := authserviceaccessor.NewAuthServiceAccessor(authQueryClient, authenticationCommand)
 
 	return &resolver{
 		userServiceAccessor,
