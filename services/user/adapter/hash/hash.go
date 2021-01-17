@@ -1,6 +1,8 @@
 package hash
 
 import (
+	"errors"
+
 	"github.com/takuya911/project-services/services/user/shared"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -22,4 +24,12 @@ func (h *hash) GenEncryptedPassword(password string) (string, error) {
 		return "", err
 	}
 	return string(hash), nil
+}
+
+// CompareHashAndPass func
+func (h *hash) CompareHashAndPass(dbPassword string, formPassword string) error {
+	if err := bcrypt.CompareHashAndPassword([]byte(dbPassword), []byte(formPassword)); err != nil {
+		return errors.New(shared.PasswordIsIncorrect)
+	}
+	return nil
 }

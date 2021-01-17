@@ -13,7 +13,7 @@ func (s *server) registerServices(dbConnection *gorm.DB) {
 	hash := hash.NewHash()
 	// user query service
 	userQueryDataAccessor := userqueryservice.NewDataAccessor(dbConnection)
-	userQueryUsecase := userqueryservice.NewUsecase(userQueryDataAccessor)
+	userQueryUsecase := userqueryservice.NewUsecase(userQueryDataAccessor, hash)
 	userQueryServer := userqueryservice.NewServer(userQueryUsecase)
 
 	// user command service

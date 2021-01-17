@@ -65,7 +65,6 @@ SELECT user_uuid
 	 , updated_at
 FROM users.users
 WHERE email = ?
-  AND password = ?
 `
 	var rslt struct {
 		UserUUID        string    `db:"user_uuid"`
@@ -78,7 +77,7 @@ WHERE email = ?
 		UpdatedAt       time.Time `db:"updated_at"`
 	}
 
-	d.db.Raw(sql, req.email, req.password).Scan(&rslt)
+	d.db.Raw(sql, req.email).Scan(&rslt)
 
 	return getByEmailAndPasswordResponse{
 		userUUID:        rslt.UserUUID,

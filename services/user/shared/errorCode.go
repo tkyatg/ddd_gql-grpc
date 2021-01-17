@@ -27,4 +27,6 @@ const (
 	InvalidTelephoneNumberFormat = "user-00012"
 	// RequiredLoginArgs : RequiredLoginArgs は必須です
 	RequiredLoginArgs = "user-00013"
+	// PasswordIsIncorrect : パスワードが誤っています
+	PasswordIsIncorrect = "user-00014"
 )

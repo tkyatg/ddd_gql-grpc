@@ -1,10 +1,15 @@
 package userqueryservice
 
-import "time"
+import (
+	"time"
+
+	"github.com/takuya911/project-services/services/user/shared"
+)
 
 type (
 	usecase struct {
-		da DataAccessor
+		da   DataAccessor
+		hash shared.Hash
 	}
 	getByIDRequest struct {
 		userUUID string
@@ -46,8 +51,8 @@ type (
 )
 
 // NewUsecase function
-func NewUsecase(da DataAccessor) Usecase {
-	return &usecase{da}
+func NewUsecase(da DataAccessor, hash shared.Hash) Usecase {
+	return &usecase{da, hash}
 }
 
 func (uc *usecase) getByID(req getByIDRequest) (getByIDResponse, error) {
@@ -55,5 +60,13 @@ func (uc *usecase) getByID(req getByIDRequest) (getByIDResponse, error) {
 }
 
 func (uc *usecase) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
-	return uc.da.getByEmailAndPassword(req)
+	res, err := uc.da.getByEmailAndPassword(req)
+	if err != nil {
+		return getByEmailAndPasswordResponse{}, err
+	}
+	if err := uc.hash.CompareHashAndPass(res.password, req.password); err != nil {
+		return getByEmailAndPasswordResponse{}, err
+	}
+
+	return res, nil
 }
