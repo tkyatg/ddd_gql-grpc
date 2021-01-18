@@ -1,3 +1,5 @@
+gen-mock:
+	mockgen -source queries/authQueryService/usecase.go -destination  queries/authQueryService/usecase_mock.go -package authqueryservice
 test:
 	go test -race -covermode=atomic ./... -test.v
 migrationfile:
