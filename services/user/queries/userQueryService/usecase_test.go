@@ -3,11 +3,13 @@ package userqueryservice
 import (
 	"errors"
 	"testing"
+	"time"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
+	"github.com/takuya911/project-services/services/user/adapter/hash"
 )
 
 type usecaseTestHelper struct {
@@ -19,7 +21,8 @@ type usecaseTestHelper struct {
 func newUsecaseTestHelper(t *testing.T) *usecaseTestHelper {
 	ctrl := gomock.NewController(t)
 	da := NewMockDataAccessor(ctrl)
-	uc := NewUsecase(da)
+	hash := hash.NewHash()
+	uc := NewUsecase(da, hash)
 
 	return &usecaseTestHelper{
 		ctrl: ctrl,
@@ -34,6 +37,8 @@ func TestUsecaseGetUserByID(t *testing.T) {
 	req := getByIDRequest{
 		userUUID: uuid.New().String(),
 	}
+	createdAt := time.Now()
+	updatedAt := time.Now()
 
 	h.da.EXPECT().getByID(req).Return(getByIDResponse{
 		userUUID:        req.userUUID,
@@ -42,6 +47,8 @@ func TestUsecaseGetUserByID(t *testing.T) {
 		password:        "password",
 		telephoneNumber: "0909090909090",
 		gender:          1,
+		createdAt:       createdAt,
+		updatedAt:       updatedAt,
 	}, nil)
 
 	res, err := h.uc.getByID(req)
@@ -59,6 +66,8 @@ func TestUsecaseGetUserByID(t *testing.T) {
 		password:        "password",
 		telephoneNumber: "0909090909090",
 		gender:          1,
+		createdAt:       createdAt,
+		updatedAt:       updatedAt,
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
 	}
@@ -70,6 +79,9 @@ func TestUsecaseGetUserByIDERROR01(t *testing.T) {
 	req := getByIDRequest{
 		userUUID: uuid.New().String(),
 	}
+	createdAt := time.Now()
+	updatedAt := time.Now()
+
 	err := errors.New("error")
 	h.da.EXPECT().getByID(req).Return(getByIDResponse{
 		userUUID:        req.userUUID,
@@ -78,6 +90,8 @@ func TestUsecaseGetUserByIDERROR01(t *testing.T) {
 		password:        "password",
 		telephoneNumber: "0909090909090",
 		gender:          1,
+		createdAt:       createdAt,
+		updatedAt:       updatedAt,
 	}, err)
 
 	_, getByIDErr := h.uc.getByID(req)

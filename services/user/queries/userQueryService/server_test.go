@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
@@ -39,6 +40,8 @@ func TestServerGetByID(t *testing.T) {
 	req := getByIDRequest{
 		userUUID: uuid.New().String(),
 	}
+	createdAt := time.Now()
+	updatedAt := time.Now()
 	h.uc.EXPECT().getByID(req).Return(getByIDResponse{
 		userUUID:        req.userUUID,
 		name:            "name",
@@ -46,6 +49,8 @@ func TestServerGetByID(t *testing.T) {
 		password:        "password",
 		telephoneNumber: "0909090909090",
 		gender:          1,
+		createdAt:       createdAt,
+		updatedAt:       updatedAt,
 	}, nil)
 
 	res, err := h.sv.GetByID(h.ctx, &definition.GetByIDRequest{
@@ -63,7 +68,14 @@ func TestServerGetByID(t *testing.T) {
 		Password:        "password",
 		TelephoneNumber: "0909090909090",
 		Gender:          1,
-	}, res, opts); diff != "" {
+	}, &definition.GetByIDResponse{
+		Uuid:            res.Uuid,
+		Name:            res.Name,
+		Email:           res.Email,
+		Password:        res.Password,
+		TelephoneNumber: res.TelephoneNumber,
+		Gender:          res.Gender,
+	}, opts); diff != "" {
 		t.Fatal(diff)
 	}
 
