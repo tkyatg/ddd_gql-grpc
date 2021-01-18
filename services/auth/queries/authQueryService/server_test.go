@@ -41,7 +41,7 @@ func TestServerGenToken(t *testing.T) {
 	h.uc.EXPECT().genToken(genTokenRequest{
 		userUUID: uUUID.String(),
 	}).Return(genTokenResponse{
-		token:        "token",
+		accessToken:  "accessToken",
 		refreshToken: "refreshToken",
 	}, nil)
 
@@ -54,7 +54,7 @@ func TestServerGenToken(t *testing.T) {
 
 	opts := cmp.Options{}
 	if diff := cmp.Diff(&definition.GenTokenResponse{
-		AccessToken:  "token",
+		AccessToken:  "accessToken",
 		RefreshToken: "refreshToken",
 	}, res, opts); diff != "" {
 		t.Fatal(diff)
