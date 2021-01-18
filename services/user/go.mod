@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20200620013148-b91950f658ec // indirect
 	github.com/golang/mock v1.4.4
-	github.com/golang/protobuf v1.4.3
+	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/go-cmp v0.5.1
 	github.com/google/uuid v1.1.2
 	github.com/jinzhu/gorm v1.9.16

@@ -63,10 +63,6 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
-github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48 h1:eGsyHdkhNoIFZqLxc3Imyj19Q/LS0sstH6OdIY6byjg=
-github.com/takuya911/project-user-definition v0.0.0-20210111121350-95ca1a79dd48/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
-github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a h1:T+BUXQEmrdeX0BdPnGStPyq+9BdhZs6cC8NpZDuVrrI=
-github.com/takuya911/project-user-definition v0.0.0-20210117103448-bb9a492f805a/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
 github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
@@ -75,7 +71,6 @@ golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd/go.mod h1:LzIPMQfyMNhhGPh
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 h1:DZhuSZLsGlFL4CmhA8BcRA0mnthyA/nZ00AqCUo7vHg=
 golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
-golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad h1:DN0cp81fZ3njFcrLCytUHRSUkqBjfTo4Tx9RJTWs0EY=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
 golang.org/x/lint v0.0.0-20190227174305-5b3e6a55c961/go.mod h1:wehouNa3lNwaWXcvxsM5YxQ5yQlVC4a0KAMCusXpPoU=
