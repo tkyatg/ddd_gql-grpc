@@ -12,7 +12,7 @@ type (
 		userUUID string
 	}
 	genTokenResponse struct {
-		token        string
+		accessToken  string
 		refreshToken string
 	}
 	// Usecase interface
@@ -32,7 +32,7 @@ func (uc *usecase) genToken(req genTokenRequest) (genTokenResponse, error) {
 		return genTokenResponse{}, err
 	}
 	return genTokenResponse{
-		token:        accessToken,
+		accessToken:  accessToken,
 		refreshToken: refreshToken,
 	}, nil
 }

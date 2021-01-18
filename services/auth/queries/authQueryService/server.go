@@ -31,7 +31,7 @@ func (s *server) GenToken(ctx context.Context, req *definition.GenTokenRequest) 
 		return nil, err
 	}
 	return &definition.GenTokenResponse{
-		AccessToken:  tokenPair.token,
+		AccessToken:  tokenPair.accessToken,
 		RefreshToken: tokenPair.refreshToken,
 	}, nil
 }
