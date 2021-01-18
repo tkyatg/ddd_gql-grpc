@@ -20,32 +20,3 @@ func TestVoParseUserUUID(t *testing.T) {
 		t.Fatal(userUUID, err)
 	}
 }
-
-func TestVoParsePassword(t *testing.T) {
-	t.Parallel()
-	if password, err := ParsePassword(""); password != "" && err != errors.New(shared.RequiredPassword) {
-		t.Fatal(password, err)
-	}
-	if password, err := ParsePassword("111111"); password != "" && err != errors.New(shared.InvalidPasswordLength) {
-		t.Fatal(password, err)
-	}
-	if password, err := ParsePassword("gdpspvls"); password == "" || err != nil {
-		t.Fatal(password, err)
-	}
-}
-
-func TestVoParseEmail(t *testing.T) {
-	t.Parallel()
-	if email, err := ParseEmail(""); email != "" && err != errors.New(shared.RequiredEmail) {
-		t.Fatal(email, err)
-	}
-	if email, err := ParseEmail("e@"); email != "" && err != errors.New(shared.InvalidEmailLength) {
-		t.Fatal(email, err)
-	}
-	if email, err := ParseEmail("testgmail.com"); email != "" && err != errors.New(shared.InvalidEmailFormat) {
-		t.Fatal(email, err)
-	}
-	if email, err := ParsePassword("test@gmail.com"); email == "" || err != nil {
-		t.Fatal(email, err)
-	}
-}
