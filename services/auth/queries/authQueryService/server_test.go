@@ -35,41 +35,27 @@ func newServerTestHelper(t *testing.T) *serverTestHelper {
 func TestServerGenToken(t *testing.T) {
 	h := newServerTestHelper(t)
 	defer h.ctrl.Finish()
-	cases := []struct {
-		name   string
-		uUUID  uuid.UUID
-		expect *definition.GenTokenResponse
-	}{
-		{
-			name:  "normal",
-			uUUID: uuid.New(),
-			expect: &definition.GenTokenResponse{
-				AccessToken:  "accessToken",
-				RefreshToken: "refreshToken",
-			},
-		},
+	uUUID := uuid.New()
+	h.uc.EXPECT().genToken(genTokenRequest{
+		userUUID: uUUID.String(),
+	}).Return(genTokenResponse{
+		accessToken:  "accessToken",
+		refreshToken: "refreshToken",
+	}, nil)
+
+	res, err := h.sv.GenToken(h.ctx, &definition.GenTokenRequest{
+		Uuid: uUUID.String(),
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
-			h.uc.EXPECT().genToken(genTokenRequest{
-				userUUID: c.uUUID.String(),
-			}).Return(genTokenResponse{
-				accessToken:  "accessToken",
-				refreshToken: "refreshToken",
-			}, nil)
 
-			res, err := h.sv.GenToken(h.ctx, &definition.GenTokenRequest{
-				Uuid: c.uUUID.String(),
-			})
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			opts := cmp.Options{}
-			if diff := cmp.Diff(c.expect, res, opts); diff != "" {
-				t.Fatal(diff)
-			}
-		})
+	opts := cmp.Options{}
+	if diff := cmp.Diff(&definition.GenTokenResponse{
+		AccessToken:  "accessToken",
+		RefreshToken: "refreshToken",
+	}, res, opts); diff != "" {
+		t.Fatal(diff)
 	}
 }
 
