@@ -63,3 +63,36 @@ delete from users.users
 	}
 	return nil
 }
+
+func (d userDataAccessor) emailAlreadyUsedCreate(email Email) (bool, error) {
+	sql := `
+select exists (
+       select user_uuid from users.users
+        where email= ?;
+)
+`
+	var rslt struct {
+		Exist bool `db:"exist"`
+	}
+	if result := d.db.Raw(sql, email).Scan(&rslt); result.Error != nil {
+		return true, result.Error
+	}
+	return rslt.Exist, nil
+}
+
+func (d userDataAccessor) emailAlreadyUsedUpdate(id UserUUID, email Email) (bool, error) {
+	sql := `
+select exists (
+       select user_uuid from users.users
+        where email= ?
+          and user_uuid != ?;
+)
+`
+	var rslt struct {
+		Exist bool `db:"exist"`
+	}
+	if result := d.db.Raw(sql, email, id).Scan(&rslt); result.Error != nil {
+		return true, result.Error
+	}
+	return rslt.Exist, nil
+}

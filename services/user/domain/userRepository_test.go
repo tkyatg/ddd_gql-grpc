@@ -5,6 +5,8 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/takuya911/project-services/services/user/shared"
+
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -37,6 +39,7 @@ func TestRepositoryCreate(t *testing.T) {
 	defer h.ctrl.Finish()
 
 	uUUID := uuid.New()
+	h.da.EXPECT().emailAlreadyUsedCreate(Email("test@gmail.com")).Return(false, nil)
 
 	h.da.EXPECT().create(UserAttributes{
 		name:            UserName("name"),
@@ -73,6 +76,9 @@ func TestRepositoryCreateEROOR01(t *testing.T) {
 	uUUID := uuid.New()
 
 	err := errors.New("error")
+
+	h.da.EXPECT().emailAlreadyUsedCreate(Email("test@gmail.com")).Return(false, nil)
+
 	h.da.EXPECT().create(UserAttributes{
 		name:            UserName("name"),
 		email:           Email("test@gmail.com"),
@@ -93,11 +99,53 @@ func TestRepositoryCreateEROOR01(t *testing.T) {
 	}
 }
 
+func TestRepositoryCreateEROOR02(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	err := errors.New("error")
+
+	h.da.EXPECT().emailAlreadyUsedCreate(Email("test@gmail.com")).Return(false, err)
+
+	_, createErr := h.repo.Create(UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err != createErr {
+		t.Fatal(createErr)
+	}
+}
+
+func TestRepositoryCreateEROOR03(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	h.da.EXPECT().emailAlreadyUsedCreate(Email("test@gmail.com")).Return(true, nil)
+	err := errors.New(shared.EmailAlreadyUsed)
+
+	_, createErr := h.repo.Create(UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+
+	if err.Error() != createErr.Error() {
+		t.Fatal(createErr)
+	}
+}
+
 func TestRepositoryUpdate(t *testing.T) {
 	h := newUserRepositoryTestHelper(t)
 	defer h.ctrl.Finish()
 
 	uUUID := uuid.New()
+
+	h.da.EXPECT().emailAlreadyUsedUpdate(UserUUID(uUUID.String()), Email("test@gmail.com")).Return(false, nil)
 
 	h.da.EXPECT().update(UserUUID(uUUID.String()), UserAttributes{
 		name:            UserName("name"),
@@ -125,6 +173,7 @@ func TestRepositoryUpdateEROOR01(t *testing.T) {
 
 	uUUID := uuid.New()
 
+	h.da.EXPECT().emailAlreadyUsedUpdate(UserUUID(uUUID.String()), Email("test@gmail.com")).Return(false, nil)
 	err := errors.New("error")
 	h.da.EXPECT().update(UserUUID(uUUID.String()), UserAttributes{
 		name:            UserName("name"),
@@ -144,7 +193,50 @@ func TestRepositoryUpdateEROOR01(t *testing.T) {
 	if err != updateErr {
 		t.Fatal(updateErr)
 	}
+}
 
+func TestRepositoryUpdateEROOR02(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	err := errors.New("error")
+	h.da.EXPECT().emailAlreadyUsedUpdate(UserUUID(uUUID.String()), Email("test@gmail.com")).Return(false, err)
+
+	updateErr := h.repo.Update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err != updateErr {
+		t.Fatal(updateErr)
+	}
+
+}
+
+func TestRepositoryUpdateEROOR03(t *testing.T) {
+	h := newUserRepositoryTestHelper(t)
+	defer h.ctrl.Finish()
+
+	uUUID := uuid.New()
+
+	err := errors.New(shared.EmailAlreadyUsed)
+
+	h.da.EXPECT().emailAlreadyUsedUpdate(UserUUID(uUUID.String()), Email("test@gmail.com")).Return(true, nil)
+
+	updateErr := h.repo.Update(UserUUID(uUUID.String()), UserAttributes{
+		name:            UserName("name"),
+		email:           Email("test@gmail.com"),
+		password:        Password("password"),
+		telephoneNumber: TelephoneNumber("09084363172"),
+		gender:          Gender(1),
+	})
+	if err.Error() != updateErr.Error() {
+		t.Fatal(updateErr)
+	}
 }
 
 func TestRepositoryDelete(t *testing.T) {

@@ -29,4 +29,6 @@ const (
 	RequiredLoginArgs = "user-00013"
 	// PasswordIsIncorrect : パスワードが誤っています
 	PasswordIsIncorrect = "user-00014"
+	// EmailAlreadyUsed : Emailはすでに使用されています
+	EmailAlreadyUsed = "user-00015"
 )

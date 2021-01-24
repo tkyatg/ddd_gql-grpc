@@ -140,3 +140,33 @@ func (mr *MockUserDataAccessorMockRecorder) delete(id interface{}) *gomock.Call 
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "delete", reflect.TypeOf((*MockUserDataAccessor)(nil).delete), id)
 }
+
+// emailAlreadyUsedCreate mocks base method
+func (m *MockUserDataAccessor) emailAlreadyUsedCreate(email Email) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "emailAlreadyUsedCreate", email)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// emailAlreadyUsedCreate indicates an expected call of emailAlreadyUsedCreate
+func (mr *MockUserDataAccessorMockRecorder) emailAlreadyUsedCreate(email interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "emailAlreadyUsedCreate", reflect.TypeOf((*MockUserDataAccessor)(nil).emailAlreadyUsedCreate), email)
+}
+
+// emailAlreadyUsedUpdate mocks base method
+func (m *MockUserDataAccessor) emailAlreadyUsedUpdate(id UserUUID, email Email) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "emailAlreadyUsedUpdate", id, email)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// emailAlreadyUsedUpdate indicates an expected call of emailAlreadyUsedUpdate
+func (mr *MockUserDataAccessorMockRecorder) emailAlreadyUsedUpdate(id, email interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "emailAlreadyUsedUpdate", reflect.TypeOf((*MockUserDataAccessor)(nil).emailAlreadyUsedUpdate), id, email)
+}

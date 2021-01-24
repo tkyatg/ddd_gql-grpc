@@ -77,7 +77,6 @@ func (uc *usecase) update(req updateRequest) error {
 	if err != nil {
 		return err
 	}
-
 	attr, err := domain.NewUserAttributes(req.name, hashedPassword, req.email, req.telephoneNumber, req.gender)
 	if err != nil {
 		return err

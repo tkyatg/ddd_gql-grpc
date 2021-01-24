@@ -1,5 +1,11 @@
 package domain
 
+import (
+	"errors"
+
+	"github.com/takuya911/project-services/services/user/shared"
+)
+
 type (
 	userRepository struct {
 		da UserDataAccessor
@@ -15,6 +21,8 @@ type (
 		create(attr UserAttributes) (UserUUID, error)
 		update(id UserUUID, attr UserAttributes) error
 		delete(id UserUUID) error
+		emailAlreadyUsedCreate(email Email) (bool, error)
+		emailAlreadyUsedUpdate(id UserUUID, email Email) (bool, error)
 	}
 )
 
@@ -26,10 +34,25 @@ func NewUserRepository(
 }
 
 func (r *userRepository) Create(attr UserAttributes) (UserUUID, error) {
+	used, err := r.da.emailAlreadyUsedCreate(attr.email)
+	if err != nil {
+		return "", err
+	}
+	if used {
+		return "", errors.New(shared.EmailAlreadyUsed)
+	}
 	return r.da.create(attr)
 }
 
 func (r *userRepository) Update(id UserUUID, attr UserAttributes) error {
+	used, err := r.da.emailAlreadyUsedUpdate(id, attr.email)
+	if err != nil {
+		return err
+	}
+	if used {
+		return errors.New(shared.EmailAlreadyUsed)
+	}
+
 	return r.da.update(id, attr)
 }
 
