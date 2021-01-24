@@ -94,6 +94,7 @@ github.com/stretchr/testify v1.5.1 h1:nOGnQDM7FYENwehXlg/kFVnos3rEvtKTjRvOWSzb6H
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0 h1:PWN10psZFSQxiKmSdzNgi29rIv2LfBvDlt6Is7qNtB8=
 github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
+github.com/takuya911/project-services v0.0.0-20210122141111-e7d267e082bf h1:u8TNg86pA6AzfzuUbW3bYyWAu+r4w7KEyRcuk4ftL/s=
 github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
 github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/urfave/cli/v2 v2.1.1 h1:Qt8FeAtxE/vfdrLmR3rxR6JRE0RoVmbXu8+6kZtYU4k=
