@@ -100,17 +100,17 @@ func (mr *MockDataAccessorMockRecorder) getByID(req interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByID", reflect.TypeOf((*MockDataAccessor)(nil).getByID), req)
 }
 
-// getByEmailAndPassword mocks base method
-func (m *MockDataAccessor) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
+// getByEmail mocks base method
+func (m *MockDataAccessor) getByEmail(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "getByEmailAndPassword", req)
+	ret := m.ctrl.Call(m, "getByEmail", req)
 	ret0, _ := ret[0].(getByEmailAndPasswordResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// getByEmailAndPassword indicates an expected call of getByEmailAndPassword
-func (mr *MockDataAccessorMockRecorder) getByEmailAndPassword(req interface{}) *gomock.Call {
+// getByEmail indicates an expected call of getByEmail
+func (mr *MockDataAccessorMockRecorder) getByEmail(req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByEmailAndPassword", reflect.TypeOf((*MockDataAccessor)(nil).getByEmailAndPassword), req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getByEmail", reflect.TypeOf((*MockDataAccessor)(nil).getByEmail), req)
 }

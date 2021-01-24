@@ -46,7 +46,7 @@ type (
 	// DataAccessor interface
 	DataAccessor interface {
 		getByID(req getByIDRequest) (getByIDResponse, error)
-		getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error)
+		getByEmail(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error)
 	}
 )
 
@@ -60,7 +60,7 @@ func (uc *usecase) getByID(req getByIDRequest) (getByIDResponse, error) {
 }
 
 func (uc *usecase) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
-	res, err := uc.da.getByEmailAndPassword(req)
+	res, err := uc.da.getByEmail(req)
 	if err != nil {
 		return getByEmailAndPasswordResponse{}, err
 	}

@@ -53,7 +53,7 @@ WHERE user_uuid = ?
 	}, nil
 }
 
-func (d *dataAccessor) getByEmailAndPassword(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
+func (d *dataAccessor) getByEmail(req getByEmailAndPasswordRequest) (getByEmailAndPasswordResponse, error) {
 	sql := `
 SELECT user_uuid
      , name
