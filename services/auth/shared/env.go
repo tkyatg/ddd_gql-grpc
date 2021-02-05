@@ -9,5 +9,8 @@ type (
 		GetDBPassword() string
 		GetDBName() string
 		GetAuthServicePort() string
+		GetTokenSubject() string
+		GetRefreshTokenSubject() string
+		GetJwtSignKey() string
 	}
 )

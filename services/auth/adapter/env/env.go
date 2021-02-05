@@ -8,12 +8,15 @@ import (
 
 type (
 	environment struct {
-		dbHost      string
-		dbPort      string
-		dbUser      string
-		dbPassword  string
-		dbName      string
-		servicePort string
+		dbHost              string
+		dbPort              string
+		dbUser              string
+		dbPassword          string
+		dbName              string
+		servicePort         string
+		tokenSubject        string
+		refreshTokenSubject string
+		jwtSignKey          string
 	}
 )
 
@@ -25,6 +28,9 @@ func NewEnv() shared.Env {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	servicePort := os.Getenv("AUTH_SERVICE_PORT")
+	tokenSubject := os.Getenv("")
+	refreshTokenSubject := os.Getenv("")
+	jwtSignKey := os.Getenv("")
 
 	return &environment{
 		dbHost,
@@ -33,6 +39,9 @@ func NewEnv() shared.Env {
 		dbPassword,
 		dbName,
 		servicePort,
+		tokenSubject,
+		refreshTokenSubject,
+		jwtSignKey,
 	}
 }
 
@@ -51,7 +60,15 @@ func (t *environment) GetDBPassword() string {
 func (t *environment) GetDBName() string {
 	return t.dbName
 }
-
 func (t *environment) GetAuthServicePort() string {
 	return t.servicePort
+}
+func (t *environment) GetTokenSubject() string {
+	return t.tokenSubject
+}
+func (t *environment) GetRefreshTokenSubject() string {
+	return t.refreshTokenSubject
+}
+func (t *environment) GetJwtSignKey() string {
+	return t.jwtSignKey
 }

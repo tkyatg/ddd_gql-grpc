@@ -44,6 +44,9 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=password
       - AUTH_SERVICE_PORT=50052
+      - TOKEN_SUBJECT=id_token
+      - REFRESH_TOKEN_SUBJECT=refresh_token
+      - JWT_SIGN_KEY=-----BEGIN EC PRIVATE KEY-----\nMIHcAgEBBEIAGT88ebOnAbgmS9Idbns1+VqWV9UN2dvzqiXMmxvAyKNnpoFQxYEL\nLrvmL9uqZaCcbR7EOz5OQyyozKyfqxNiMcigBwYFK4EEACOhgYkDgYYABAB/PCXh\nMMmfHGuR2vm7NLtaa1Jg25CuldjD3LlpFAbrQ0tkfnvskJYRkuFJcbbMGEDLKwvz\nH/HCCi/k8lmynF/DlwH4EAVQTUhkoHO2AUS5zK5oDTKxPN8v86BXBBtbbdVEjZaL\na6hVSC8VOiQD+NeSCWwdN2pY0gYCQHcvxyrCqvAX9Q==\n-----END EC PRIVATE KEY-----
     ports:
       - 50052:50052
     tty: true
