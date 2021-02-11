@@ -1,4 +1,6 @@
-services/gql/tmp/runner-build
 services/auth/tmp/runner-build
-services/user/tmp/runner-build
 services/auth/tmp/runner-build-errors.log
+services/user/tmp/runner-build
+services/user/tmp/runner-build-errors.log
+services/gql/tmp/runner-build
+services/gql/tmp/runner-build-errors.log
