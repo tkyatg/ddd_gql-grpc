@@ -1,3 +1,4 @@
 services/gql/tmp/runner-build
 services/auth/tmp/runner-build
 services/user/tmp/runner-build
+services/auth/tmp/runner-build-errors.log

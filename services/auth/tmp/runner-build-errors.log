@@ -1,2 +1,0 @@
-go: github.com/takuya911/ddd_gql-grpc/services/user@v0.0.0-20210118110920-853d8a1da2bc: invalid version: git fetch -f https://github.com/takuya911/ddd_gql-grpc refs/heads/*:refs/heads/* refs/tags/*:refs/tags/* in /go/pkg/mod/cache/vcs/e4d7bfee4d4bd718b1afa2670a2fe53dbad351575c2874c2c6122dcf8aa46743: exit status 128:
-	fatal: could not read Username for 'https://github.com': terminal prompts disabled
