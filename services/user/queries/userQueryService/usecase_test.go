@@ -9,7 +9,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
-	"github.com/takuya911/project-services/services/user/adapter/hash"
+	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/hash"
 )
 
 type usecaseTestHelper struct {

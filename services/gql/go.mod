@@ -1,4 +1,4 @@
-module github.com/takuya911/project-services/services/gql
+module github.com/takuya911/ddd_gql-grpc/services/gql
 
 go 1.13
 

@@ -1,4 +1,4 @@
-module github.com/takuya911/project-services/services/user/migration
+module github.com/takuya911/ddd_gql-grpc/services/user/migration
 
 go 1.13
 

@@ -20,7 +20,7 @@ func NewUserDataAccessor(
 func (d userDataAccessor) create(attr UserAttributes) (UserUUID, error) {
 	sql := `
 INSERT INTO users.users(name , email , password , telephone_number , gender, created_at)
-VALUES ( ?, ?, ?, ?, ? ,now() ) returning user_uuid;
+VALUES ( ?, ?, ?, ?, ? ,now() ) returning user_uuid
 `
 	var rslt struct {
 		UserUUID string `db:"user_uuid"`
@@ -45,7 +45,7 @@ update users.users
      , telephone_number = ?
 	 , gender = ?
 	 , updated_at = now()
- where user_uuid = ?;
+ where user_uuid = ?
 `
 	if result := d.db.Exec(sql, attr.name, attr.email, attr.password, attr.telephoneNumber, attr.gender, id); result.Error != nil {
 		return result.Error
@@ -56,7 +56,7 @@ update users.users
 func (d userDataAccessor) delete(id UserUUID) error {
 	sql := `
 delete from users.users 
- where user_uuid= ?;
+ where user_uuid= ?
 `
 	if result := d.db.Exec(sql, id); result.Error != nil {
 		return result.Error
@@ -68,7 +68,7 @@ func (d userDataAccessor) emailAlreadyUsedCreate(email Email) (bool, error) {
 	sql := `
 select exists (
        select user_uuid from users.users
-        where email= ?;
+        where email= ?
 )
 `
 	var rslt struct {
@@ -85,7 +85,7 @@ func (d userDataAccessor) emailAlreadyUsedUpdate(id UserUUID, email Email) (bool
 select exists (
        select user_uuid from users.users
         where email= ?
-          and user_uuid != ?;
+          and user_uuid != ?
 )
 `
 	var rslt struct {

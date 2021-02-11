@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
+	"github.com/takuya911/ddd_gql-grpc/services/auth/domain"
+	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
 	definition "github.com/takuya911/project-auth-definition"
-	"github.com/takuya911/project-services/services/auth/domain"
-	"github.com/takuya911/project-services/services/auth/shared"
 )
 
 type server struct {

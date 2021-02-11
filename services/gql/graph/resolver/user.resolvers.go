@@ -6,10 +6,9 @@ package resolver
 import (
 	"context"
 
-	authserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/authServiceAccessor"
-	userserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/userServiceAccessor"
-	"github.com/takuya911/project-services/services/gql/graph/generated"
-	"github.com/takuya911/project-services/services/gql/graph/model"
+	userserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
+	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/generated"
+	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUserRequest) (*model.CreateUserResponse, error) {
@@ -24,16 +23,16 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		return nil, err
 	}
 
-	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
-	if err != nil {
-		return nil, err
-	}
+	// token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &model.CreateUserResponse{
-		UUID: res.UUID,
+		UUID:      res.UUID,
 		TokenPair: &model.TokenPair{
-			AccessToken:  token.TokenPair.AccessToken,
-			RefreshToken: token.TokenPair.RefreshToken,
+			// AccessToken:  token.TokenPair.AccessToken,
+			// RefreshToken: token.TokenPair.RefreshToken,
 		},
 	}, nil
 }
@@ -51,16 +50,16 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 		return nil, err
 	}
 
-	token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
-	if err != nil {
-		return nil, err
-	}
+	// token, err := r.authServiceAccessor.GenToken(ctx, authserviceaccessor.GenTokenRequest{UUID: res.UUID})
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &model.UpdateUserResponse{
-		UUID: res.UUID,
+		UUID:      res.UUID,
 		TokenPair: &model.TokenPair{
-			AccessToken:  token.TokenPair.AccessToken,
-			RefreshToken: token.TokenPair.RefreshToken,
+			// AccessToken:  token.TokenPair.AccessToken,
+			// RefreshToken: token.TokenPair.RefreshToken,
 		},
 	}, nil
 }

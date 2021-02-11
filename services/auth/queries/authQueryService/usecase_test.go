@@ -7,9 +7,9 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
-	"github.com/takuya911/project-services/services/auth/adapter/env"
-	"github.com/takuya911/project-services/services/auth/adapter/jwt"
-	"github.com/takuya911/project-services/services/auth/shared"
+	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/env"
+	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/jwt"
+	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
 )
 
 type usecaseTestHelper struct {

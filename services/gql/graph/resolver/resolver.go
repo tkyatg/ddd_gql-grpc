@@ -3,11 +3,11 @@ package resolver
 import (
 	"context"
 
+	authserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/authServiceAccessor"
+	userserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
+	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/generated"
+	"github.com/takuya911/ddd_gql-grpc/services/gql/shared"
 	authdefinition "github.com/takuya911/project-auth-definition"
-	authserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/authServiceAccessor"
-	userserviceaccessor "github.com/takuya911/project-services/services/gql/adapter/rpc/userServiceAccessor"
-	"github.com/takuya911/project-services/services/gql/graph/generated"
-	"github.com/takuya911/project-services/services/gql/shared"
 	userdefinition "github.com/takuya911/project-user-definition"
 
 	"google.golang.org/grpc"

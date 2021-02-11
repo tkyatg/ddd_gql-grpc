@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/takuya911/project-services/services/user/adapter/env"
-	"github.com/takuya911/project-services/services/user/adapter/rpc"
-	"github.com/takuya911/project-services/services/user/adapter/sql"
+	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/env"
+	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/rpc"
+	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/sql"
 )
 
 func main() {

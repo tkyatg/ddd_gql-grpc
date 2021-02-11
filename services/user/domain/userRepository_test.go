@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/takuya911/project-services/services/user/shared"
+	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
@@ -214,7 +214,6 @@ func TestRepositoryUpdateEROOR02(t *testing.T) {
 	if err != updateErr {
 		t.Fatal(updateErr)
 	}
-
 }
 
 func TestRepositoryUpdateEROOR03(t *testing.T) {

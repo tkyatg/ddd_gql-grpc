@@ -1,7 +1,7 @@
 package authqueryservice
 
 import (
-	"github.com/takuya911/project-services/services/auth/shared"
+	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
 )
 
 type (

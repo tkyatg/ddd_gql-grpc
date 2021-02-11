@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/takuya911/project-services/services/user/domain"
-	"github.com/takuya911/project-services/services/user/shared"
+	"github.com/takuya911/ddd_gql-grpc/services/user/domain"
+	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
 	definition "github.com/takuya911/project-user-definition"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

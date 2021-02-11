@@ -26,4 +26,4 @@ models:
       - github.com/99designs/gqlgen/graphql.Int64
   Time:
     model:
-      - "github.com/takuya911/project-services/services/gql/graph/scalar.TimeProto"
+      - "github.com/takuya911/ddd_gql-grpc/services/gql/graph/scalar.TimeProto"

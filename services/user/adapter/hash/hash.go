@@ -3,7 +3,7 @@ package hash
 import (
 	"errors"
 
-	"github.com/takuya911/project-services/services/user/shared"
+	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
 	"golang.org/x/crypto/bcrypt"
 )
 
