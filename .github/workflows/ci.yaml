@@ -8,8 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test Auth
-        run: |
-          services/auth && make test
+        working-directory: ./services/auth
+        run: make test
       - name: Test pwd
-        run: |
-          pwd
+        run: pwd
