@@ -9,4 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test Auth
         run: |
-          pwd && make test
+          services/auth && make test
+      - name: Test pwd
+        run: |
+          pwd
