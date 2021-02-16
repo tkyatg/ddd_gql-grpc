@@ -7,8 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Test Auth
+      - name: test auth service
         working-directory: ./services/auth
         run: make test
-      - name: Test pwd
-        run: pwd
+      - name: test user service
+        working-directory: ./services/user
+        run: make test
