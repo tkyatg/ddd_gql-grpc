@@ -2,7 +2,8 @@ package main
 
 import (
 	"log"
-	"net/rpc"
+
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/rpc"
 
 	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/env"
 	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/sql"
