@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/shared"
 )
 
 func TestVoParseUserUUID(t *testing.T) {

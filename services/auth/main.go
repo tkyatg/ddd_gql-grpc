@@ -2,10 +2,10 @@ package main
 
 import (
 	"log"
+	"net/rpc"
 
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/env"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/rpc"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/sql"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/env"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/sql"
 )
 
 func main() {

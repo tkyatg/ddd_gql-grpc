@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	gomock "github.com/golang/mock/gomock"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/env"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/jwt"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/env"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/jwt"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/shared"
 )
 
 type usecaseTestHelper struct {

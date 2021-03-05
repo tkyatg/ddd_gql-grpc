@@ -2,11 +2,10 @@ package rpc
 
 import (
 	"github.com/jinzhu/gorm"
-
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/env"
-	"github.com/takuya911/ddd_gql-grpc/services/auth/adapter/jwt"
-	authqueryservice "github.com/takuya911/ddd_gql-grpc/services/auth/queries/authQueryService"
-	definition "github.com/takuya911/project-auth-definition"
+	definition "github.com/tkyatg/auth-definition"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/env"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/adapter/jwt"
+	authqueryservice "github.com/tkyatg/ddd_gql-grpc/services/auth/queries/authQueryService"
 )
 
 func (s *server) registerServices(dbConnection *gorm.DB) {

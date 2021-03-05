@@ -63,6 +63,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0 h1:PWN10psZFSQxiKmSdzNgi29rIv2LfBvDlt6Is7qNtB8=
 github.com/takuya911/project-auth-definition v0.0.0-20210117101525-89d87b5f36f0/go.mod h1:tn31p7FpHacAMV2CTNxDO1HTfCE8CdQXhUnKfREa5hI=
+github.com/tkyatg/auth-definition v1.0.0 h1:PnjchV7EEdrYMFsLt+IWrSplYRrYwl0gL5FEXJj9jRI=
+github.com/tkyatg/auth-definition v1.0.0/go.mod h1:M4K3cLYjvgeXz439LQ4VRRi+65jj6XPee2RxoJCvOmI=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd h1:GGJVjV8waZKRHrgwvtH66z9ZGVurTD1MT0n1Bb+q4aM=

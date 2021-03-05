@@ -3,7 +3,7 @@ package env
 import (
 	"os"
 
-	"github.com/takuya911/ddd_gql-grpc/services/auth/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/auth/shared"
 )
 
 type (
