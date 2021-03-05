@@ -3,7 +3,7 @@ package authserviceaccessor
 import (
 	"context"
 
-	definition "github.com/takuya911/project-auth-definition"
+	definition "github.com/tkyatg/auth-definition"
 )
 
 type (

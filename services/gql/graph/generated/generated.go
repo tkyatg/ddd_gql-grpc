@@ -11,8 +11,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/model"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/scalar"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/model"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/scalar"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 	"google.golang.org/protobuf/types/known/timestamppb"

@@ -6,9 +6,9 @@ package resolver
 import (
 	"context"
 
-	userserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/generated"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/model"
+	userserviceaccessor "github.com/tkyatg/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/generated"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUserRequest) (*model.CreateUserResponse, error) {

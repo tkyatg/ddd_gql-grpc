@@ -7,9 +7,9 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/adapter/env"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/generated"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/resolver"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/adapter/env"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/generated"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/resolver"
 )
 
 func main() {

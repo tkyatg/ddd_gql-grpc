@@ -7,11 +7,11 @@ import (
 	"context"
 	"errors"
 
-	authserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/authServiceAccessor"
-	userserviceaccessor "github.com/takuya911/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/generated"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/graph/model"
-	"github.com/takuya911/ddd_gql-grpc/services/gql/shared"
+	authserviceaccessor "github.com/tkyatg/ddd_gql-grpc/services/gql/adapter/rpc/authServiceAccessor"
+	userserviceaccessor "github.com/tkyatg/ddd_gql-grpc/services/gql/adapter/rpc/userServiceAccessor"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/generated"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/graph/model"
+	"github.com/tkyatg/ddd_gql-grpc/services/gql/shared"
 )
 
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginRequest) (*model.LoginResponse, error) {
