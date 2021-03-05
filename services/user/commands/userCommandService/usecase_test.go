@@ -8,9 +8,9 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
-	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/hash"
-	"github.com/takuya911/ddd_gql-grpc/services/user/domain"
-	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/adapter/hash"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/domain"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/shared"
 )
 
 type usecaseTestHelper struct {

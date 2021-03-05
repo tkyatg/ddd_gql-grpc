@@ -2,11 +2,11 @@ package rpc
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/takuya911/ddd_gql-grpc/services/user/adapter/hash"
-	usercommandservice "github.com/takuya911/ddd_gql-grpc/services/user/commands/userCommandService"
-	"github.com/takuya911/ddd_gql-grpc/services/user/domain"
-	userqueryservice "github.com/takuya911/ddd_gql-grpc/services/user/queries/userQueryService"
-	definition "github.com/takuya911/project-user-definition"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/adapter/hash"
+	usercommandservice "github.com/tkyatg/ddd_gql-grpc/services/user/commands/userCommandService"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/domain"
+	userqueryservice "github.com/tkyatg/ddd_gql-grpc/services/user/queries/userQueryService"
+	definition "github.com/tkyatg/user-definition"
 )
 
 func (s *server) registerServices(dbConnection *gorm.DB) {

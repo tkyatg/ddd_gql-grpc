@@ -1,8 +1,8 @@
 package usercommandservice
 
 import (
-	"github.com/takuya911/ddd_gql-grpc/services/user/domain"
-	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/domain"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/shared"
 )
 
 type (

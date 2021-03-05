@@ -278,9 +278,11 @@ github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXf
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
-github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
-github.com/takuya911/project-user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
 github.com/tidwall/pretty v0.0.0-20180105212114-65a9db5fad51/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
+github.com/tkyatg/user-definition v0.0.0-20210117110601-750ed00fd461 h1:gZb91j5lEhBkFU0qnPdkSff+zjIyH/YgVSuUOa4cwOs=
+github.com/tkyatg/user-definition v0.0.0-20210117110601-750ed00fd461/go.mod h1:la+0JJjqBkpp8A5KfM/NgxeG8VnThX4BB7LzhiVcXyk=
+github.com/tkyatg/user-definition v1.0.0 h1:qM++2yXSlAFOoz9SDg7LieDjsvqkTOawu3Aht/o3hxA=
+github.com/tkyatg/user-definition v1.0.0/go.mod h1:BUNP8MlAJCsN7ztIxdnqaR62YPvezgzhOVEzUJdya/c=
 github.com/xanzy/go-gitlab v0.15.0/go.mod h1:8zdQa/ri1dfn8eS3Ir1SyfvOKlw7WBJ8DVThkpGiXrs=
 github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c/go.mod h1:lB8K/P019DLNhemzwFU4jHLhdvlE6uDZjXFejJXr49I=
 github.com/xdg/stringprep v1.0.0/go.mod h1:Jhud4/sHMO4oL310DaZAKk9ZaJ08SJfe+sJh0HrGL1Y=

@@ -8,7 +8,7 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/uuid"
-	definition "github.com/takuya911/project-user-definition"
+	definition "github.com/tkyatg/user-definition"
 )
 
 type serverTestHelper struct {

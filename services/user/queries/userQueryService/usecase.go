@@ -3,7 +3,7 @@ package userqueryservice
 import (
 	"time"
 
-	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/shared"
 )
 
 type (

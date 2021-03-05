@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/takuya911/ddd_gql-grpc/services/user/shared"
+	"github.com/tkyatg/ddd_gql-grpc/services/user/shared"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"

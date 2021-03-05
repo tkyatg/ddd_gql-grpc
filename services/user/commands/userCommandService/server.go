@@ -3,7 +3,7 @@ package usercommandservice
 import (
 	"context"
 
-	definition "github.com/takuya911/project-user-definition"
+	definition "github.com/tkyatg/user-definition"
 )
 
 type (
